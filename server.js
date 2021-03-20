@@ -22,8 +22,8 @@ app.use(session({
 }));
 
 //routes
-require("./routes/api-routes")(app);
-require("./routes/html-routes")(app);
+require('./routes/api-routes')(app);
+require('./routes/html-routes')(app);
 
 
 db.sequelize.sync().then(function () {
