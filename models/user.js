@@ -31,5 +31,17 @@ module.exports = (sequelize, DataTypes) => {
     User.addHook('beforeCreate', (user) => {
         user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
     });
+    User.associate = (models) => {
+        User.belongsTo(models.Group, {
+            onDelete: 'cascade'
+        });
+        User.hasMany(models.Routine, {
+            onDelete: 'cascade'
+        });
+        User.hasMany(models.Task, {
+            onDelete: 'cascade'
+        });
+    };
+
     return User;
 };
