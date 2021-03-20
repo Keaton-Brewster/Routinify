@@ -1,20 +1,33 @@
 const express = require('express');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
-const port = process.env.PORT || 8080
-var db = require("./models");
+const PORT = process.env.PORT || 8080;
+const db = require('./models');
 
 const app = express();
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(express.static("public"));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(cookieParser());
 
-app.use(session({ secret: "secret", resave: true, saveUninitialized: true }));
+app.use(express.json());
+app.use(express.static('public'));
+
+app.use(session({
+  secret: 'secret',
+  resave: true,
+  saveUninitialized: true
+}));
 
 //routes
+require('./routes/api-routes')(app);
+require('./routes/html-routes')(app);
 
-db.sequelize.sync().then(function() {
-    app.listen(PORT, function() {
-      console.log(`Listening on port ${port}.`, PORT, PORT);
-    });
+
+db.sequelize.sync().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}.`, PORT, PORT);
   });
-  
+});
