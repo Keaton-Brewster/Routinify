@@ -22,6 +22,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 //routes
+// TODO get these routes working so that we can start really using the app!
 // require('./routes/api-routes')(app);
 // require('./routes/html-routes')(app);
 
