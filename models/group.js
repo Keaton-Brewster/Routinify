@@ -5,8 +5,8 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         }  
     });
-    Group.associate = (models) => {
-        Group.hasMany(models.User, {onDelete: 'cascade'});
-    };
+    // Group.associate = (models) => {
+    //     Group.hasMany(models.User, {onDelete: 'cascade'});
+    // };
     return Group;
 };

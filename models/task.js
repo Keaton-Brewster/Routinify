@@ -5,17 +5,17 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },    
     });
-    Task.associate = (models) => {
-        Task.hasOne(models.Group, {onDelete: 'cascade'});
-        Task.belongsToMany(models.Routine, {
-            through: 'routines',
-            onDelete: 'cascade'
-        });
-        Task.belongsToMany(models.User, {
-            through: 'users',
-            onDelete: 'cascade'
-        });
-    };
+    // Task.associate = (models) => {
+    //     Task.hasOne(models.Group, {onDelete: 'cascade'});
+    //     Task.belongsToMany(models.Routine, {
+    //         through: 'routines',
+    //         onDelete: 'cascade'
+    //     });
+    //     Task.belongsToMany(models.User, {
+    //         through: 'users',
+    //         onDelete: 'cascade'
+    //     });
+    // };
     
     return Task;
 };

@@ -22,12 +22,16 @@ app.use(session({
 }));
 
 //routes
-require('./routes/api-routes')(app);
-require('./routes/html-routes')(app);
+// require('./routes/api-routes')(app);
+// require('./routes/html-routes')(app);
 
 
 db.sequelize.sync().then(() => {
-  app.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}.`, PORT, PORT);
-  });
+    try{
+        app.listen(PORT, () => {
+            console.log(`Listening on port ${PORT}.`, PORT, PORT);
+        });
+    } catch(err){
+        console.error(`Error at server.js(35): ${err}`)
+    }
 });

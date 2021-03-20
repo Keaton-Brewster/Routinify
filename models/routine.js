@@ -5,10 +5,10 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         }
     });
-    Routine.associate = (models) => {
-        Routine.belongsTo(models.Group, {onDelete: 'cascade'});
-        Routine.hasMany(models.Task, {onDelete: 'cascade'});
-    };
+    // Routine.associate = (models) => {
+    //     Routine.belongsTo(models.Group, {onDelete: 'cascade'});
+    //     Routine.hasMany(models.Task, {onDelete: 'cascade'});
+    // };
     
     return Routine;
 };
