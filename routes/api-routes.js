@@ -38,8 +38,6 @@ module.exports = function(app) {
         }).then((dbMessages) => console.log(dbMessages));
     });
 
-
-
     // update task
     app.post('/api/tasks/:id', (req, res) => {
         // from req.body -> get table, column, value for query
@@ -51,7 +49,6 @@ module.exports = function(app) {
         }).then((dbTask) => console.log(dbTask));
     });
 
-    
     // update request (accept)(deny)
     app.post('/api/messages/:id', (req,res) => {
         // from req.body -> get table, column, value for query
@@ -62,7 +59,6 @@ module.exports = function(app) {
             },
         }).then((dbMessage) => console.log(dbMessage));
     });
-
 
     // create routine
     app.post('/api/routines', (req, res) => {
@@ -85,10 +81,15 @@ module.exports = function(app) {
             where: {
                 // routine id
                 id: req.params.id,
-            },
-        }).then(res) {
-            console.log(res);   
-        };
+            }, 
+            // (result) => {
+            //     if (result.changedRows === 0) {
+            //         return res.status(404).end();
+            //     } else {
+            //         res.status(200).end();
+            //     };
+            // }
+        });
     });
 
     // delete user
@@ -98,9 +99,10 @@ module.exports = function(app) {
                 // user id
                 id: req.params.id,
             },
-        }).then(res) {
-            console.log(res);   
-        };
+        // }).then(res) {
+        //     console.log(res);   
+        // };
+        });
     });
 
     // delete tasks
@@ -110,9 +112,12 @@ module.exports = function(app) {
                 // task id
                 id: req.params.id,
             },
-        }).then(res) {
-            console.log(res);   
-        };
+        // }).then(res) {
+        //     console.log(res);   
+        // };
     });
 
-}
+    });
+
+    // I remember something about needing to return something, but I'm not sure how to apply that until we have a better idea of what's going where. Does that need to happen in each or all of it at the end?
+};
