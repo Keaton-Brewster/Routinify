@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 
 module.exports = (sequelize, DataTypes) => {
-    const User = sequelize.define('user', {
+    const User = sequelize.define('User', {
         username: {
             type: DataTypes.STRING,
             allowNull: false
@@ -26,23 +26,22 @@ module.exports = (sequelize, DataTypes) => {
     User.prototype.validPassword = function (password) {
         return bcrypt.compareSync(password, this.password);
     };
-    // Hooks are automatic methods that run during various phases of the User Model lifecycle
-    // In this case, before a User is created, we will automatically hash their password
+
     User.addHook('beforeCreate', (user) => {
         user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
     });
 
-    // User.associate = (models) => {
-    //     User.belongsTo(models.Group, {
-    //         onDelete: 'cascade'
-    //     });
-    //     User.hasMany(models.Routine, {
-    //         onDelete: 'cascade'
-    //     });
-    //     User.hasMany(models.Task, {
-    //         onDelete: 'cascade'
-    //     });
-    // };
+    User.associate = (models) => {
+        User.belongsTo(models.Group, {
+            onDelete: 'cascade'
+        });
+        User.hasMany(models.Routine, {
+            onDelete: 'cascade'
+        });
+        User.hasMany(models.Task, {
+            onDelete: 'cascade'
+        });
+    };
 
     return User;
 };
