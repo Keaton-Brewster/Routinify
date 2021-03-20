@@ -20,5 +20,11 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: false
         }
     });
+    User.associate = (models) => {
+        User.belongsTo(models.Group, {onDelete: 'cascade'});
+        User.hasMany(models.Routine, {onDelete: 'cascade'});
+        User.hasMany(models.Task, {onDelete: 'cascade'}); 
+    };
+    
     return User;
 };
