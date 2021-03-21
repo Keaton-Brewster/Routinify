@@ -6,9 +6,13 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
     Routine.associate = (models) => {
-        Routine.belongsTo(models.Group, {onDelete: 'cascade'});
-        Routine.hasMany(models.Task, {onDelete: 'cascade'});
+        Routine.belongsTo(models.Group, {
+            onDelete: 'cascade'
+        });
+        Routine.hasMany(models.Task, {
+            onDelete: 'cascade'
+        });
     };
-    
+
     return Routine;
 };

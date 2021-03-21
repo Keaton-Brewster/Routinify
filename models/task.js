@@ -6,6 +6,10 @@ module.exports = (sequelize, DataTypes) => {
         },    
     });
     Task.associate = (models) => {
+<<<<<<< HEAD
+=======
+        // Task.hasOne(models.Group, {onDelete: 'cascade'});
+>>>>>>> ad07cfcb9b5054b369b557b2744bae5f12d9b877
         Task.belongsToMany(models.Routine, {
             through: 'routines',
             onDelete: 'cascade'
