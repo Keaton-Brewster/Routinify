@@ -1,35 +1,36 @@
 const express = require('express');
 const session = require('express-session');
-const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
+
+const passport = require('./config/passport.js');
 
 <<<<<<< HEAD
 const PORT = process.env.PORT || 8080;
 const db = require('./models');
 
 const app = express();
-app.use(bodyParser.urlencoded({
+app.use(express.urlencoded({
   extended: true
 }));
-app.use(cookieParser());
-
 app.use(express.json());
 app.use(express.static('public'));
 
 app.use(session({
-  secret: 'secret',
+  secret: 'the family whiteboard',
   resave: true,
   saveUninitialized: true
 }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 //routes
-require('./routes/api-routes')(app);
-require('./routes/html-routes')(app);
+// TODO get these routes working so that we can start really using the app!
+// require('./routes/api-routes')(app);
+// require('./routes/html-routes')(app);
 
 
 db.sequelize.sync().then(() => {
   app.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}.`, PORT, PORT);
+    console.log('Listening on port', PORT);
   });
 =======
 const app = require('express');
