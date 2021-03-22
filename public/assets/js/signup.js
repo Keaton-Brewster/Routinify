@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const signUpButton = document.querySelector('#sign-up');
+    const signUpForm = document.querySelector('#sign-up-form');
 
     const insertNewUserData = (newUserData = {
         username: 'string',
@@ -14,11 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(newUserData)
-            }).then()
+            })
             .catch(error => console.error(error));
     };
 
-    signUpButton.addEventListener('click', (e) => {
+    signUpForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const confirmUsername = document.getElementById('confirmUsername').value.trim();
         const confirmEmail = document.getElementById('confirmEmail').value.trim();
@@ -31,9 +31,11 @@ document.addEventListener('DOMContentLoaded', () => {
             isAdmin: false
         };
 
-        if (newUser.username === confirmUsername) {
-            if (newUser.email === confirmEmail) {
-                if (newUser.password === confirmPassword) {
+        if (confirmUsername && newUser.username === confirmUsername) {
+            if (confirmEmail && newUser.email === confirmEmail) {
+                if (confirmPassword && newUser.password === confirmPassword) {
+                    //! Trying to figure out how to get the redirect to work after a post method. 
+                    //! POST methods in the controller do not allow you to redirect..
                     insertNewUserData(newUser);
                 } else {
                     alert('Passwords do not match');

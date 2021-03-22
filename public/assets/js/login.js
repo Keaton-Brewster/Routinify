@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const login = (user) => {
         fetch('/api/login', {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
             },
