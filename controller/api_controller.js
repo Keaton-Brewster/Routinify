@@ -17,7 +17,6 @@ module.exports = (app) => {
 
         // got the simple bit of authentication working. You have to already have an account to 'sign in'
         // now just have to figure out what we want thing to look like after we sign in?
-        console.log(req.body);
         res.json(req.user);
     });
 
@@ -38,6 +37,8 @@ module.exports = (app) => {
                 id: req.params.id
             },
         }).then((dbUser) => console.log(dbUser));
+
+        res.end();
     });
 
     // get unassigned tasks (admin only?)
@@ -46,6 +47,8 @@ module.exports = (app) => {
             include: ['tasks', 'routines'],
             where: 'no user id assigned',
         }).then((dbTasks) => console.log(dbTasks));
+
+        res.end();
     });
 
     // get messages (requests) logged in user = receiver id (OR response message where user = sender id)
@@ -57,6 +60,8 @@ module.exports = (app) => {
             //     'senderId': req.params.id || 'receiverId': req.params.id
             // }
         }).then((dbMessages) => console.log(dbMessages));
+
+        res.end();
     });
 
     // update task
@@ -68,6 +73,8 @@ module.exports = (app) => {
                 id: req.body.id,
             },
         }).then((dbTask) => console.log(dbTask));
+
+        res.end();
     });
 
     // update request (accept)(deny)
@@ -79,21 +86,29 @@ module.exports = (app) => {
                 id: req.body.id,
             },
         }).then((dbMessage) => console.log(dbMessage));
+
+        res.end();
     });
 
     // create routine
     app.post('/api/routines', (req, res) => {
         db.Routine.create(req.body).then((res) => console.log(res));
+
+        res.end();
     });
 
     // create task
     app.post('/api/tasks', (req, res) => {
         db.Tasks.create(req.body).then((res) => console.log(res));
+
+        res.end();
     });
 
     // create request (for asking someone else to do a task)
     app.post('/api/messages', (req, res) => {
         db.Message.create(req.body).then((res) => console.log(res));
+
+        res.end();
     });
 
     // delete routine
@@ -111,6 +126,8 @@ module.exports = (app) => {
             //     };
             // }
         });
+
+        res.end();
     });
 
     // delete user
@@ -124,6 +141,8 @@ module.exports = (app) => {
             //     console.log(res);   
             // };
         });
+
+        res.end();
     });
 
     // delete tasks
@@ -138,8 +157,8 @@ module.exports = (app) => {
             // };
         });
 
+        res.end();
     });
-
     // I remember something about needing to return something, but I'm not sure how to apply that until we have a better idea of what's going where. Does that need to happen in each or all of it at the end?
 
 };
