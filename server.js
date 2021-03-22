@@ -30,8 +30,8 @@ app.set('view engine', 'handlebars');
 
 //routes
 // TODO get these routes working so that we can start really using the app!
-// require('./routes/api-routes')(app);
-require('./routes/html-routes')(app);
+require('./controller/api-routes')(app);
+require('./controller/html-routes')(app);
 
 
 db.sequelize.sync().then(() => {
