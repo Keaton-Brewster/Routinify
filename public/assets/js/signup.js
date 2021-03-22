@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
         password: 'password',
         isAdmin: false
     }) => {
-        $.post('/api/sign_up', (newUserData))
+        $.post('/api/sign_up', newUserData)
             .then(() => {
                 window.location.replace('/');
             })
