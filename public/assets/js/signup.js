@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
         password: 'password',
         isAdmin: false
     }) => {
-        fetch('/api/signUp', {
+        fetch('/api/sign_up', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -20,23 +20,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     signUpButton.addEventListener('click', (e) => {
         e.preventDefault();
-        const newUserUsername = document.getElementById('signupUsername').value.trim();
         const confirmUsername = document.getElementById('confirmUsername').value.trim();
-        const newUserEmail = document.getElementById('signupEmail').value.trim();
         const confirmEmail = document.getElementById('confirmEmail').value.trim();
-        const newUserPassword = document.getElementById('password').value.trim();
         const confirmPassword = document.getElementById('confirmPassword').value.trim();
 
         const newUser = {
-            username: newUserUsername,
-            email: newUserEmail,
-            password: newUserPassword,
+            username: document.getElementById('signupUsername').value.trim(),
+            email: document.getElementById('signupEmail').value.trim(),
+            password: document.getElementById('password').value.trim(),
             isAdmin: false
         };
 
-        if (newUserUsername === confirmUsername) {
-            if (newUserEmail === confirmEmail) {
-                if (newUserPassword === confirmPassword) {
+        if (newUser.username === confirmUsername) {
+            if (newUser.email === confirmEmail) {
+                if (newUser.password === confirmPassword) {
                     insertNewUserData(newUser);
                 } else {
                     alert('Passwords do not match');
