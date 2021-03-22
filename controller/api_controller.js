@@ -20,6 +20,11 @@ module.exports = (app) => {
         res.json(req.user);
     });
 
+    app.get('/logout', (req, res) => {
+        req.logout();
+        res.redirect('/');
+    });
+
 
     // these are the user routes for when logged in
 

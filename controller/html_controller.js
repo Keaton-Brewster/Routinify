@@ -27,6 +27,9 @@ module.exports = (app) => {
 
     // login (need middleware before (req, res))
     app.get('/', (req, res) => {
+        if (req.user) {
+            res.render('homepage', {});
+        }
         res.render('login', {});
     });
 
