@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Routine = sequelize.define('user', {
+    const Routine = sequelize.define('Routine', {
         routine: {
             type: DataTypes.STRING,
             allowNull: false

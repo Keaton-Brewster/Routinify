@@ -19,8 +19,8 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }));
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 //set up handlebars
 app.engine('handlebars', exphbs({
