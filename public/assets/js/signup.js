@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const signUpForm = document.querySelector('#sign-up-form');
+    const signUpForm = document.getElementById('sign-up-form');
 
     const insertNewUserData = (newUserData = {
         username: 'string',
@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(newUserData)
+            }).then(() => {
+                window.location.replace('/users/home');
             })
             .catch(error => console.error(error));
     };
