@@ -20,9 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     signUpButton.addEventListener('click', (e) => {
         e.preventDefault();
-        const newUserUsername = document.getElementById('username-input').value;
-        const newUserEmail = document.getElementById('email-input').value;
-        const newUserPassword = document.getElementById('password-input').value;
+        const newUserUsername = document.getElementById('signupUsername').value.trim();
+        const confirmUsername = document.getElementById('confirmUsername').value.trim();
+        const newUserEmail = document.getElementById('signupEmail').value.trim();
+        const confirmEmail = document.getElementById('confirmEmail').value.trim();
+        const newUserPassword = document.getElementById('password').value.trim();
+        const confirmPassword = document.getElementById('confirmPassword').value.trim();
 
         const newUser = {
             username: newUserUsername,
@@ -31,8 +34,18 @@ document.addEventListener('DOMContentLoaded', () => {
             isAdmin: false
         };
 
-        insertNewUserData(newUser);
+        if (newUserUsername === confirmUsername) {
+            if (newUserEmail === confirmEmail) {
+                if (newUserPassword === confirmPassword) {
+                    insertNewUserData(newUser);
+                } else {
+                    alert('Passwords do not match');
+                }
+            } else {
+                alert('Emails do not match');
+            }
+        } else {
+            alert('Usernames do not match');
+        }
     });
-
-
 });
