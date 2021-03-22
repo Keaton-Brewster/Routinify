@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "KeatonDev42420",
+    "password": "your password here",
     "database": "whiteboard_development",
     "host": "127.0.0.1",
     "dialect": "mysql"

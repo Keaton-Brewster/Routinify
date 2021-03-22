@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    document.querySelector('.login').addEventListener('submit', (e) => {
+    document.querySelector('#login').addEventListener('submit', (e) => {
         e.preventDefault();
         console.log('submit');
 
