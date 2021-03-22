@@ -15,8 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('submit');
 
         const userData = {
-            email: document.getElementById('email-input').value.trim(),
-            password: document.getElementById('password-input').value.trim()
+            email: document.getElementById('user').value.trim(),
+            password: document.getElementById('password').value.trim()
         };
 
         if (userData.email && userData.password) {
