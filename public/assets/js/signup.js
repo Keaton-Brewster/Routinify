@@ -27,20 +27,20 @@ document.addEventListener('DOMContentLoaded', () => {
             isAdmin: false
         };
 
-        if (confirmUsername && newUser.username === confirmUsername) {
-            if (confirmEmail && newUser.email === confirmEmail) {
-                if (confirmPassword && newUser.password === confirmPassword) {
-                    //! Trying to figure out how to get the redirect to work after a post method. 
-                    //! POST methods in the controller do not allow you to redirect..
-                    insertNewUserData(newUser);
-                } else {
-                    alert('Passwords do not match');
-                }
-            } else {
-                alert('Emails do not match');
-            }
-        } else {
-            alert('Usernames do not match');
+        if (!confirmUsername && newUser.username !== confirmUsername) {
+            alert('Usernames do not match, or are left empty');
+            return;
         }
+        if (!confirmEmail && newUser.email !== confirmEmail) {
+            alert('Emails do not match');
+            return;
+        }
+        if (!confirmPassword && newUser.password !== confirmPassword) {
+            alert('Passwords do not match');
+            return;
+        }
+        insertNewUserData(newUser);
+
+
     });
 });
