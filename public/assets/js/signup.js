@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 body: JSON.stringify(newUserData)
             }).then(() => {
-                window.location.replace('/users/home');
+                window.location.replace('/');
             })
             .catch(error => console.error(error));
     };
