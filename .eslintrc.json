@@ -1,5 +1,6 @@
 {
     "env": {
+        "browser": true,
         "node": true,
         "commonjs": true,
         "es2021": true
@@ -14,7 +15,10 @@
         "curly": "error",
         "dot-notation": "error",
         "eqeqeq": "error",
-        "implicit-arrow-linebreak": ["error", "beside"],
+        "implicit-arrow-linebreak": [
+            "error",
+            "beside"
+        ],
         "no-duplicate-case": "error",
         "no-else-return": "error",
         "no-empty": "error",
@@ -28,8 +32,14 @@
         "no-var": "error",
         "prefer-arrow-callback": "error",
         "prefer-const": "error",
-        "quotes": ["error", "single"],
-        "semi": ["error", "always"],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
         "vars-on-top": "error",
         "yoda": "error"
     }
