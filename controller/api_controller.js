@@ -3,17 +3,22 @@ const passport = require('../config/passport');
 
 module.exports = (app) => {
     app.post('/api/sign_up', (req, res) => {
-        console.log(req.body);
         db.User.create(req.body)
             .then(() => {
-                res.redirect('/users/home');
+                res.redirect(307, '/api/login');
+            })
+            .catch(error => {
+                res.status(401).json(error);
             });
     });
 
-    app.get('/api/login', passport.authenticate('local'), (req, res) => {
+    app.post('/api/login', passport.authenticate('local'), (req, res) => {
+        // app.post('/api/login', (req, res) => {
+
         // got the simple bit of authentication working. You have to already have an account to 'sign in'
         // now just have to figure out what we want thing to look like after we sign in?
-        res.redirect(201, '/users/home');
+        console.log(req.body);
+        res.json(req.user);
     });
 
 
@@ -21,7 +26,6 @@ module.exports = (app) => {
 
     // I'm literally making up the structure, so we'll need to revisit that when it's set
     // any authorization stuff will have to be added around/in  
-
 
 
     // get tasks assigned to user

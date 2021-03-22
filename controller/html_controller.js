@@ -30,7 +30,7 @@ module.exports = (app) => {
         res.render('login', {});
     });
 
-    app.get('/users/home', (req, res) => {
+    app.get('/users/home', isAuthenticated, (req, res) => {
         res.render('homepage', {});
     });
 };
