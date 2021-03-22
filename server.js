@@ -29,7 +29,6 @@ app.engine('handlebars', exphbs({
 app.set('view engine', 'handlebars');
 
 //routes
-// TODO get these routes working so that we can start really using the app!
 require('./controller/api_controller')(app);
 require('./controller/html_controller')(app);
 
