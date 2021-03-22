@@ -7,14 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
         password: 'password',
         isAdmin: false
     }) => {
-        fetch('/api/sign_up', {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(newUserData)
-            }).then(() => {
+        $.post('/api/sign_up', newUserData)
+            .then(() => {
                 window.location.replace('/');
             })
             .catch(error => console.error(error));

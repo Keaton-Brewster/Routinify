@@ -5,7 +5,7 @@ module.exports = (app) => {
     app.post('/api/sign_up', (req, res) => {
         db.User.create(req.body)
             .then(() => {
-                res.redirect(307, '/api/login');
+                res.send(207);
             })
             .catch(error => {
                 res.status(401).json(error);
