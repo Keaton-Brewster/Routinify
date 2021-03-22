@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const User = sequelize.define('user', {
+    const User = sequelize.define('User', {
         username: {
             type: DataTypes.STRING,
             allowNull: false
@@ -20,10 +20,9 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: false
         }
     });
-    User.associate = (models) => {
+     User.associate = (models) => {
         User.belongsTo(models.Group, {onDelete: 'cascade'});
-        User.hasMany(models.Routine, {onDelete: 'cascade'});
-        User.hasMany(models.Task, {onDelete: 'cascade'}); 
+        // User.hasMany(models.Routine, {onDelete: 'cascade'});
     };
     
     return User;

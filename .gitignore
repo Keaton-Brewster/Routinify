@@ -104,4 +104,4 @@ dist
 .tern-port
 
 #ignore this trash
-.DS_store
+**/.DS_Store
