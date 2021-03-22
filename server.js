@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const exphbs = require('express-handlebars');
 
 const passport = require('./config/passport.js');
 
@@ -21,10 +22,16 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+//set up handlebars
+app.engine('handlebars', exphbs({
+  defaultLayout: 'main'
+}));
+app.set('view engine', 'handlebars');
+
 //routes
 // TODO get these routes working so that we can start really using the app!
 // require('./routes/api-routes')(app);
-// require('./routes/html-routes')(app);
+require('./routes/html-routes')(app);
 
 
 db.sequelize.sync().then(() => {
