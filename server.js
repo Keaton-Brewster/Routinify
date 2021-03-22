@@ -22,7 +22,7 @@ app.use(session({
 }));
 
 //routes
-require('./routes/api-routes')(app);
+// console.log(require('./routes/api-routes')(app));
 require('./routes/html-routes')(app);
 
 
