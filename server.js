@@ -36,7 +36,7 @@ require('./controller/html_controller')(app);
 db.sequelize.sync().then(() => {
   try {
     app.listen(PORT, () => {
-      console.log(`Listening on port ${PORT}.`, PORT, PORT);
+      console.log(`Listening on port ${PORT}.`);
     });
   } catch (err) {
     console.error(`Error at server.js(35): ${err}`);
