@@ -1,6 +1,6 @@
 module.exports = (app) => {
     app.get('/sign_up', (req, res) => {
-        res.render('sign_up', {});
+        res.render('signup', {});
     });
 
     app.get('/', (req, res) => {

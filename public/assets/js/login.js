@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-
     const login = (user) => {
         fetch('/api/login', {
             method: 'POST',
@@ -24,4 +23,5 @@ document.addEventListener('DOMContentLoaded', () => {
             login(userData);
         }
     });
+
 });
