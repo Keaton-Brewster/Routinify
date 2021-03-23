@@ -25,15 +25,15 @@ module.exports = (app) => {
     });
 
     app.post('/api/groups', async (req, res) => {
-       try {
-        const newGroup = await db.Group.create({
-            name: req.body.name,
-        });
-        console.log(newGroup);
-       } catch {
-           (error) => console.error(error);
-       }
-       res.end();
+        try {
+            const newGroup = await db.Group.create({
+                name: req.body.name,
+            });
+            console.log(newGroup);
+        } catch {
+            (error) => console.error(error);
+        }
+        res.end();
     });
 
     app.get('/api/groups', (req, res) => {
@@ -55,7 +55,7 @@ module.exports = (app) => {
                 id: req.params.id
             },
         });
-        
+
         console.log(dbUser);
 
         res.end();

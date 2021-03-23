@@ -20,8 +20,8 @@ module.exports = (app) => {
         res.render('login', {});
     });
 
-    app.get('/users/home', isAuthenticated, async (req, res) => {
-        const user = await req.user;
+    app.get('/users/home', isAuthenticated, (req, res) => {
+        const user = req.user;
         res.render('homepage', {
             user: user
         });
