@@ -35,7 +35,7 @@ module.exports = (app) => {
 
     app.get('/users/home/:userInfo', isAuthenticated, (req, res) => {
         // const signedInUser = JSON.parse(req.params.userInfo);
-        res.render('homepage', {});
+        res.render('homepage', req.params.userInfo);
         // res.render('homepage', signedInUser);
     });
 };
