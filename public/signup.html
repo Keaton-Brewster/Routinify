@@ -13,41 +13,150 @@
     <nav class="navbar navbar-expanded-lg navbar-light bg-light">
         <a class="navbar-brand" href=#>Digital whiteboard</a>
     </nav>
+
     <main>
-        <form class="col-8 mx-auto">
-            <div class="bg-primary p-3 m-2">
+                         
+        <ul class="nav nav-tabs bg-dark m-3">
+            <li class="bg-danger col-2 px-3 py-2"><a href="../views/layouts/main.hbs" class="text-white text-uppercase font-weight-bold">Dashboard</a></li>
+            <li class="active bg-info col-2 px-3 py-2"><a href="#" class="text-white text-uppercase font-weight-bold" >Routines</a></li>
+            <li class="bg-warning col-2 px-3 py-2"><a href="../views/layouts/main.hbs" class="text-white text-uppercase font-weight-bold">Tasks</a></li>
+            <li class="bg-primary col-2 px-3 py-2"><a href="../views/layouts/main.hbs" class="text-white text-uppercase font-weight-bold">Messages</a></li>
+        
+            <li class="dropdown col-2 bg-success px-3 py-2">
+                <a class="dropdown-toggle text-white text-uppercase font-weight-bold" data-toggle="dropdown" href="#">Create<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <a href="#" class="text-white text-uppercase font-weight-bold" >Create routine</a>
+                  <a href="#" class="text-white text-uppercase font-weight-bold" >Create task</a>
+                  <a href="#" class="text-white text-uppercase font-weight-bold" >Create group</a>
+                  <a href="#" class="text-white text-uppercase font-weight-bold" >Create message</a>
+                </ul>
+            </li>
+          </ul>
+                
+          
+        <form class="col-6 mx-auto" id="signIn">
+            <div class="bg-primary p-3 mx-2 mt-5">
+                <h1 class="text-white text-center">Sign in</h1>
+            </div><br>
+            <div class="col-9 mx-auto">
+                <div class="form-group">
+                    <label for="userEmail" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="userEmail">
+                </div>
+                <div class="form-group">
+                    <label for="userPassword" class="form-label">Password</label>
+                    <input type="password" class="form-control col" id="userPassword">
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success btn-lg">Sign In</button>
+                </div>
+            </div><br><br>
+
+            <div class="text-center">
+                <h5>Don't have an account yet?</h5>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#signupModal">Sign up here</button>
+            </div>
+        </form>
+
+                <form>
+                    <div class="form-group">
+                        <label for="signupEmail" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="signupEmail" aria-describedly="noShare">
+                        <small id="noShare" class="form-text text-muted text-center">We'll never share your email with anyone else.</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmEmail" class="form-label">Confirm email address</label>
+                        <input type="email" class="form-control" id="confirmEmail">
+                    </div><br>
+
+                    <div class="form-group">
+                        <label for="password" class="form-label">Enter password</label>
+                        <input type="password" class="form-control col" id="password">
+                        <!-- do we want placeholder text with password requirements, upper lower whatever? -->
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword" class="form-label">Confirm password</label>
+                        <input type="email" class="form-control" id="confirmPassword">
+                    </div><br>
+
+                    <div class="col-10 mx-auto">
+                        <label for="birthYear" class="form-label">Please enter your birth year</label>
+                        <input type="number" class="form-control" id="birthYear" aria-describedly="ageRestrict">
+                        <small id="ageRestrict" class="form-text text-muted text-center">If you will not be 18 by the end of this calendar year, please have a parent or guardian sign up and add you to their group.</small>
+                    </div><br>
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success btn-lg">Sign Up</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+        <!-- <form class="col-6 mx-auto d-none" id="signIn">
+            <div class="bg-primary p-3 mx-2 mt-5">
+                <h1 class="text-white text-center">Sign in</h1>
+            </div><br>
+            <div class="col-9 mx-auto">
+                <div class="form-group">
+                    <label for="userEmail" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="userEmail">
+                </div>
+                <div class="form-group">
+                    <label for="userPassword" class="form-label">Password</label>
+                    <input type="password" class="form-control col" id="userPassword">
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success btn-lg">Sign In</button>
+                </div>
+            </div><br><br>
+
+            <div class="text-center">
+                <h5>Don't have an account yet?</h5>
+                <button type="submit" class="btn btn-success" id="signupScreen">Sign up here</button>
+            </div>
+            
+
+        </form>
+        <br>
+        <form class="col-6 mx-auto " id="signup">
+            <div class="bg-primary p-3 mx-2 mt-5">
                 <h1 class="text-white text-center">Signup here!</h1>
             </div><br>
             <div class="form-group">
                 <label for="signupEmail" class="form-label">Email address</label>
                 <input type="email" class="form-control" id="signupEmail" aria-describedly="noShare">
-                <small id="noShare" class="form-text text-muted text-center">We'll never share your email with anyone else.</small>
             </div>
             <div class="form-group">
                 <label for="confirmEmail" class="form-label">Confirm email address</label>
                 <input type="email" class="form-control" id="confirmEmail">
+                <small id="noShare" class="form-text text-muted text-center">We'll never share your email with anyone else.</small>
             </div><br>
 
             <div class="form-group">
-                <label for="password" class="form-label">Enter password</label>
-                <input type="password" class="form-control col" id="password">
+                <label for="createPassword" class="form-label">Enter password</label>
+                <input type="password" class="form-control col" id="createPassword">
                 <!-- do we want placeholder text with password requirements, upper lower whatever? -->
             </div>
             <div class="form-group">
                 <label for="confirmPassword" class="form-label">Confirm password</label>
-                <input type="email" class="form-control" id="confirmPassword">
+                <input type="password" class="form-control" id="confirmPassword">
             </div><br>
 
-            <div class="col-10 mx-auto">
-                <label for="birthYear" class="form-label">Please enter your birth year</label>
-                <input type="number" class="form-control" id="birthYear" aria-describedly="ageRestrict">
-                <small id="ageRestrict" class="form-text text-muted text-center">If you will not be 18 by the end of this calendar year, please have a parent or guardian sign up and add you to their group.</small>
+            <div class="col-10 text-center mx-auto">
+                <div class="col-5 mx-auto text-center">
+                    <label for="birthYear" class="form-label">Please enter your birth year</label>
+                    <input type="text" class="form-control" id="birthYear" aria-describedly="ageRestrict">
+                </div>
+                <small id="ageRestrict" class="form-text text-muted text-center col-9 mx-auto">If you will not be 18 by the end of this calendar year, please have a parent or guardian sign up and add you to their group.</small>
             </div><br>
 
-            <button type="submit" class="btn btn-success btn-lg btn-block">Sign Up</button>
-        </form>
+            <div class="text-center">
+                <button type="submit" class="btn btn-success btn-lg">Create account</button>
+            </div>
+    </form> -->
     </main>
 
-    <script src="assets/js/signup.js"></script>
 </body>
 </html>
