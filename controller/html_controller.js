@@ -1,5 +1,5 @@
 const isAuthenticated = require('../config/middleware/auth');
-const db = require('../models');
+// const db = require('../models');
 
 module.exports = (app) => {
 
@@ -20,17 +20,18 @@ module.exports = (app) => {
         res.render('login', {});
     });
 
-    app.get('/users/home/:userID', isAuthenticated, async (req, res) => {
-        const user = {
-            user: await db.User.findOne({
-                where: {
-                    id: req.params.userID
-                }
-            })
-        };
-        res.render('homepage', {
-            user: user
-        });
+    app.get('/users/home', isAuthenticated, (req, res) => {
+        const user = req.user.dataValues;
+        res.render('homepage', user);
+        // const user = {
+        //     user: await db.User.findOne({
+        //         where: {
+        //             id: req.params.userID
+        //         }
+        //     })
+        // };
+        // res.render('homepage', {
+        //     user: user
+        // });
     });
-
 };

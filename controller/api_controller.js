@@ -13,11 +13,11 @@ module.exports = (app) => {
     });
 
     app.post('/api/login', passport.authenticate('local'), (req, res) => {
-        // app.post('/api/login', (req, res) => {
-
+        console.log(req.user);
+        // console.log(res);
         // got the simple bit of authentication working. You have to already have an account to 'sign in'
         // now just have to figure out what we want thing to look like after we sign in?
-        res.json(req.user);
+        res.redirect('/users/home');
     });
 
     app.get('/logout', (req, res) => {
