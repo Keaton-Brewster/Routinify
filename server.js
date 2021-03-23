@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 const express = require('express');
 const session = require('express-session');
+const exphbs = require('express-handlebars');
 
 const passport = require('./config/passport.js');
 
@@ -12,6 +13,7 @@ const app = express();
 app.use(express.urlencoded({
   extended: true
 }));
+
 app.use(express.json());
 app.use(express.static('public'));
 
@@ -23,13 +25,18 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-//routes
-// TODO get these routes working so that we can start really using the app!
-// require('./routes/api-routes')(app);
-// require('./routes/html-routes')(app);
+//set up handlebars
+app.engine('handlebars', exphbs({
+  defaultLayout: 'main'
+}));
+app.set('view engine', 'handlebars');
 
+//routes
+require('./controller/api_controller')(app);
+require('./controller/html_controller')(app);
 
 db.sequelize.sync().then(() => {
+<<<<<<< HEAD
   app.listen(PORT, () => {
     console.log('Listening on port', PORT);
   });
@@ -74,3 +81,13 @@ apps.listen(PORT, function () {
 });
 =======
 >>>>>>> 23a3805cf0b739d6720ff8e002c6cbea8fb824fd
+=======
+  try {
+    app.listen(PORT, () => {
+      console.log(`Listening on port ${PORT}.`);
+    });
+  } catch (err) {
+    console.error(`Error at server.js(35): ${err}`);
+  }
+});
+>>>>>>> development

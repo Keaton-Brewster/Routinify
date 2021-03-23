@@ -16,10 +16,6 @@ module.exports = (sequelize, DataTypes) => {
         password: {
             type: DataTypes.STRING,
             allowNull: false
-        },
-        isAdmin: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false
         }
     });
 
@@ -32,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     User.associate = (models) => {
-        User.belongsTo(models.Group, {
+        User.hasMany(models.Group, {
             onDelete: 'cascade'
         });
         User.hasMany(models.Routine, {
