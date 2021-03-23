@@ -2,15 +2,11 @@ const isAuthenticated = require('../config/middleware/auth');
 // const db = require('../models');
 
 module.exports = (app) => {
-
-
     // load home screen
 
     app.get('/sign_up', (req, res) => {
         res.render('signup', {});
     });
-
-
 
     // login (need middleware before (req, res))
     app.get('/', (req, res) => {
