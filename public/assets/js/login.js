@@ -3,19 +3,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const login = (user) => {
         // return new Promise((resolve, reject) => {
-        $.post('/api/login', user)
-            .then(() => {
-                // const {
-                //     id
-                // } = userData;
-                // if (id) {
-                //     resolve(id);
-                // } else {
-                //     reject('something is off');
-                // }
-                // });
-                // window.location.replace('/users/home');
-            });
+        $.post('/api/login', user);
+            // .then(() => {
+            //     // const {
+            //     //     id
+            //     // } = userData;
+            //     // if (id) {
+            //     //     resolve(id);
+            //     // } else {
+            //     //     reject('something is off');
+            //     // }
+            //     // });
+            //     // window.location.replace('/users/home');
+            // });
     };
 
 
