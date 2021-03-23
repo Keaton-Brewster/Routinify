@@ -1,9 +1,11 @@
 <h1>Welcome!</h1>
 
 <li>
-    <ul>{{user.id}}</ul>
-    <ul>{{user.email}}</ul>
-    <ul>{{user.idAdmin}}</ul>
+    {{#each user}}
+    <ul>{{id}}</ul>
+    <ul>{{email}}</ul>
+    <ul>{{idAdmin}}</ul>
+    {{/each}}
 </li>
 
 <a class="btn btn-small" href="/logout">LOGOUT</a>

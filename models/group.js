@@ -6,10 +6,10 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
     Group.associate = (models) => {
-        Group.belongsTo(models.User, {
+        Group.hasMany(models.Routine, {
             foreignKey: {
-                name: 'created by',
-                type: DataTypes.UUID
+                name: 'routine',
+                type: DataTypes.STRING
             }
         });
     };
