@@ -22,19 +22,8 @@ module.exports = (app) => {
     });
 
     app.get('/users/home', isAuthenticated, (req, res) => {
-        const user = req.user;
         res.render('homepage', {
-            user: user
+            user: req.user
         });
-        // const user = {
-        //     user: await db.User.findOne({
-        //         where: {
-        //             id: req.params.userID
-        //         }
-        //     })
-        // };
-        // res.render('homepage', {
-        //     user: user
-        // });
     });
 };
