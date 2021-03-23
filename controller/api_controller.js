@@ -13,7 +13,6 @@ module.exports = (app) => {
     });
 
     app.post('/api/login', passport.authenticate('local'), (req, res) => {
-        console.log(req.user);
         // console.log(res);
         // got the simple bit of authentication working. You have to already have an account to 'sign in'
         // now just have to figure out what we want thing to look like after we sign in?
@@ -25,6 +24,21 @@ module.exports = (app) => {
         res.redirect('/');
     });
 
+    app.post('/api/groups', async (req, res) => {
+       try {
+        const newGroup = await db.Group.create({
+            name: req.body.name,
+        });
+        console.log(newGroup);
+       } catch {
+           (error) => console.error(error);
+       }
+       res.end();
+    });
+
+    app.get('/api/groups', (req, res) => {
+        res.json();
+    });
 
     // these are the user routes for when logged in
 
@@ -33,15 +47,16 @@ module.exports = (app) => {
 
 
     // get tasks assigned to user
-    app.get('/api/users/:id', (req, res) => {
-        // the includes are obviously placeholder text
-        db.User.findAll({
-            include: ['tasks', 'routines'],
+    app.get('/api/users/:id', async (req, res) => {
+        const dbUser = await db.User.findAll({
+            include: ['Groups'],
             where: {
                 // user id
                 id: req.params.id
             },
-        }).then((dbUser) => console.log(dbUser));
+        });
+        
+        console.log(dbUser);
 
         res.end();
     });

@@ -20,8 +20,11 @@ module.exports = (app) => {
         res.render('login', {});
     });
 
-    app.get('/users/home', isAuthenticated, (req, res) => {
-        res.render('homepage', {});
+    app.get('/users/home', isAuthenticated, async (req, res) => {
+        const user = await req.user;
+        res.render('homepage', {
+            user: user
+        });
         // const user = {
         //     user: await db.User.findOne({
         //         where: {
