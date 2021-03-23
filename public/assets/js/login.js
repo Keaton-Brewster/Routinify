@@ -1,26 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-
     // const login = (user) => {
-    //     // return new Promise((resolve, reject) => {
-    //     $.post('/api/login', user);
-    //         // .then(() => {
-    //         //     // const {
-    //         //     //     id
-    //         //     // } = userData;
-    //         //     // if (id) {
-    //         //     //     resolve(id);
-    //         //     // } else {
-    //         //     //     reject('something is off');
-    //         //     // }
-    //         //     // });
-    //         //     // window.location.replace('/users/home');
-    //         // });
+    //     //! Switched to jQuery because for some reason the body was messing up the request.
+    //     // fetch('/api/login', {
+    //     //         method: 'POST',
+    //     //         headers: {
+    //     //             accept: 'json',
+    //     //             'Content-Type': 'json/application'
+    //     //         },
+    //     //         body: JSON.stringify(user)
+    //     //     })
+    //     //     .then(() => {
+    //     //         window.location.replace('/users/home');
+    //     //     })
+    //     //     .catch(error => console.log(error));
+
     // };
 
-
-
-    document.querySelector('#login_button').addEventListener('click', () => {
+    document.querySelector('#login').addEventListener('submit', (e) => {
+        e.preventDefault();
         const userEmail = $('input#user').val();
         const userPassword = $('input#password').val();
 
@@ -30,15 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         if (userData.email && userData.password) {
-
-            $.post('/api/login', userData);
-            // login(userData);
-            // login(userData).then(id => {
-            //     $.get(`/users/home/${id}`)
-            //         .catch(error => console.error(error));
-            // });
-
+            $.post('/api/login', userData)
+                .then(() => {
+                    location.reload();
+                })
+                .catch(error => console.log(error));
         }
-
     });
+
 });
