@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     User.associate = (models) => {
-        User.belongsTo(models.Group, {
+        User.hasMany(models.Group, {
             onDelete: 'cascade'
         });
         User.hasMany(models.Routine, {

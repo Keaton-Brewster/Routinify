@@ -33,7 +33,9 @@ module.exports = (app) => {
         res.render('login', {});
     });
 
-    app.get('/users/home', isAuthenticated, (req, res) => {
+    app.get('/users/home/:userInfo', isAuthenticated, (req, res) => {
+        // const signedInUser = JSON.parse(req.params.userInfo);
         res.render('homepage', {});
+        // res.render('homepage', signedInUser);
     });
 };

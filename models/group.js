@@ -6,8 +6,11 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
     Group.associate = (models) => {
-        Group.hasMany(models.User, {
-            onDelete: 'cascade'
+        Group.belongsTo(models.User, {
+            foreignKey: {
+                name: 'created by',
+                type: DataTypes.UUID
+            }
         });
     };
     return Group;
