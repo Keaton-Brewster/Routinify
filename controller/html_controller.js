@@ -28,12 +28,14 @@ module.exports = (app) => {
     // login (need middleware before (req, res))
     app.get('/', (req, res) => {
         if (req.user) {
-            res.render('homepage', {});
+            res.redirect('/users/home');
         }
         res.render('login', {});
     });
 
     app.get('/users/home', isAuthenticated, (req, res) => {
-        res.render('homepage', {});
+        res.render('homepage', {
+            user: res.user
+        });
     });
 };
