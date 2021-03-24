@@ -1,13 +1,54 @@
-<h1>Welcome!</h1>
-
+<h1>Welcome {{user.username}}!</h1>
 <ul>
     <li>{{user.id}}</li>
     <li>{{user.email}}</li>
-    <li>{{user.username}}</li>
 </ul>
 
 <a class="btn btn-small" href="/logout">LOGOUT</a>
 <a class="btn btn-small" id="create">CREATE GROUP</a>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <form id="groupForm">
+                <h2>Create a new group with a unique name</h2>
+                <div class="mb-3">
+                    <label for="newGroup" class="form-label">Group name</label>
+                    <input type="text" class="form-control" id="newGroup">
+                </div>
+                <button type="submit" id="createGroup" class="btn btn-primary">Create Group</button>
+            </form>
+            <form id="userForm">
+                <h2>Add users to <span class="newGroupName"></span></h2>
+                <div class="mb-3">
+                    <label for="newEmail" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="newEmail" aria-describedby="emailHelp">
+                    <div id="emailHelp" class="form-text">This will be the email address this user will use to sign in
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="newUsername" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="newUsername" aria-describedby="usernameHelp">
+                    <div id="usernameHelp" class="form-text">Give this user a username</div>
+                </div>
+                <div class="mb-3">
+                    <label for="newPassword" class="form-label">Password</label>
+                    <input type="text" class="form-control" id="newPassword" aria-describedby="passwordHelp">
+                    <div id="passwordHelp" class="form-text">Set this user's password</div>
+                </div>
+                <button type="submit" id="createUser" class="btn btn-primary">Add User</button>
+            </form>
+        </div>
+    </div>
+    <div class="row" id="finished">
+        <div class="col-8">
+            <p>Or finalize <span class="newGroupName"></span> to get started adding and assigning tasks:</p>
+            <button type="submit" id="finishGroup" class="btn btn-primary">Done</button>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 <script type="text/javascript" src="/assets/js/homepage.js"></script>
