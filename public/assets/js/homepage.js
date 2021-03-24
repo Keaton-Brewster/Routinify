@@ -33,6 +33,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // // $('#createGroup').css('display', 'none');
         // Don't send post request yet
         $.post('/api/groups/add_group', newGroupObj)
+            .then(() => {
+                location.reload();
+            })
             .catch((error) => {
                 console.error(`Error homepage.js line 37: ${error}`);
             });
