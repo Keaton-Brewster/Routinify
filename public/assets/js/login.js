@@ -1,27 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const loginForm = $('#login');
 
-    const login = (user) => {
-        //! Switched to jQuery because for some reason the body was messing up the request.
-        // fetch('/api/login', {
-        //         method: 'POST',
-        //         headers: {
-        //             accept: 'json',
-        //             'Content-Type': 'json/application'
-        //         },
-        //         body: JSON.stringify(user)
-        //     })
-        //     .then(() => {
-        //         window.location.replace('/users/home');
-        //     })
-        //     .catch(error => console.log(error));
-        $.post('/api/login', user)
-            .then(() => {
-                window.location.replace('/users/home');
-            });
-    };
-
-    document.querySelector('#login').addEventListener('submit', (e) => {
-        e.preventDefault();
+    loginForm.on('submit', () => {
         const userEmail = $('input#user').val();
         const userPassword = $('input#password').val();
 
@@ -31,8 +11,11 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         if (userData.email && userData.password) {
-            login(userData);
+            $.post('/api/login', userData)
+                .then(() => {
+                    location.reload();
+                })
+                .catch(error => console.log(error));
         }
     });
-
 });

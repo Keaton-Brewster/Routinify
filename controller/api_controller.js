@@ -13,11 +13,9 @@ module.exports = (app) => {
     });
 
     app.post('/api/login', passport.authenticate('local'), (req, res) => {
-        // app.post('/api/login', (req, res) => {
-
         // got the simple bit of authentication working. You have to already have an account to 'sign in'
         // now just have to figure out what we want thing to look like after we sign in?
-        res.json(req.user);
+        res.redirect('/users/home');
     });
 
     app.get('/logout', (req, res) => {
@@ -26,15 +24,15 @@ module.exports = (app) => {
     });
 
     app.post('/api/groups', async (req, res) => {
-       try {
-        const newGroup = await db.Group.create({
-            name: req.body.name,
-        });
-        console.log(newGroup);
-       } catch {
-           (error) => console.error(error);
-       }
-       res.end();
+        try {
+            const newGroup = await db.Group.create({
+                name: req.body.name,
+            });
+            console.log(newGroup);
+        } catch {
+            (error) => console.error(error);
+        }
+        res.end();
     });
 
     app.get('/api/groups', (req, res) => {
@@ -56,7 +54,7 @@ module.exports = (app) => {
                 id: req.params.id
             },
         });
-        
+
         console.log(dbUser);
 
         res.end();
@@ -110,6 +108,8 @@ module.exports = (app) => {
 
         res.end();
     });
+
+
 
     // create routine
     app.post('/api/routines', (req, res) => {

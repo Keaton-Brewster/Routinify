@@ -16,31 +16,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     signUpForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        const confirmUsername = document.getElementById('confirmUsername').value.trim();
-        const confirmEmail = document.getElementById('confirmEmail').value.trim();
-        const confirmPassword = document.getElementById('confirmPassword').value.trim();
+        const confirmUsername = $('#confirmUsername').val();
+        const confirmEmail = $('#confirmEmail').val();
+        const confirmPassword = $('#confirmPassword').val();
 
         const newUser = {
-            username: document.getElementById('signupUsername').value.trim(),
-            email: document.getElementById('signupEmail').value.trim(),
-            password: document.getElementById('password').value.trim(),
+            username: $('#signupUsername').val(),
+            email: $('#signupEmail').val(),
+            password: $('#password').val(),
             isAdmin: false
         };
 
-        if (confirmUsername && newUser.username === confirmUsername) {
-            if (confirmEmail && newUser.email === confirmEmail) {
-                if (confirmPassword && newUser.password === confirmPassword) {
-                    //! Trying to figure out how to get the redirect to work after a post method. 
-                    //! POST methods in the controller do not allow you to redirect..
-                    insertNewUserData(newUser);
-                } else {
-                    alert('Passwords do not match');
-                }
-            } else {
-                alert('Emails do not match');
-            }
-        } else {
-            alert('Usernames do not match');
+        if (!confirmUsername || newUser.username !== confirmUsername) {
+            alert('Usernames do not match, or are left empty');
+            return;
+        } else if (!confirmEmail || newUser.email !== confirmEmail) {
+            alert('Emails do not match');
+            return;
+        } else if (!confirmPassword || newUser.password !== confirmPassword) {
+            alert('Passwords do not match');
+            return;
         }
+        insertNewUserData(newUser);
+
+
     });
 });

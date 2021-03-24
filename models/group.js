@@ -6,8 +6,11 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
     Group.associate = (models) => {
-        Group.hasMany(models.User, {
-            onDelete: 'cascade'
+        Group.hasMany(models.Routine, {
+            foreignKey: {
+                name: 'routine',
+                type: DataTypes.STRING
+            }
         });
     };
     return Group;
