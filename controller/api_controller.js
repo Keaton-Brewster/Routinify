@@ -5,7 +5,7 @@ module.exports = (app) => {
     app.post('/api/sign_up', (req, res) => {
         db.User.create(req.body)
             .then(() => {
-                res.send(207);
+                res.sendStatus(207);
             })
             .catch(error => {
                 res.status(401).json(error);
@@ -15,6 +15,7 @@ module.exports = (app) => {
     app.post('/api/login', passport.authenticate('local'), (req, res) => {
         // got the simple bit of authentication working. You have to already have an account to 'sign in'
         // now just have to figure out what we want thing to look like after we sign in?
+
         res.redirect('/users/home');
     });
 
@@ -27,16 +28,40 @@ module.exports = (app) => {
         try {
             const newGroup = await db.Group.create({
                 name: req.body.name,
+                ownerId: req.user.id
             });
             console.log(newGroup);
+            res.sendStatus(202);
         } catch {
-            (error) => console.error(error);
+            (error) => console.log(error);
+            res.sendStatus(500);
         }
-        res.end();
+        //? would this be about the right url we want to hit?
+        //? res,redirect('/home/users/group/:id');
     });
 
-    app.get('/api/groups', (req, res) => {
-        res.json();
+    app.get('/api/groups', async (req, res) => {
+        try {
+            const groups = await db.Group.findAll({});
+            if (groups) {
+                res.json(groups);
+            } else {
+                res.sendStatus(404);
+            }
+        } catch {
+            res.sendStatus(500);
+        }
+    });
+
+    //! delete later, just added for viewing the json
+    app.get('/api/users/groups', (req, res) => {
+        db.Group.findAll({
+            where: {
+                ownerId: req.user.id
+            }
+        }).then(users => {
+            res.json(users);
+        });
     });
 
     // these are the user routes for when logged in
@@ -108,8 +133,6 @@ module.exports = (app) => {
 
         res.end();
     });
-
-
 
     // create routine
     app.post('/api/routines', (req, res) => {

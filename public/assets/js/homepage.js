@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     //todo Need to get this to do the initial loading of all db data, with a specific fetch. 
     //todo Then the controller will handle the rendering of the db data thru hbs
-    
+
     const groupForm = $('#groupForm');
     const userForm = $('#userForm');
     const finishedDiv = $('#finished');
@@ -27,10 +27,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const newGroupName = $('#newGroup').val().trim();
         newGroupObj.name = newGroupName.toLowerCase().split(' ').join('_');
         $('.newGroupName').text(newGroupName);
-        userForm.css('display', 'block');
-        $('#newGroup').attr('readonly', true);
-        $('#createGroup').css('display', 'none');
+        //? just commenting out for dev
+        // // userForm.css('display', 'block');
+        // // $('#newGroup').attr('readonly', true);
+        // // $('#createGroup').css('display', 'none');
         // Don't send post request yet
+        $.post('/api/groups', newGroupObj)
+            .then(() => {
+                console.log('working?');
+            });
     });
 
     $('#createUser').on('click', (e) => {
@@ -40,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
             email: $('#newEmail').val().trim(),
             password: $('#newPassword').val().trim()
         };
-       
+
         newUsers.push(newUserObj);
         $('#createUser').text('Add another User');
         finishedDiv.css('display', 'block');

@@ -28,15 +28,17 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     User.associate = (models) => {
-        User.hasMany(models.Group, {
-            onDelete: 'cascade'
-        });
-        User.hasMany(models.Routine, {
-            onDelete: 'cascade'
-        });
-        User.hasMany(models.Task, {
-            onDelete: 'cascade'
-        });
+        //* moved this to group as a belongsToMany
+        // User.hasMany(models.Group, {
+        //     through: 'UserGroups',
+        //     onDelete: 'cascade'
+        // });
+        // User.hasMany(models.Routine, {
+        //     onDelete: 'cascade'
+        // });
+        // User.hasMany(models.Task, {
+        //     onDelete: 'cascade'
+        // });
     };
 
     return User;
