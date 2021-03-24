@@ -32,9 +32,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // // $('#newGroup').attr('readonly', true);
         // // $('#createGroup').css('display', 'none');
         // Don't send post request yet
-        $.post('/api/groups', newGroupObj)
-            .then(() => {
-                console.log('working?');
+        $.post('/api/groups/add_group', newGroupObj)
+            .catch((error) => {
+                console.error(`Error homepage.js line 37: ${error}`);
             });
     });
 

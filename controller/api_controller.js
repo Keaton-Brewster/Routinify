@@ -24,20 +24,64 @@ module.exports = (app) => {
         res.redirect('/');
     });
 
-    app.post('/api/groups', async (req, res) => {
+    app.post('/api/groups/add_group', async (req, res) => {
         try {
             const newGroup = await db.Group.create({
                 name: req.body.name,
                 ownerId: req.user.id
             });
-            console.log(newGroup);
-            res.sendStatus(202);
+
+            const groupId = encodeURIComponent(newGroup.id);
+            const user = encodeURIComponent(req.user.id);
+            res.redirect(`/api/users/add_group/?group=${groupId}&user=${user}`);
         } catch {
-            (error) => console.log(error);
+            (error) => console.error(error);
             res.sendStatus(500);
         }
-        //? would this be about the right url we want to hit?
-        //? res,redirect('/home/users/group/:id');
+    });
+
+
+
+    app.get('/api/users/add_group/', async (req, res) => {
+        try {
+            const groupIdFromQuery = parseInt(decodeURIComponent(req.query.group));
+            const userIdFromQuery = decodeURIComponent(req.query.user);
+
+            let userGroups = await db.User.findOne({
+                where: {
+                    id: userIdFromQuery
+                },
+                attributes: ['groupsIds']
+            });
+            userGroups = JSON.parse(userGroups.dataValues.groupsIds);
+
+            let userGroupsIds = [];
+
+            if (userGroups === 0) {
+                userGroupsIds = [0, groupIdFromQuery];
+            } else {
+                userGroups.forEach(el => userGroupsIds.push(el));
+                userGroupsIds.push(groupIdFromQuery);
+            }
+
+            const reEnterUserGroups = JSON.stringify(userGroupsIds);
+
+            await db.User.update({
+                    groupsIds: reEnterUserGroups
+                }, {
+                    where: {
+                        id: userIdFromQuery
+                    }
+                })
+                .catch(error => console.error(error));
+            res.sendStatus(200);
+
+        } catch {
+            error => {
+                console.error(error);
+                res.sendStatus(500);
+            };
+        }
     });
 
     app.get('/api/groups', async (req, res) => {
@@ -53,6 +97,12 @@ module.exports = (app) => {
         }
     });
 
+    // To add an existing user to a group
+    //todo MAKE THIS WORK
+    app.put('/api/group/add_user', (req, res) => {
+        res.end();
+    });
+
     //! delete later, just added for viewing the json
     app.get('/api/users/groups', (req, res) => {
         db.Group.findAll({
@@ -63,6 +113,7 @@ module.exports = (app) => {
             res.json(users);
         });
     });
+
 
     // these are the user routes for when logged in
 

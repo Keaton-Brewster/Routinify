@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
         password: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        groupsIds: {
+            type: DataTypes.TEXT,
+            defaultValue: '0'
         }
     });
 
@@ -30,8 +34,9 @@ module.exports = (sequelize, DataTypes) => {
     User.associate = (models) => {
         //* moved this to group as a belongsToMany
         // User.hasMany(models.Group, {
-        //     through: 'UserGroups',
-        //     onDelete: 'cascade'
+        //     as: 'Groups',
+        //     foreignKey: 'groupsIds',
+        //     targetKey: 'id'
         // });
         // User.hasMany(models.Routine, {
         //     onDelete: 'cascade'
