@@ -41,7 +41,6 @@ module.exports = (app) => {
                 id: req.params.id
             }
         }).then(groupData => {
-            console.log(groupData);
             res.render('group_page', {
                 group: groupData[0].dataValues
             });
