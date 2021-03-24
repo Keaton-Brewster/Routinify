@@ -1,4 +1,5 @@
 const isAuthenticated = require('../config/middleware/auth');
+const db = require('../models');
 // const db = require('../models');
 
 module.exports = (app) => {
@@ -14,12 +15,36 @@ module.exports = (app) => {
             res.redirect('/users/home');
         } else {
             res.render('login', {});
-        } 
+        }
     });
 
-    app.get('/users/home', isAuthenticated, (req, res) => {
+    app.get('/users/home', isAuthenticated, async (req, res) => {
+        const groupData = await db.Group.findAll({
+            where: {
+                ownerId: req.user.id
+            }
+        });
+        const groups = [];
+        for (let i = 0; i < groupData.length; i++) {
+            groups.push(groupData[i].dataValues);
+        }
+        // console.log(groups);
         res.render('homepage', {
-            user: req.user
+            user: req.user,
+            groups: groups
+        });
+    });
+
+    app.get('/users/home/groups/:id', isAuthenticated, (req, res) => {
+        db.Group.findAll({
+            where: {
+                id: req.params.id
+            }
+        }).then(groupData => {
+            console.log(groupData);
+            res.render('group_page', {
+                group: groupData[0].dataValues
+            });
         });
     });
 };
