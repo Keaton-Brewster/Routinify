@@ -13,7 +13,6 @@
     "rules": {
         "array-callback-return": "error",
         "camelcase": "error",
-        "curly": "error",
         "dot-notation": "error",
         "eqeqeq": "error",
         "implicit-arrow-linebreak": [
