@@ -1,5 +1,7 @@
+const bcrypt = require('bcryptjs');
+
 module.exports = (sequelize, DataTypes) => {
-    const User = sequelize.define('user', {
+    const User = sequelize.define('User', {
         username: {
             type: DataTypes.STRING,
             allowNull: false
@@ -14,17 +16,28 @@ module.exports = (sequelize, DataTypes) => {
         password: {
             type: DataTypes.STRING,
             allowNull: false
-        },
-        isAdmin: {
-            type: DataTypes.BOOLEAN,
-            defaultValue: false
         }
     });
-    User.associate = (models) => {
-        User.belongsTo(models.Group, {onDelete: 'cascade'});
-        User.hasMany(models.Routine, {onDelete: 'cascade'});
-        User.hasMany(models.Task, {onDelete: 'cascade'}); 
+
+    User.prototype.validPassword = function (password) {
+        return bcrypt.compareSync(password, this.password);
     };
-    
+
+    User.addHook('beforeCreate', (user) => {
+        user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
+    });
+
+    User.associate = (models) => {
+        User.hasMany(models.Group, {
+            onDelete: 'cascade'
+        });
+        User.hasMany(models.Routine, {
+            onDelete: 'cascade'
+        });
+        User.hasMany(models.Task, {
+            onDelete: 'cascade'
+        });
+    };
+
     return User;
 };
