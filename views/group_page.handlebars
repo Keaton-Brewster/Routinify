@@ -1,1 +1,17 @@
 <h1>Welcome to {{group.name}} home page</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <form id="addUserForm">
+                <h2>Create a new group with a unique name</h2>
+                <div class="mb-3">
+                    <label for="addUser" class="form-label">Username of user you would like to add</label>
+                    <input type="text" class="form-control" id="addUser">
+                </div>
+                <button type="submit" id="addUserButton" data-groupId="{{group.id}}"
+                    class="btn btn-primary">ADD</button>
+            </form>
+        </div>
+    </div>
+</div>
