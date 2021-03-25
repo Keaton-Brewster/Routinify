@@ -55,16 +55,42 @@ module.exports = (app) => {
             groups: groups
         });
     });
-
-    app.get('/users/home/groups/:id', isAuthenticated, (req, res) => {
-        db.Group.findAll({
-            where: {
-                id: req.params.id
-            }
-        }).then(groupData => {
-            res.render('group_page', {
-                group: groupData[0].dataValues
-            });
+    
+    app.get('/users/home/groups/:id', isAuthenticated, async (req, res) => {
+        let groupData;
+        const users = await db.User.findAll({
+            attributes: ['groupsIds']
         });
+        const usersArr = JSON.parse(users.dataValues.groupsIds);
+        console.log(users);
+        usersArr.forEach(async (groupId) => {
+            if (groupId === req.params.id) {
+                groupData = await db.Group.findAll({
+                    where: {
+                        id: req.params.id
+                    },
+                    include: {
+                        model: db.User,
+                    }
+                });
+            }
+        });
+        console.log(groupData);
+        res.render('group_page', {
+            group: groupData[0].dataValues,
+            users: groupData[0].dataValues
+        });
+
     });
+    // app.get('/users/home/groups/:id', isAuthenticated, (req, res) => {
+    //     db.Group.findAll({
+    //         where: {
+    //             id: req.params.id
+    //         }
+    //     }).then(groupData => {
+    //         res.render('group_page', {
+    //             group: groupData[0].dataValues
+    //         });
+    //     });
+    // });
 };
