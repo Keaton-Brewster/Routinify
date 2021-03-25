@@ -9,6 +9,7 @@
   * [Installation](#Installation)
   * [License](#license)
   * [Contribution](#contribution)
+  * [Facesoftheteam](#Facesoftheteam)
   * [Usage](#usage)
   * [License](#License)
   * [Images](#Images)
