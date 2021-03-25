@@ -42,3 +42,4 @@ db.sequelize.sync().then(() => {
     console.error(`Error at server.js(35): ${err}`);
   }
 });
+

@@ -3,7 +3,11 @@ module.exports = (sequelize, DataTypes) => {
         name: {
             type: DataTypes.STRING,
             allowNull: false
-        },    
+        },
+        notes: {
+            type: DataTypes.TEXT,
+            length: 'tiny'
+        }
     });
     Task.associate = (models) => {
         Task.belongsToMany(models.User, {

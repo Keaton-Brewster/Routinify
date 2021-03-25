@@ -1,1 +1,40 @@
 <h1>Welcome to {{group.name}} home page</h1>
+
+<div class="container">
+    <div class="row">
+        <button type="button" class="btn btn-primary" id="addTaskBtn">Add New Task</button>
+        <button type="button" class="btn btn-primary" id="addRoutineBtn">Add New Routine</button>
+    </div>
+    <div class="row">
+        <div class="col-8">
+            <form id="createTask">
+                <div class="mb-3">
+                    <label for="taskName" class="form-label">Task Name</label>
+                    <input type="email" class="form-control" id="taskName" placeholder="Take out the trash.">
+                </div>
+                <div class="mb-3">
+                    <label for="taskNotes" class="form-label">Add notes for this Task</label>
+                    <textarea class="form-control" id="taskNotes" rows="3"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="userAssign" class="form-label">Assign this task to a User in this Group</label>
+                    <input class="form-control" list="datalistOptions" id="userAssign"
+                        placeholder="Search by Username">
+                    <datalist id="userAssignOptions">
+                        {{!-- {{#if !users.username}}
+                        <option value="No Users with that Username in this Group">
+                        {{!-- {{else}} --}}
+                        {{!-- {{#each users}}     --}}
+                        {{!-- <option value={{username}}> --}}
+                        {{!-- {{/each}} --}}
+                        {{!-- {{/if}} --}} --}}
+                    </datalist>
+                </div>
+                <button type="submit" class="btn btn-info" id="submitTask">Create Task</button>
+            </form>
+        </div>
+    </div>
+    <div class="row"></div>
+</div>
+
+<script type="text/javascript" src="../public/assets/js/group_page.js"></script>
