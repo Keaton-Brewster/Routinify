@@ -1,5 +1,8 @@
 const isAuthenticated = require('../config/middleware/auth');
 const db = require('../models');
+const {
+    Op
+} = require('sequelize');
 // const db = require('../models');
 
 module.exports = (app) => {
@@ -19,14 +22,32 @@ module.exports = (app) => {
     });
 
     app.get('/users/home', isAuthenticated, async (req, res) => {
+        let userGroups = await db.User.findOne({
+            where: {
+                id: req.user.id
+            },
+            attributes: ['groupsIds']
+        });
+        userGroups = JSON.parse(userGroups.dataValues.groupsIds);
+
+        const userGroupsIds = [];
+        if (userGroups !== 0) {
+            userGroups.forEach(ele => userGroupsIds.push(ele));
+        }
         const groupData = await db.Group.findAll({
             where: {
-                ownerId: req.user.id
+                [Op.and]: {
+                    id: userGroupsIds
+                }
             }
         });
-        const groups = [];
-        for (let i = 0; i < groupData.length; i++) {
-            groups.push(groupData[i].dataValues);
+        let groups = [];
+        if (groupData.length > 0) {
+            for (let i = 0; i < groupData.length; i++) {
+                groups.push(groupData[i].dataValues);
+            }
+        } else {
+            groups = 'no groups found';
         }
         // console.log(groups);
         res.render('homepage', {

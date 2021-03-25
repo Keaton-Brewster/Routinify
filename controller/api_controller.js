@@ -33,16 +33,31 @@ module.exports = (app) => {
 
             const groupId = encodeURIComponent(newGroup.id);
             const user = encodeURIComponent(req.user.id);
-            res.redirect(`/api/users/add_group/?group=${groupId}&user=${user}`);
+            res.redirect(`/api/users/add_user_to_group/?group=${groupId}&user=${user}`);
         } catch {
             (error) => console.error(error);
             res.sendStatus(500);
         }
     });
 
+    app.post('/api/groups/add_user_by_username', async (req, res) => {
+        try {
+            const username = decodeURIComponent(req.query.user);
+            let userId = await db.User.findOne({
+                where: {
+                    username: username
+                },
+                attributes: ['id']
+            });
+            userId = encodeURIComponent(userId.dataValues.id);
 
+            res.redirect(`/api/users/add_user_to_group/?group=${req.query.group}&user=${userId}`);
+        } catch {
+            error => console.error(error);
+        }
+    });
 
-    app.get('/api/users/add_group/', async (req, res) => {
+    app.get('/api/users/add_user_to_group/', async (req, res) => {
         try {
             const groupIdFromQuery = parseInt(decodeURIComponent(req.query.group));
             const userIdFromQuery = decodeURIComponent(req.query.user);
@@ -64,10 +79,13 @@ module.exports = (app) => {
                 userGroupsIds.push(groupIdFromQuery);
             }
 
-            const reEnterUserGroups = JSON.stringify(userGroupsIds);
+            userGroupsIds = [...new Set(userGroupsIds)];
+            userGroupsIds = [...userGroupsIds];
+
+            const updatedGroups = JSON.stringify(userGroupsIds);
 
             await db.User.update({
-                    groupsIds: reEnterUserGroups
+                    groupsIds: updatedGroups
                 }, {
                     where: {
                         id: userIdFromQuery
