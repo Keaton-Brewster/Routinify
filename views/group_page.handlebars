@@ -24,8 +24,8 @@
                         <option value="No Users with that Username in this Group">
                             {{else}} --}}
                             <select>
-                                {{#each users}}
-                                <option value={{usersInGroup.username}}></option>
+                                {{#each usersInGroup}}
+                                <option value={{username}}></option>
                                 {{/each}}
                             </select>
 

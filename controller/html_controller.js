@@ -57,24 +57,26 @@ module.exports = (app) => {
     });
 
     app.get('/users/home/groups/:id', isAuthenticated, async (req, res) => {
-        const users = await db.User.findAll({});
+        let users = await db.User.findAll({});
 
-        const usersArr = [];
-        if (users.length < 1) {
-            usersArr.push(users.dataValues);
-        } else {
-            users.forEach(user => usersArr.push(user));
-        }
 
-        let usersInGroup = usersArr.map((user) => {
-            if (user.dataValues.groupsIds.includes(req.params.id)) {
-                return user.dataValues.id;
+        users = users.map(user => user.dataValues);
+        // console.log('line 64', users);
+
+
+        let usersInGroup = users.map(user => {
+            console.log(user.groupsIds);
+            if (user.groupsIds.includes(req.params.id)) {
+                return user.id;
             }
             return 0;
         });
-        usersInGroup.pop();
 
-        console.log(`line 69 ${usersInGroup}`);
+        usersInGroup = usersInGroup.filter(id => id !== 0);
+
+
+
+        // console.log(`line 78 ${usersInGroup}`);
 
         usersInGroup = await db.User.findAll({
             where: {
@@ -84,7 +86,7 @@ module.exports = (app) => {
             }
         });
 
-        console.log('line 79', usersInGroup);
+
 
 
         usersInGroup = usersInGroup.map(user => {
