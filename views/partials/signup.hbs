@@ -1,0 +1,32 @@
+        <form class="col-8 mx-auto">
+            <div class="bg-primary p-3 m-2">
+                <h1 class="text-white text-center">Signup here!</h1>
+            </div><br>
+            <div class="form-group">
+                <label for="signupEmail" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="signupEmail" aria-describedly="noShare">
+                <small id="noShare" class="form-text text-muted text-center">We'll never share your email with anyone else.</small>
+            </div>
+            <div class="form-group">
+                <label for="confirmEmail" class="form-label">Confirm email address</label>
+                <input type="email" class="form-control" id="confirmEmail">
+            </div><br>
+
+            <div class="form-group">
+                <label for="password" class="form-label">Enter password</label>
+                <input type="password" class="form-control col" id="password">
+                <!-- do we want placeholder text with password requirements, upper lower whatever? -->
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword" class="form-label">Confirm password</label>
+                <input type="email" class="form-control" id="confirmPassword">
+            </div><br>
+
+            <div class="col-10 mx-auto">
+                <label for="birthYear" class="form-label">Please enter your birth year</label>
+                <input type="number" class="form-control" id="birthYear" aria-describedly="ageRestrict">
+                <small id="ageRestrict" class="form-text text-muted text-center">If you will not be 18 by the end of this calendar year, please have a parent or guardian sign up and add you to their group.</small>
+            </div><br>
+
+            <button type="submit" class="btn btn-success btn-lg btn-block">Sign Up</button>
+        </form>

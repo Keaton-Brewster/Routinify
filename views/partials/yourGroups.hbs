@@ -1,0 +1,15 @@
+        <div class="col-8 mx-auto">
+            <div class="bg-primary p-3 m-2">
+                <h1 class="text-white text-center">Which group would you like to work with?</h1>
+            </div><br>
+
+            <div>
+                <ul class="list-group list-group-flush">
+                    {{#each groups}}
+                        <li class="list-group-item">{{group}}
+                            <button class="btn btn-outline-info float-right select-group" type="submit" data-id="{{this.id}}">SELECT</button>
+                        </li>
+                    {{/each}}
+                </ul>
+            </div>
+        </div>
