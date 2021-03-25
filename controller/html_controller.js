@@ -95,10 +95,21 @@ module.exports = (app) => {
 
 
 
-        res.render('group_page', {
-            // group: groupData[0].dataValues,
-            users: usersInGroup
+        db.Group.findAll({
+            where: {
+                id: req.params.id
+            }
+        }).then(groupData => {
+            res.render('group_page', {
+                group: groupData[0].dataValues,
+                users: usersInGroup
+
+            });
         });
+        // res.render('group_page', {
+        //     group: groupData[0].dataValues,
+        //     users: usersInGroup
+        // });
 
     });
     // app.get('/users/home/groups/:id', isAuthenticated, (req, res) => {
@@ -108,7 +119,9 @@ module.exports = (app) => {
     //         }
     //     }).then(groupData => {
     //         res.render('group_page', {
-    //             group: groupData[0].dataValues
+    //             group: groupData[0].dataValues,
+    // users: usersInGroup
+
     //         });
     //     });
     // });

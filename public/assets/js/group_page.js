@@ -6,7 +6,7 @@ $(document).ready(() => {
         e.stopPropagation();
 
         let username = $('#addUser').val();
-        let groupId = $('#addUserButton').attr('data-id');
+        let groupId = addUserForm.attr('data-id');
 
         console.log(username, groupId);
 

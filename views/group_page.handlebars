@@ -2,18 +2,53 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-8">
-            <form id="addUserForm">
-                <h2>Add a user to this group</h2>
+        <button type="button" class="btn btn-primary" id="addTaskBtn">Add New Task</button>
+        <button type="button" class="btn btn-primary" id="addRoutineBtn">Add New Routine</button>
+    </div>
+    <div class="row my-5">
+        <div class="col-10">
+            <form id="createTask">
                 <div class="mb-3">
-                    <label for="addUser" class="form-label">Username of user you would like to add</label>
-                    <input type="text" class="form-control" id="addUser">
+                    <label for="taskName" class="form-label">Task Name</label>
+                    <input type="email" class="form-control" id="taskName" placeholder="Take out the trash.">
                 </div>
-                <button type="submit" id="addUserButton" data-id="{{group.id}}"
-                    class="btn btn-primary">ADD</button>
+                <div class="mb-3">
+                    <label for="taskNotes" class="form-label">Add notes for this Task</label>
+                    <textarea class="form-control" id="taskNotes" rows="3"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="userAssign" class="form-label">Assign this task to a User in this Group</label>
+                    <input class="form-control" list="datalistOptions" id="userAssign" placeholder="Search by Username">
+                    {{!-- <datalist id="userAssignOptions"> --}}
+                        {{!-- {{#if !users}}
+                        <option value="No Users with that Username in this Group">
+                            {{else}} --}}
+                            <select>
+                                {{#each users}}
+                                <option value={{usersInGroup.username}}></option>
+                                {{/each}}
+                            </select>
+
+                            {{!-- {{/if}} --}}
+                            {{!--
+                    </datalist> --}}
+                </div>
+                <button type="submit" class="btn btn-info" id="submitTask">Create Task</button>
             </form>
         </div>
     </div>
+    <div class="row my-5">
+        <div class="col-10">
+            <form id="addUserForm" data-id="{{group.id}}">
+                <div class="mb-3">
+                    <label class="form-label" for="addUserToGroup">Add a user to this group</label>
+                    <input class="form-control" id="addUser" placeholder="add another user by USERNAME">
+                </div>
+                <button class="btn btn-success" type="submit">Add</button>
+            </form>
+        </div>
+    </div>
+    <div class="row"></div>
 </div>
 
-<script src="/assets/js/group_page.js"></script>
+<script type="text/javascript" src="/assets/js/group_page.js"></script>

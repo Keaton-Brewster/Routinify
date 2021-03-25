@@ -103,5 +103,8 @@ dist
 # TernJS port file
 .tern-port
 
-#ignore this trash
-.DS_store
+# ignore this trash
+**/.DS_Store
+
+# .env file containing developer-specific host, user, and password
+**/.env
