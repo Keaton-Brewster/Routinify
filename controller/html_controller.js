@@ -55,30 +55,49 @@ module.exports = (app) => {
             groups: groups
         });
     });
-    
+
     app.get('/users/home/groups/:id', isAuthenticated, async (req, res) => {
-        let groupData;
-        const users = await db.User.findAll({
-            attributes: ['groupsIds']
+        const users = await db.User.findAll({});
+
+        const usersArr = [];
+        if (users.length < 1) {
+            usersArr.push(users.dataValues);
+        } else {
+            users.forEach(user => usersArr.push(user));
+        }
+
+        let usersInGroup = usersArr.map((user) => {
+            if (user.dataValues.groupsIds.includes(req.params.id)) {
+                return user.dataValues.id;
+            }
+            return 0;
         });
-        const usersArr = JSON.parse(users.dataValues.groupsIds);
-        console.log(users);
-        usersArr.forEach(async (groupId) => {
-            if (groupId === req.params.id) {
-                groupData = await db.Group.findAll({
-                    where: {
-                        id: req.params.id
-                    },
-                    include: {
-                        model: db.User,
-                    }
-                });
+        usersInGroup.pop();
+
+        console.log(`line 69 ${usersInGroup}`);
+
+        usersInGroup = await db.User.findAll({
+            where: {
+                [Op.and]: {
+                    id: usersInGroup
+                }
             }
         });
-        console.log(groupData);
+
+        console.log('line 79', usersInGroup);
+
+
+        usersInGroup = usersInGroup.map(user => {
+            return user.dataValues;
+        });
+
+        console.log('line 90 usersInGroup', usersInGroup);
+
+
+
         res.render('group_page', {
-            group: groupData[0].dataValues,
-            users: groupData[0].dataValues
+            // group: groupData[0].dataValues,
+            users: usersInGroup
         });
 
     });
