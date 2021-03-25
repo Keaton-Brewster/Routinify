@@ -25,16 +25,17 @@
     
   ## Images
       N/A
+     
+  ## Contribution
+     Keaton-Brewster, Eliaswolfgang, Justin Yates, Michael, Maggiemaywilder
+     
+  ## Faces of the team
       ![image](https://user-images.githubusercontent.com/73671076/112399291-fc12a300-8cd3-11eb-8c81-02c3014a9bdd.png)
       ![image](https://user-images.githubusercontent.com/73671076/112399401-22384300-8cd4-11eb-90de-69b20d485dd3.png)
       ![image](https://user-images.githubusercontent.com/73671076/112399455-3c722100-8cd4-11eb-8afb-06c5282fa472.png)
       ![image](https://user-images.githubusercontent.com/73671076/112399519-5ca1e000-8cd4-11eb-9f30-1da60a2c4bd1.png)
       ![michaelaswigartat27 2](https://user-images.githubusercontent.com/73671076/112399660-a1c61200-8cd4-11eb-8f8d-d6f0e339fe84.png)
 
-  ## Contribution
-     Keaton-Brewster, Eliaswolfgang, Justin Yates, Michael, Maggiemaywilder
-     
-  ## 
      
   ## Questions
    If you have any questions reach us at
