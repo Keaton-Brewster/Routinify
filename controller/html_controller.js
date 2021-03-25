@@ -58,22 +58,27 @@ module.exports = (app) => {
 
     app.get('/users/home/groups/:id', isAuthenticated, async (req, res) => {
         const usersInGroup = [];
-        const users = await db.User.findAll();
+        const allUsers = await db.User.findAll({});
+        const thisGroup = await db.Group.findOne({
+            where: {
+                id: req.params.id
+            }
+        });
+        const thisGroupId = parseInt(req.params.id);
 
-        const id = parseInt(req.params.id);
-
-        users.forEach((user) => {
+        allUsers.forEach((user) => {
            // console.log(user.groupsIds);
             const userGroups = JSON.parse(user.groupsIds);
 
              //console.log(userGroups)
-            if (userGroups.includes(id)) {
+            if (userGroups.includes(thisGroupId)) {
                 usersInGroup.push(user);
             }
         });
         
         res.render('group_page', {
-            group: req.params.id,
+            group: thisGroup,
+            allUsers: allUsers,
             users: usersInGroup
         });
     });

@@ -1,13 +1,17 @@
-<h1>Welcome to {{group.name}} home page</h1>
+<h1>Welcome to {{group.dataValues.name}} home page</h1>
 
 <div class="container">
     <div class="row">
         <div class="col-8">
             <form id="addUserForm">
-                <h2>Add a user to this group</h2>
+                <h2>Add a User to this Group</h2>
                 <div class="mb-3">
-                    <label for="addUser" class="form-label">Username of User you would like to add</label>
-                    <input type="text" class="form-control" id="addUser">
+                    <input class="form-control" list="allUsers" id="addUser" placeholder="Search by Username">
+                    <datalist id="allUsers">
+                        {{#each allUsers}}
+                        <option value={{dataValues.username}}>
+                        {{/each}}
+                    </datalist>    
                 </div>
                 <button type="submit" id="addUserButton" data-id="{{group.id}}" class="btn btn-primary">ADD</button>
             </form>
@@ -16,11 +20,8 @@
 </div>
 <div class="container">
     <div class="row">
-        <button type="button" class="btn btn-primary" id="addTaskBtn">Add New Task</button>
-        <button type="button" class="btn btn-primary" id="addRoutineBtn">Add New Routine</button>
-    </div>
-    <div class="row">
         <div class="col-8">
+            <h2>Add a New Task for this Group</h2>
             <form id="createTask">
                 <div class="mb-3">
                     <label for="taskName" class="form-label">Task Name</label>
@@ -32,8 +33,8 @@
                 </div>
                 <div class="mb-3">
                     <label for="userAssign" class="form-label">Assign this Task to a User in this Group</label>
-                    <input class="form-control" list="datalistOptions" id="userAssign" placeholder="Search by Username">
-                    <datalist id="datalistOptions">
+                    <input class="form-control" list="usersInGroup" id="userAssign" placeholder="Search by Username">
+                    <datalist id="usersInGroup">
                         {{#each users}}
                         <option value={{dataValues.username}}>
                         {{/each}}
@@ -43,7 +44,9 @@
             </form>
         </div>
     </div>
-    <div class="row"></div>
+    <div class="row">
+        <h2>Create a Routine for this Group</h2>
+    </div>
 </div>
 
 <script src="/assets/js/group_page.js"></script>
