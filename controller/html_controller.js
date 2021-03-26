@@ -84,7 +84,6 @@ module.exports = (app) => {
         } else {
             groups = 'no groups found';
         }
-        // console.log(groups);
         res.render('yourGroups', {
             user: req.user,
             groups: groups
@@ -92,56 +91,29 @@ module.exports = (app) => {
     });
 
     app.get('/users/home/groups/:id', isAuthenticated, async (req, res) => {
-        let users = await db.User.findAll({});
-        users = users.map(user => user.dataValues);
-
-        let usersInGroup = users.map(user => {
-            console.log(user.groupsIds);
-            if (user.groupsIds.includes(req.params.id)) {
-                return user.id;
-            }
-            return 0;
-        });
-        usersInGroup = usersInGroup.filter(id => id !== 0);
-        usersInGroup = await db.User.findAll({
-            where: {
-                [Op.and]: {
-                    id: usersInGroup
-                }
-            }
-        });
-        usersInGroup = usersInGroup.map(user => {
-            return user.dataValues;
-        });
-
-        db.Group.findAll({
+        const usersInGroup = [];
+        const allUsers = await db.User.findAll({});
+        const thisGroup = await db.Group.findOne({
             where: {
                 id: req.params.id
             }
-        }).then(groupData => {
-            res.render('group_page', {
-                group: groupData[0].dataValues,
-                usersInGroup: usersInGroup,
-                user: req.user
-            });
         });
-        // res.render('group_page', {
-        //     group: groupData[0].dataValues,
-        //     users: usersInGroup
-        // });
+        const thisGroupId = parseInt(req.params.id);
 
+        allUsers.forEach((user) => {
+            // console.log(user.groupsIds);
+            const userGroups = JSON.parse(user.groupsIds);
+
+            //console.log(userGroups)
+            if (userGroups.includes(thisGroupId)) {
+                usersInGroup.push(user);
+            }
+        });
+
+        res.render('group_page', {
+            group: thisGroup,
+            allUsers: allUsers,
+            users: usersInGroup
+        });
     });
-    // app.get('/users/home/groups/:id', isAuthenticated, (req, res) => {
-    //     db.Group.findAll({
-    //         where: {
-    //             id: req.params.id
-    //         }
-    //     }).then(groupData => {
-    //         res.render('group_page', {
-    //             group: groupData[0].dataValues,
-    // users: usersInGroup
-
-    //         });
-    //     });
-    // });
 };
