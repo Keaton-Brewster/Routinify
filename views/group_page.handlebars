@@ -18,14 +18,14 @@
                 </div>
                 <div class="mb-3">
                     <label for="userAssign" class="form-label">Assign this task to a User in this Group</label>
-                    <input class="form-control" list="datalistOptions" id="userAssign" placeholder="Search by Username">
                     {{!-- <datalist id="userAssignOptions"> --}}
                         {{!-- {{#if !users}}
                         <option value="No Users with that Username in this Group">
                             {{else}} --}}
                             <select>
-                                {{#each usersInGroup}}
-                                <option value={{username}}></option>
+                                <option value=""></option>
+                                {{#each users}}
+                                <option value={{username}}>{{username}}</option>
                                 {{/each}}
                             </select>
 
