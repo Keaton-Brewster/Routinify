@@ -50,7 +50,42 @@ module.exports = (app) => {
             groups = 'no groups found';
         }
         // console.log(groups);
-        res.render('homepage', {
+        res.render('justHome', {
+            user: req.user,
+            groups: groups
+        });
+    });
+
+    app.get('/users/home/groups', isAuthenticated, async (req, res) => {
+        let userGroups = await db.User.findOne({
+            where: {
+                id: req.user.id
+            },
+            attributes: ['groupsIds']
+        });
+        userGroups = JSON.parse(userGroups.dataValues.groupsIds);
+
+        const userGroupsIds = [];
+        if (userGroups !== 0) {
+            userGroups.forEach(ele => userGroupsIds.push(ele));
+        }
+        const groupData = await db.Group.findAll({
+            where: {
+                [Op.and]: {
+                    id: userGroupsIds
+                }
+            }
+        });
+        let groups = [];
+        if (groupData.length > 0) {
+            for (let i = 0; i < groupData.length; i++) {
+                groups.push(groupData[i].dataValues);
+            }
+        } else {
+            groups = 'no groups found';
+        }
+        // console.log(groups);
+        res.render('yourGroups', {
             user: req.user,
             groups: groups
         });

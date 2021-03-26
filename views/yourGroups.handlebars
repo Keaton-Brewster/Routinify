@@ -1,0 +1,22 @@
+{{> nav_bar}}
+
+<div class="col-8 mx-auto my-5">
+    <div class="bg-light p-3 m-2">
+        <h1 class="text-dark text-center">Your groups</h1>
+    </div><br>
+
+    <div>
+        <ul class="list-group list-group-flush">
+            {{#each groups}}
+            <li class="list-group-item">
+                <a class="btn btn-info float-right select-group" href="/users/home/groups/{{id}}"
+                    data-id="{{this.id}}">{{name}}</a>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+</div>
+
+{{> groupCreation}}
+
+<script type="text/javascript" src="/assets/js/yourGroups.js"></script>
