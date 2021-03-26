@@ -17,7 +17,7 @@
                         <button class="btn btn-outline-info float-right select-group" type="submit" data-id="{{this.id}}">DONE</button>
                     </li>
                 {{/each}}
-            {{#else if isRoutines}}
+            {{#elseif isRoutines}}
             {{!-- list routines --}}
                 {{#each routine}}
                     <li class="list-group-item">

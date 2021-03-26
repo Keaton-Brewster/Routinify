@@ -13,7 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (userData.email && userData.password) {
             $.post('/api/login', userData)
                 .then(() => {
-                    location.reload();
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
                 })
                 .catch(error => console.log(error));
         }

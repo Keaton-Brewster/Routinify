@@ -1,11 +1,10 @@
-<h1>Welcome {{user.username}}!</h1>
-<ul>
-    <li>{{user.id}}</li>
-    <li>{{user.email}}</li>
-</ul>
+{{> navBar}}
 
+
+{{!--
 <a class="btn btn-small" href="/logout">LOGOUT</a>
 <a class="btn btn-small" id="create">CREATE GROUP</a>
+
 
 <div class="container">
     <div class="row">
@@ -46,13 +45,17 @@
             <button type="submit" id="finishGroup" class="btn btn-primary">Done</button>
         </div>
     </div>
-</div>
+</div> --}}
 
+
+{{> yourGroups}}
+
+{{!-- 
 <ul>
     <h2>Your Groups</h2>
     {{#each groups}}
     <a class="btn btn-primary" href="/users/home/groups/{{id}}">{{id}}: {{name}}</a><br>
     {{/each}}
-</ul>
+</ul> --}}
 
 <script type="text/javascript" src="/assets/js/homepage.js"></script>

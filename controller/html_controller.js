@@ -86,8 +86,8 @@ module.exports = (app) => {
         }).then(groupData => {
             res.render('group_page', {
                 group: groupData[0].dataValues,
-                users: usersInGroup
-
+                usersInGroup: usersInGroup,
+                user: req.user
             });
         });
         // res.render('group_page', {
