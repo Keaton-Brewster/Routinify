@@ -92,8 +92,9 @@ module.exports = (app) => {
 
     app.get('/users/home/groups/:id', isAuthenticated, async (req, res) => {
         const usersInGroup = [];
+        const usersNOTInGroup = [];
         const allUsers = await db.User.findAll({});
-        const thisGroup = await db.Group.findOne({
+        const group = await db.Group.findOne({
             where: {
                 id: req.params.id
             }
@@ -107,13 +108,15 @@ module.exports = (app) => {
             //console.log(userGroups)
             if (userGroups.includes(thisGroupId)) {
                 usersInGroup.push(user);
+            } else {
+                usersNOTInGroup.push(user);
             }
         });
 
         res.render('group_page', {
-            group: thisGroup,
-            allUsers: allUsers,
-            users: usersInGroup
+            group: group.dataValues,
+            usersNOTInGroup: usersNOTInGroup,
+            usersInGroup: usersInGroup
         });
     });
 };
