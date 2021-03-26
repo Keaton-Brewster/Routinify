@@ -1,0 +1,54 @@
+<h1>Welcome to {{group.name}} home page</h1>
+
+<div class="container">
+    <div class="row">
+        <button type="button" class="btn btn-primary" id="addTaskBtn">Add New Task</button>
+        <button type="button" class="btn btn-primary" id="addRoutineBtn">Add New Routine</button>
+    </div>
+    <div class="row my-5">
+        <div class="col-10">
+            <form id="createTask">
+                <div class="mb-3">
+                    <label for="taskName" class="form-label">Task Name</label>
+                    <input type="email" class="form-control" id="taskName" placeholder="Take out the trash.">
+                </div>
+                <div class="mb-3">
+                    <label for="taskNotes" class="form-label">Add notes for this Task</label>
+                    <textarea class="form-control" id="taskNotes" rows="3"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="userAssign" class="form-label">Assign this task to a User in this Group</label>
+                    {{!-- <datalist id="userAssignOptions"> --}}
+                        {{!-- {{#if !users}}
+                        <option value="No Users with that Username in this Group">
+                            {{else}} --}}
+                            <select>
+                                <option value=""></option>
+                                {{#each users}}
+                                <option value={{username}}>{{username}}</option>
+                                {{/each}}
+                            </select>
+
+                            {{!-- {{/if}} --}}
+                            {{!--
+                    </datalist> --}}
+                </div>
+                <button type="submit" class="btn btn-info" id="submitTask">Create Task</button>
+            </form>
+        </div>
+    </div>
+    <div class="row my-5">
+        <div class="col-10">
+            <form id="addUserForm" data-id="{{group.id}}">
+                <div class="mb-3">
+                    <label class="form-label" for="addUserToGroup">Add a user to this group</label>
+                    <input class="form-control" id="addUser" placeholder="add another user by USERNAME">
+                </div>
+                <button class="btn btn-success" type="submit">Add</button>
+            </form>
+        </div>
+    </div>
+    <div class="row"></div>
+</div>
+
+<script type="text/javascript" src="/assets/js/group_page.js"></script>

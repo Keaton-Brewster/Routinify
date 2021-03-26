@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expanded-lg navbar-light bg-light">
+    <a class="navbar-brand">Digital whiteboard</a>
+</nav>
+<main class="container">
+    <div class="row">
+        <div class="col-8">
+            <form id="login">
+                <div class="bg-primary p-3 m-2 text-white text-center">
+                    <h1>Login</h1>
+                </div><br>
+                <div class="form-group">
+                    <label for="user" class="form-label">Email:</label>
+                    <input type="email" class="form-control" id="user" aria-describedby="emailUsername">
+                </div>
+                <div class="form-group">
+                    <label for="password" class="form-label">Password:</label>
+                    <input type="password" class="form-control" id="password">
+                </div><br>
+
+                <button id="login_button" class="btn btn-success btn-lg btn-block">Login</button>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8">
+            <div class="bg-primary p-3 m-2 text-white">
+                <h3>Don't have an account yet?</h3>
+                <p><a class="text-info" href="/sign_up" id="redirectLink">Sign up</a> as an admin with a valid email address to
+                    get started!</p>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<script type="text/javascript" src="/assets/js/login.js"></script>

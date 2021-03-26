@@ -1,12 +1,20 @@
 module.exports = (sequelize, DataTypes) => {
     const Group = sequelize.define('Group', {
-        group: {
+        name: {
             type: DataTypes.STRING,
             allowNull: false
-        }  
+        },
+        ownerId: {
+            type: DataTypes.INTEGER,
+            foreignKey: true
+        },
     });
     Group.associate = (models) => {
-        Group.hasMany(models.User, {onDelete: 'cascade'});
+        Group.belongsTo(models.User, {
+            as: 'OwnedBy',
+            foreignKey: 'ownerId',
+            targetKey: 'id'
+        });
     };
     return Group;
 };
