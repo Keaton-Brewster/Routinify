@@ -4,9 +4,7 @@ $(document).ready(() => {
 
     createGroupBtn.on('click', (e) => {
         e.preventDefault();
-        const newGroupName = $('#groupName').val().trim();
-        newGroupObj.name = newGroupName.toLowerCase().split(' ').join('_');
-
+        newGroupObj.name = $('#groupName').val().trim();
 
         $.post('/api/groups/add_group', newGroupObj)
             .then((res) => {
