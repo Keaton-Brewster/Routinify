@@ -1,0 +1,14 @@
+<main>
+{{!-- need add info to render functions --}}
+
+{{#if isUser}}
+{{!-- regular user home --}}
+    {{> userHome }}
+    {{else}}
+    {{!-- for SignIn/up --}}
+        {{> justHome }}
+    {{/else}}
+{{/if}}
+
+
+</main>
