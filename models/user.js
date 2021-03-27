@@ -21,10 +21,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT,
             defaultValue: '0'
         },
-        // tasksIds: {
-        //     type: DataTypes.TEXT,
-        //     allowNull: true
-        // }
+        tasksIds: {
+            type: DataTypes.TEXT,
+            allowNull: true
+        }
 
     });
 

@@ -13,7 +13,6 @@ module.exports = (app) => {
     });
 
     app.post('/api/login', passport.authenticate('local'), (req, res) => {
-        console.log(req.user.id);
         res.redirect('/users/home');
     });
 
@@ -24,6 +23,7 @@ module.exports = (app) => {
 
     app.post('/api/groups/add_group', async (req, res) => {
         try {
+            // console.log(req.body);
             const newGroup = await db.Group.create({
                 name: req.body.name,
                 ownerId: req.user.id
@@ -32,6 +32,7 @@ module.exports = (app) => {
             const groupId = encodeURIComponent(newGroup.id);
             const user = encodeURIComponent(req.user.id);
             res.redirect(`/api/users/add_user_to_group/?group=${groupId}&user=${user}`);
+            
         } catch {
             (error) => console.error(error);
             res.sendStatus(500);
