@@ -23,6 +23,13 @@ module.exports = (sequelize, DataTypes) => {
         },
     });
 
+    User.associate = (models) => {
+        User.hasMany(models.Task, {
+            sourceKey: 'id',
+            foreignKey: 'username'
+        });
+    };
+       
     User.prototype.validPassword = function (password) {
         return bcrypt.compareSync(password, this.password);
     };

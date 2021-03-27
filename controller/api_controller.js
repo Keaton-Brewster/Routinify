@@ -52,7 +52,7 @@ module.exports = (app) => {
 
             res.redirect(`/api/users/add_user_to_group/?group=${req.query.group}&user=${userId}`);
         } catch {
-            error => console.error(error);
+            error => console.log(error);
         }
     });
 
@@ -120,28 +120,28 @@ module.exports = (app) => {
         res.end();
     });
 
-    //! delete later, just added for viewing the json
-    app.get('/api/users/groups', (req, res) => {
-        db.Group.findAll({
-            where: {
-                ownerId: req.user.id
-            }
-        }).then(users => {
-            res.json(users);
-        });
-    });
-
 
     // these are the user routes for when logged in
 
     // I'm literally making up the structure, so we'll need to revisit that when it's set
     // any authorization stuff will have to be added around/in  
 
-
+    app.post('/api/tasks/:username', async (req, res) => {
+        const newTask = await db.Task.create({
+            name: req.body.name,
+            notes: req.body.notes
+        }, //{
+        //     include: [{
+        //         association: db.User
+        //     }]
+        // }
+        );
+        console.log(newTask);
+        res.end();
+    });    
     // get tasks assigned to user
     app.get('/api/users/:id', async (req, res) => {
         const dbUser = await db.User.findAll({
-            include: ['Groups'],
             where: {
                 // user id
                 id: req.params.id
@@ -184,7 +184,8 @@ module.exports = (app) => {
                 // task id
                 id: req.body.id,
             },
-        }).then((dbTask) => console.log(dbTask));
+        }).then((dbTask) => console.log(dbTask))
+            .catch((err) => console.error(err));
 
         res.end();
     });
