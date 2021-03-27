@@ -1,17 +1,18 @@
 module.exports = (sequelize, DataTypes) => {
     const Routine = sequelize.define('Routine', {
-        name: {
+        routine: {
             type: DataTypes.STRING,
             allowNull: false
         }
     });
     Routine.associate = (models) => {
-        Routine.belongsToMany(models.User, {
-            through: 'UserRoutines',
+        Routine.belongsTo(models.Group, {
             onDelete: 'cascade'
         });
-        Routine.hasMany(models.Task, {onDelete: 'cascade'});
+        Routine.hasMany(models.Task, {
+            onDelete: 'cascade'
+        });
     };
-    
+
     return Routine;
 };
