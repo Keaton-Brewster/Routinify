@@ -12,8 +12,6 @@
     },
     "rules": {
         "array-callback-return": "error",
-        "camelcase": "error",
-        "curly": "error",
         "dot-notation": "error",
         "eqeqeq": "error",
         "implicit-arrow-linebreak": [
@@ -29,7 +27,6 @@
         "no-irregular-whitespace": "error",
         "no-multi-spaces": "error",
         "no-unreachable": "error",
-        "no-unused-vars": "error",
         "no-var": "error",
         "prefer-arrow-callback": "error",
         "prefer-const": "error",

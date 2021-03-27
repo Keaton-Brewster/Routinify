@@ -1,7 +1,7 @@
 {
   "development": {
     "username": "root",
-    "password": "ivmysql123",
+    "password": "KeatonDev42420",
     "database": "whiteboard_development",
     "host": "127.0.0.1",
     "dialect": "mysql"

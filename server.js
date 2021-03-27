@@ -3,7 +3,6 @@ const session = require('express-session');
 const exphbs = require('express-handlebars');
 
 const passport = require('./config/passport.js');
-
 const PORT = process.env.PORT || 8080;
 const db = require('./models');
 
@@ -33,7 +32,7 @@ app.set('view engine', 'handlebars');
 require('./controller/api_controller')(app);
 require('./controller/html_controller')(app);
 
-db.sequelize.sync().then(() => {
+db.sequelize.sync({}).then(() => {
   try {
     app.listen(PORT, () => {
       console.log(`Listening on port ${PORT}.`);

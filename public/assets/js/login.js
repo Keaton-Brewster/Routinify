@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = $('#login');
 
-    loginForm.on('submit', () => {
+    loginForm.on('submit', (e) => {
+        e.preventDefault();
         const userEmail = $('input#user').val();
         const userPassword = $('input#password').val();
 
@@ -13,7 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (userData.email && userData.password) {
             $.post('/api/login', userData)
                 .then(() => {
-                    location.reload();
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1000);
                 })
                 .catch(error => console.log(error));
         }

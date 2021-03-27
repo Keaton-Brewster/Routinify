@@ -3,15 +3,17 @@ module.exports = (sequelize, DataTypes) => {
         name: {
             type: DataTypes.STRING,
             allowNull: false
-        }
+        },
+        ownerId: {
+            type: DataTypes.INTEGER,
+            foreignKey: true
+        },
     });
     Group.associate = (models) => {
-        Group.hasMany(models.Routine, {
-            foreignKey: {
-                name: 'routine',
-                type: DataTypes.STRING
-            }
+        Group.belongsToMany = (models.User, {
+            through: models.User_group
         });
+
     };
     return Group;
 };

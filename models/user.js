@@ -16,8 +16,23 @@ module.exports = (sequelize, DataTypes) => {
         password: {
             type: DataTypes.STRING,
             allowNull: false
-        }
+        },
+        groupsIds: {
+            type: DataTypes.JSON,
+            defaultValue: []
+        },
     });
+
+    User.associate = (models) => {
+        User.hasMany(models.Task, {
+            sourceKey: 'id',
+            foreignKey: 'username'
+        });
+
+        User.belongsToMany(models.Group, {
+            through: models.User_group
+        });
+    };
 
     User.prototype.validPassword = function (password) {
         return bcrypt.compareSync(password, this.password);
@@ -27,17 +42,6 @@ module.exports = (sequelize, DataTypes) => {
         user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
     });
 
-    User.associate = (models) => {
-        User.hasMany(models.Group, {
-            onDelete: 'cascade'
-        });
-        User.hasMany(models.Routine, {
-            onDelete: 'cascade'
-        });
-        User.hasMany(models.Task, {
-            onDelete: 'cascade'
-        });
-    };
 
     return User;
 };

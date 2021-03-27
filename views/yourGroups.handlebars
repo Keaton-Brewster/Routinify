@@ -1,0 +1,44 @@
+{{> nav_bar}}
+
+<div style="display:none">
+    <span id="userId">{{user.id}}</span>
+</div>
+<div class="col-8 mx-auto my-5">
+    <div class="bg-light p-3 m-2">
+        <h1 class="text-dark text-center">Your groups</h1>
+    </div><br>
+
+    <div>
+        <ul class="list-group list-group-flush">
+            {{#each groups}}
+            <li class="list-group-item">
+                <a class="btn btn-info float-right select-group" href="/users/home/groups/{{id}}"
+                    data-id="{{this.id}}">{{name}}</a>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+</div>
+
+<form class="col-8 mx-auto">
+    <div class="bg-light p-3 m-2">
+        <h1 class="text-dark text-center">Create a new group</h1>
+    </div><br>
+
+    <form class="form-group">
+        <label for="groupName" class="form-label">Name your group</label>
+        <input type="text" class="form-control col" id="groupName">
+        <button class="btn" id="createGroup">Create</button>
+    </form>
+    {{!-- <br><br>
+    <div class="p-3 m-2">
+        <h1 class="text-white text-center">Would you like to add other users?</h1>
+    </div><br>
+
+    <div class="btn-group" role="group">
+        <button type="submit" class="btn btn-success btn-lg btn-success">yes</button>
+        <button type="submit" class="btn btn-success btn-lg btn-danger">no</button>
+    </div> --}}
+</form>
+
+<script type="text/javascript" src="/assets/js/yourGroups.js"></script>

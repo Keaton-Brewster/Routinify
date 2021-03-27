@@ -1,11 +1,52 @@
 const db = require('../models');
 const passport = require('../config/passport');
 
+const addUserToGroup = async (groupId = 'number', userId = 'number') => {
+    // just making sure that we are getting integers in here
+    groupId = parseInt(groupId);
+    userId = parseInt(userId);
+
+    // const n = await db.User_groups.create({
+    //     userId: userId,
+    //     groupId: groupId
+    // });
+
+    // console.log(n);
+
+    let userGroups = await db.User.findOne({
+        where: {
+            id: userId
+        }
+    });
+    userGroups = userGroups.dataValues.groupsIds;
+
+    let userGroupsIds;
+
+
+    if (userGroups === 0) {
+        userGroupsIds = [0, groupId];
+    } else {
+        userGroupsIds = userGroups.map(el => el);
+        userGroupsIds.push(groupId);
+    }
+
+    userGroupsIds = [...new Set(userGroupsIds)];
+    const updatedGroups = [...userGroupsIds];
+
+    await db.User.update({
+        groupsIds: updatedGroups
+    }, {
+        where: {
+            id: userId
+        }
+    });
+};
+
 module.exports = (app) => {
     app.post('/api/sign_up', (req, res) => {
         db.User.create(req.body)
             .then(() => {
-                res.send(207);
+                res.sendStatus(207);
             })
             .catch(error => {
                 res.status(401).json(error);
@@ -13,8 +54,6 @@ module.exports = (app) => {
     });
 
     app.post('/api/login', passport.authenticate('local'), (req, res) => {
-        // got the simple bit of authentication working. You have to already have an account to 'sign in'
-        // now just have to figure out what we want thing to look like after we sign in?
         res.redirect('/users/home');
     });
 
@@ -23,32 +62,156 @@ module.exports = (app) => {
         res.redirect('/');
     });
 
-    app.post('/api/groups', async (req, res) => {
+    app.post('/api/groups/add_group', async (req, res) => {
         try {
+            // console.log(req.body);
+            // const user = await db.User.findOne({
+            //     where: {
+            //         id: req.user.id
+            //     }
+            // });
+
+
+            // const newGroup = await db.Group.create({
+            //         name: req.body.name,
+            //         ownerId: req.user.id,
+            //         users: [{
+            //             id: req.user.id,
+            //             User_group: {
+            //                 name: req.body.name
+            //             }
+            //         }]
+            //     }, {
+            //         include: db.User
+            //     })
+            //     .catch(error => console.log(error));
+
             const newGroup = await db.Group.create({
                 name: req.body.name,
+                ownerId: req.user.id
             });
+
+            addUserToGroup(newGroup.id, req.user.id);
             console.log(newGroup);
+
+            res.sendStatus(200);
         } catch {
             (error) => console.error(error);
+            res.sendStatus(500);
         }
+    });
+
+    app.post('/api/groups/add_user_by_username', async (req, res) => {
+        try {
+            const username = decodeURIComponent(req.query.user);
+            let userId = await db.User.findOne({
+                where: {
+                    username: username
+                },
+                attributes: ['id']
+            });
+            userId = encodeURIComponent(userId.dataValues.id);
+
+
+            addUserToGroup(req.query.group, userId);
+            res.sendStatus(201);
+            // res.redirect(`/api/users/add_user_to_group/?group=${req.query.group}&user=${userId}`);
+        } catch {
+            error => console.log(error);
+        }
+    });
+
+    //* Was using this route for adding users to the db. 
+    //* Realized that was stupid and just put the add user to group into a function
+    // app.get('/api/users/add_user_to_group/', async (req, res) => {
+    //     try {
+    //         const groupIdFromQuery = parseInt(decodeURIComponent(req.query.group));
+    //         const userIdFromQuery = decodeURIComponent(req.query.user);
+
+    //         let userGroups = await db.User.findOne({
+    //             where: {
+    //                 id: userIdFromQuery
+    //             },
+    //             attributes: ['groupsIds']
+    //         });
+    //         userGroups = JSON.parse(userGroups.dataValues.groupsIds);
+
+    //         // let userGroupsIds = [];
+
+    //         let userGroupsIds;
+
+
+    //         if (userGroups === 0) {
+    //             userGroupsIds = [0, groupIdFromQuery];
+    //         } else {
+    //             userGroupsIds = userGroups.map(el => el);
+    //             userGroupsIds.push(groupIdFromQuery);
+    //         }
+
+    //         userGroupsIds = [...new Set(userGroupsIds)];
+    //         userGroupsIds = [...userGroupsIds];
+
+    //         const updatedGroups = JSON.stringify(userGroupsIds);
+
+    //         await db.User.update({
+    //                 groupsIds: updatedGroups
+    //             }, {
+    //                 where: {
+    //                     id: userIdFromQuery
+    //                 }
+    //             })
+    //             .catch(error => console.error(error));
+    //         res.sendStatus(200);
+
+    //     } catch {
+    //         error => {
+    //             console.error(error);
+    //             res.sendStatus(500);
+    //         };
+    //     }
+    // });
+
+    app.get('/api/groups', async (req, res) => {
+        try {
+            const groups = await db.Group.findAll({});
+            if (groups) {
+                res.json(groups);
+            } else {
+                res.sendStatus(404);
+            }
+        } catch {
+            res.sendStatus(500);
+        }
+    });
+
+    // To add an existing user to a group
+    //todo MAKE THIS WORK
+    app.put('/api/group/add_user', (req, res) => {
         res.end();
     });
 
-    app.get('/api/groups', (req, res) => {
-        res.json();
-    });
 
     // these are the user routes for when logged in
 
     // I'm literally making up the structure, so we'll need to revisit that when it's set
     // any authorization stuff will have to be added around/in  
 
-
+    app.post('/api/tasks/:username', async (req, res) => {
+        const newTask = await db.Task.create({
+                name: req.body.name,
+                notes: req.body.notes
+            }, //{
+            //     include: [{
+            //         association: db.User
+            //     }]
+            // }
+        );
+        console.log(newTask);
+        res.end();
+    });
     // get tasks assigned to user
     app.get('/api/users/:id', async (req, res) => {
         const dbUser = await db.User.findAll({
-            include: ['Groups'],
             where: {
                 // user id
                 id: req.params.id
@@ -87,11 +250,12 @@ module.exports = (app) => {
     app.post('/api/tasks/:id', (req, res) => {
         // from req.body -> get table, column, value for query
         db.Tasks.updateOne(req.body, {
-            where: {
-                // task id
-                id: req.body.id,
-            },
-        }).then((dbTask) => console.log(dbTask));
+                where: {
+                    // task id
+                    id: req.body.id,
+                },
+            }).then((dbTask) => console.log(dbTask))
+            .catch((err) => console.error(err));
 
         res.end();
     });
