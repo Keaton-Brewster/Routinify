@@ -3,7 +3,7 @@
      Routinify
     
   ##  Description
-    We help you make a list and keep track with your friends and famly.
+    We help you make a list of things you need to do around the house.
   ## Table of Contents
   * [Description](#description)
   * [Installation](#Installation)
@@ -30,7 +30,7 @@
       N/A
      
   ## Contribution
-     Keaton-Brewster, Eliaswolfgang, Justin Yates, Michael, Maggiemaywilder
+     Keaton-Brewster, Eliaswolfgang, Justin Yates, Maggiemaywilder, Michael.
      
   ## Faces of the team
       ![image](https://user-images.githubusercontent.com/73671076/112399291-fc12a300-8cd3-11eb-8c81-02c3014a9bdd.png)
@@ -45,4 +45,6 @@
    Github : [Keaton-Brewster](https://github.com/Keaton-Brewster/project-2)[Ian E Von Fange](https://github.com/eliaswolfgang)[Justin Yates](https://github.com/justinyates887)[Maggie May Wilder](https://github.com/maggiemaywilder)[Michael Swigart](https://github.com/Michaelswigart)
   
   ## Links
-     
+     https://github.com/Keaton-Brewster/project-2
+
+     Place holder for heroku.
