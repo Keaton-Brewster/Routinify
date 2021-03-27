@@ -2,6 +2,10 @@ const db = require('../models');
 const passport = require('../config/passport');
 
 const addUserToGroup = async (groupId = Number, userId = Number) => {
+    // just making sure that we are getting integers in here
+    
+    groupId = parseInt(groupId);
+    userId = parseInt(userId);
     let userGroups = await db.User.findOne({
         where: {
             id: userId
@@ -45,9 +49,6 @@ module.exports = (app) => {
     });
 
     app.post('/api/login', passport.authenticate('local'), (req, res) => {
-        // got the simple bit of authentication working. You have to already have an account to 'sign in'
-        // now just have to figure out what we want thing to look like after we sign in?
-
         res.redirect('/users/home');
     });
 
@@ -58,6 +59,7 @@ module.exports = (app) => {
 
     app.post('/api/groups/add_group', async (req, res) => {
         try {
+            // console.log(req.body);
             const newGroup = await db.Group.create({
                 name: req.body.name,
                 // ownerId: req.user.id
@@ -90,57 +92,59 @@ module.exports = (app) => {
             res.sendStatus(201);
             // res.redirect(`/api/users/add_user_to_group/?group=${req.query.group}&user=${userId}`);
         } catch {
-            error => console.error(error);
+            error => console.log(error);
         }
     });
 
-    app.get('/api/users/add_user_to_group/', async (req, res) => {
-        try {
-            const groupIdFromQuery = parseInt(decodeURIComponent(req.query.group));
-            const userIdFromQuery = decodeURIComponent(req.query.user);
+    //* Was using this route for adding users to the db. 
+    //* Realized that was stupid and just put the add user to group into a function
+    // app.get('/api/users/add_user_to_group/', async (req, res) => {
+    //     try {
+    //         const groupIdFromQuery = parseInt(decodeURIComponent(req.query.group));
+    //         const userIdFromQuery = decodeURIComponent(req.query.user);
 
-            let userGroups = await db.User.findOne({
-                where: {
-                    id: userIdFromQuery
-                },
-                attributes: ['groupsIds']
-            });
-            userGroups = JSON.parse(userGroups.dataValues.groupsIds);
+    //         let userGroups = await db.User.findOne({
+    //             where: {
+    //                 id: userIdFromQuery
+    //             },
+    //             attributes: ['groupsIds']
+    //         });
+    //         userGroups = JSON.parse(userGroups.dataValues.groupsIds);
 
-            // let userGroupsIds = [];
+    //         // let userGroupsIds = [];
 
-            let userGroupsIds;
+    //         let userGroupsIds;
 
 
-            if (userGroups === 0) {
-                userGroupsIds = [0, groupIdFromQuery];
-            } else {
-                userGroupsIds = userGroups.map(el => el);
-                userGroupsIds.push(groupIdFromQuery);
-            }
+    //         if (userGroups === 0) {
+    //             userGroupsIds = [0, groupIdFromQuery];
+    //         } else {
+    //             userGroupsIds = userGroups.map(el => el);
+    //             userGroupsIds.push(groupIdFromQuery);
+    //         }
 
-            userGroupsIds = [...new Set(userGroupsIds)];
-            userGroupsIds = [...userGroupsIds];
+    //         userGroupsIds = [...new Set(userGroupsIds)];
+    //         userGroupsIds = [...userGroupsIds];
 
-            const updatedGroups = JSON.stringify(userGroupsIds);
+    //         const updatedGroups = JSON.stringify(userGroupsIds);
 
-            await db.User.update({
-                    groupsIds: updatedGroups
-                }, {
-                    where: {
-                        id: userIdFromQuery
-                    }
-                })
-                .catch(error => console.error(error));
-            res.sendStatus(200);
+    //         await db.User.update({
+    //                 groupsIds: updatedGroups
+    //             }, {
+    //                 where: {
+    //                     id: userIdFromQuery
+    //                 }
+    //             })
+    //             .catch(error => console.error(error));
+    //         res.sendStatus(200);
 
-        } catch {
-            error => {
-                console.error(error);
-                res.sendStatus(500);
-            };
-        }
-    });
+    //     } catch {
+    //         error => {
+    //             console.error(error);
+    //             res.sendStatus(500);
+    //         };
+    //     }
+    // });
 
     app.get('/api/groups', async (req, res) => {
         try {
@@ -161,28 +165,28 @@ module.exports = (app) => {
         res.end();
     });
 
-    //! delete later, just added for viewing the json
-    app.get('/api/users/groups', (req, res) => {
-        db.Group.findAll({
-            where: {
-                ownerId: req.user.id
-            }
-        }).then(users => {
-            res.json(users);
-        });
-    });
-
 
     // these are the user routes for when logged in
 
     // I'm literally making up the structure, so we'll need to revisit that when it's set
     // any authorization stuff will have to be added around/in  
 
-
+    app.post('/api/tasks/:username', async (req, res) => {
+        const newTask = await db.Task.create({
+                name: req.body.name,
+                notes: req.body.notes
+            }, //{
+            //     include: [{
+            //         association: db.User
+            //     }]
+            // }
+        );
+        console.log(newTask);
+        res.end();
+    });
     // get tasks assigned to user
     app.get('/api/users/:id', async (req, res) => {
         const dbUser = await db.User.findAll({
-            include: ['Groups'],
             where: {
                 // user id
                 id: req.params.id
@@ -221,11 +225,12 @@ module.exports = (app) => {
     app.post('/api/tasks/:id', (req, res) => {
         // from req.body -> get table, column, value for query
         db.Tasks.updateOne(req.body, {
-            where: {
-                // task id
-                id: req.body.id,
-            },
-        }).then((dbTask) => console.log(dbTask));
+                where: {
+                    // task id
+                    id: req.body.id,
+                },
+            }).then((dbTask) => console.log(dbTask))
+            .catch((err) => console.error(err));
 
         res.end();
     });

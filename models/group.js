@@ -10,11 +10,16 @@ module.exports = (sequelize, DataTypes) => {
         },
     });
     Group.associate = (models) => {
-        Group.belongsTo(models.User, {
+        Group.hasOne(models.User, {
             as: 'OwnedBy',
             foreignKey: 'ownerId',
             targetKey: 'id'
         });
+        Group.belongsToMany = (models.User, {
+            through: 'User_groups',
+            foreignKey: 'groupId'
+        });
+
     };
     return Group;
 };

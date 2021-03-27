@@ -1,7 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = $('#login');
 
-    loginForm.on('submit', () => {
+    loginForm.on('submit', (e) => {
+        e.preventDefault();
         const userEmail = $('input#user').val();
         const userPassword = $('input#password').val();
 

@@ -20,9 +20,22 @@ module.exports = (sequelize, DataTypes) => {
         groupsIds: {
             type: DataTypes.TEXT,
             defaultValue: '0'
-        }
+        },
     });
 
+    User.associate = (models) => {
+        User.hasMany(models.Task, {
+            sourceKey: 'id',
+            foreignKey: 'username'
+        });
+
+
+        User.belongsToMany(models.Group, {
+            through: 'Users_groups',
+            foreignKey: 'userId'
+        });
+    };
+       
     User.prototype.validPassword = function (password) {
         return bcrypt.compareSync(password, this.password);
     };
