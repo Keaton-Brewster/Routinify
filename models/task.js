@@ -12,6 +12,11 @@ module.exports = (sequelize, DataTypes) => {
         belongsTo: {
             type: DataTypes.INTEGER,
             allowNull: false
+        },
+        isCompleted: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
         }
     });
     return Task;
