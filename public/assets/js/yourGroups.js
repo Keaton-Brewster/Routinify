@@ -1,19 +1,19 @@
 $(document).ready(() => {
-    const newGroupObj = {};
-    const createGroupBtn = $('createGroup');
+    const createGroupBtn = $('#createGroup');
 
-    createGroupBtn.on('click', (e) => {
-        e.preventDefault();
-        newGroupObj.name = $('#groupName').val().trim();
+    createGroupBtn.on('click', () => {
 
-        $.post('/api/groups/add_group', newGroupObj)
+        $.post('/api/groups/add_group', {
+                name: $('#groupName').val().trim()
+            })
             .then((res) => {
                 console.log(res);
-                location.reload();
+                // location.reload();
             })
             .catch((error) => {
                 console.error(`Error: ${error}`);
             });
+
     });
 
 });

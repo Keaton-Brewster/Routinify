@@ -1,6 +1,38 @@
 const db = require('../models');
 const passport = require('../config/passport');
 
+const addUserToGroup = async (groupId = Number, userId = Number) => {
+    let userGroups = await db.User.findOne({
+        where: {
+            id: userId
+        }
+    });
+    userGroups = JSON.parse(userGroups.dataValues.groupsIds);
+
+    let userGroupsIds;
+
+
+    if (userGroups === 0) {
+        userGroupsIds = [0, groupId];
+    } else {
+        userGroupsIds = userGroups.map(el => el);
+        userGroupsIds.push(groupId);
+    }
+
+    userGroupsIds = [...new Set(userGroupsIds)];
+    userGroupsIds = [...userGroupsIds];
+
+    const updatedGroups = JSON.stringify(userGroupsIds);
+
+    await db.User.update({
+        groupsIds: updatedGroups
+    }, {
+        where: {
+            id: userId
+        }
+    });
+};
+
 module.exports = (app) => {
     app.post('/api/sign_up', (req, res) => {
         db.User.create(req.body)
@@ -28,12 +60,14 @@ module.exports = (app) => {
         try {
             const newGroup = await db.Group.create({
                 name: req.body.name,
-                ownerId: req.user.id
+                // ownerId: req.user.id
+                ownerId: '2'
             });
 
-            const groupId = encodeURIComponent(newGroup.id);
-            const user = encodeURIComponent(req.user.id);
-            res.redirect(`/api/users/add_user_to_group/?group=${groupId}&user=${user}`);
+            // addUserToGroup(newGroup.id, req.user.id);
+            addUserToGroup(newGroup.id, '2');
+
+            res.sendStatus(200);
         } catch {
             (error) => console.error(error);
             res.sendStatus(500);
@@ -51,7 +85,10 @@ module.exports = (app) => {
             });
             userId = encodeURIComponent(userId.dataValues.id);
 
-            res.redirect(`/api/users/add_user_to_group/?group=${req.query.group}&user=${userId}`);
+
+            addUserToGroup(req.query.group, userId);
+            res.sendStatus(201);
+            // res.redirect(`/api/users/add_user_to_group/?group=${req.query.group}&user=${userId}`);
         } catch {
             error => console.error(error);
         }
@@ -70,12 +107,15 @@ module.exports = (app) => {
             });
             userGroups = JSON.parse(userGroups.dataValues.groupsIds);
 
-            let userGroupsIds = [];
+            // let userGroupsIds = [];
+
+            let userGroupsIds;
+
 
             if (userGroups === 0) {
                 userGroupsIds = [0, groupIdFromQuery];
             } else {
-                userGroups.forEach(el => userGroupsIds.push(el));
+                userGroupsIds = userGroups.map(el => el);
                 userGroupsIds.push(groupIdFromQuery);
             }
 
