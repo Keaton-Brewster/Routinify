@@ -28,7 +28,9 @@ module.exports = (app) => {
             },
             attributes: ['groupsIds']
         });
-        userGroups = JSON.parse(userGroups.dataValues.groupsIds);
+        // userGroups = JSON.parse(userGroups.dataValues.groupsIds);
+        userGroups = userGroups.dataValues.groupsIds;
+
 
         let userGroupsIds;
         Array.isArray(userGroups) ?
@@ -64,19 +66,19 @@ module.exports = (app) => {
             },
             attributes: ['groupsIds']
         });
-        userGroups = JSON.parse(userGroups.groupsIds);
+        userGroups = userGroups.groupsIds;
 
-        let userGroupsIds;
-        if (userGroups === 0) {
-            userGroupsIds = '0';
-        } else {
-            userGroupsIds = userGroups.map(ele => ele);
-        }
+        // let userGroupsIds;
+        // if (userGroups === 0) {
+        //     userGroupsIds = '0';
+        // } else {
+        //     userGroupsIds = userGroups.map(ele => ele);
+        // }
 
         const groupData = await db.Group.findAll({
             where: {
                 [Op.and]: {
-                    id: userGroupsIds
+                    id: userGroups
                 }
             }
         });
@@ -107,9 +109,9 @@ module.exports = (app) => {
 
         allUsers.forEach((user) => {
             // console.log(user.groupsIds);
-            const userGroups = JSON.parse(user.groupsIds);
+            const userGroups = user.groupsIds;
 
-            if (Array.isArray(userGroups) && userGroups.includes(thisGroupId)) {
+            if (userGroups.includes(thisGroupId)) {
                 usersInGroup.push(user);
             } else {
                 usersNOTInGroup.push(user);

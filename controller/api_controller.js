@@ -1,17 +1,24 @@
 const db = require('../models');
 const passport = require('../config/passport');
 
-const addUserToGroup = async (groupId = Number, userId = Number) => {
+const addUserToGroup = async (groupId = 'number', userId = 'number') => {
     // just making sure that we are getting integers in here
-    
     groupId = parseInt(groupId);
     userId = parseInt(userId);
+
+    // const n = await db.User_groups.create({
+    //     userId: userId,
+    //     groupId: groupId
+    // });
+
+    // console.log(n);
+
     let userGroups = await db.User.findOne({
         where: {
             id: userId
         }
     });
-    userGroups = JSON.parse(userGroups.dataValues.groupsIds);
+    userGroups = userGroups.dataValues.groupsIds;
 
     let userGroupsIds;
 
@@ -24,9 +31,7 @@ const addUserToGroup = async (groupId = Number, userId = Number) => {
     }
 
     userGroupsIds = [...new Set(userGroupsIds)];
-    userGroupsIds = [...userGroupsIds];
-
-    const updatedGroups = JSON.stringify(userGroupsIds);
+    const updatedGroups = [...userGroupsIds];
 
     await db.User.update({
         groupsIds: updatedGroups
@@ -60,14 +65,34 @@ module.exports = (app) => {
     app.post('/api/groups/add_group', async (req, res) => {
         try {
             // console.log(req.body);
+            // const user = await db.User.findOne({
+            //     where: {
+            //         id: req.user.id
+            //     }
+            // });
+
+
+            // const newGroup = await db.Group.create({
+            //         name: req.body.name,
+            //         ownerId: req.user.id,
+            //         users: [{
+            //             id: req.user.id,
+            //             User_group: {
+            //                 name: req.body.name
+            //             }
+            //         }]
+            //     }, {
+            //         include: db.User
+            //     })
+            //     .catch(error => console.log(error));
+
             const newGroup = await db.Group.create({
                 name: req.body.name,
-                // ownerId: req.user.id
-                ownerId: '2'
+                ownerId: req.user.id
             });
 
-            // addUserToGroup(newGroup.id, req.user.id);
-            addUserToGroup(newGroup.id, '2');
+            addUserToGroup(newGroup.id, req.user.id);
+            console.log(newGroup);
 
             res.sendStatus(200);
         } catch {

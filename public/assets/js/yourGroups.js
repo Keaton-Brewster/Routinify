@@ -8,7 +8,7 @@ $(document).ready(() => {
             })
             .then((res) => {
                 console.log(res);
-                // location.reload();
+                location.reload();
             })
             .catch((error) => {
                 console.error(`Error: ${error}`);

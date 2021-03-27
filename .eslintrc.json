@@ -12,7 +12,6 @@
     },
     "rules": {
         "array-callback-return": "error",
-        "camelcase": "error",
         "dot-notation": "error",
         "eqeqeq": "error",
         "implicit-arrow-linebreak": [

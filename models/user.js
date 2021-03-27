@@ -18,8 +18,8 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         groupsIds: {
-            type: DataTypes.TEXT,
-            defaultValue: '0'
+            type: DataTypes.JSON,
+            defaultValue: []
         },
     });
 
@@ -29,13 +29,11 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: 'username'
         });
 
-
         User.belongsToMany(models.Group, {
-            through: 'Users_groups',
-            foreignKey: 'userId'
+            through: models.User_group
         });
     };
-       
+
     User.prototype.validPassword = function (password) {
         return bcrypt.compareSync(password, this.password);
     };
