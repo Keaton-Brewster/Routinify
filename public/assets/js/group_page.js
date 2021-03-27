@@ -8,8 +8,6 @@ $(document).ready(() => {
         let username = $('#addUser').val();
         let groupId = addUserForm.attr('data-id');
 
-        console.log(username, groupId);
-
         username = encodeURIComponent(username);
         groupId = encodeURIComponent(groupId);
 
