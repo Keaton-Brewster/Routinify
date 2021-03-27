@@ -17,7 +17,7 @@ module.exports = (app) => {
         if (req.user) {
             res.redirect('/users/home');
         } else {
-            res.render('login');
+            res.render('login', {});
         }
     });
 
@@ -30,10 +30,11 @@ module.exports = (app) => {
         });
         userGroups = JSON.parse(userGroups.dataValues.groupsIds);
 
-        const userGroupsIds = [];
-        if (userGroups !== 0) {
-            userGroups.forEach(ele => userGroupsIds.push(ele));
-        }
+        let userGroupsIds;
+        Array.isArray(userGroups) ?
+            userGroupsIds = userGroups.map(ele => ele) :
+            userGroupsIds = '0';
+
         const groupData = await db.Group.findAll({
             where: {
                 [Op.and]: {
@@ -63,12 +64,15 @@ module.exports = (app) => {
             },
             attributes: ['groupsIds']
         });
-        userGroups = JSON.parse(userGroups.dataValues.groupsIds);
+        userGroups = JSON.parse(userGroups.groupsIds);
 
-        const userGroupsIds = [];
-        if (userGroups !== 0) {
-            userGroups.forEach(ele => userGroupsIds.push(ele));
+        let userGroupsIds;
+        if (userGroups === 0) {
+            userGroupsIds = '0';
+        } else {
+            userGroupsIds = userGroups.map(ele => ele);
         }
+
         const groupData = await db.Group.findAll({
             where: {
                 [Op.and]: {
@@ -90,7 +94,7 @@ module.exports = (app) => {
         });
     });
 
-    app.get('/users/home/groups/:id', isAuthenticated, async (req, res) => {
+    app.get('/users/home/groups/:id', async (req, res) => {
         const usersInGroup = [];
         const usersNOTInGroup = [];
         const allUsers = await db.User.findAll({});
@@ -105,8 +109,7 @@ module.exports = (app) => {
             // console.log(user.groupsIds);
             const userGroups = JSON.parse(user.groupsIds);
 
-            //console.log(userGroups)
-            if (userGroups.includes(thisGroupId)) {
+            if (Array.isArray(userGroups) && userGroups.includes(thisGroupId)) {
                 usersInGroup.push(user);
             } else {
                 usersNOTInGroup.push(user);

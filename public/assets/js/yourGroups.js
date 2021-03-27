@@ -1,6 +1,6 @@
 $(document).ready(() => {
     const newGroupObj = {};
-    const createGroupBtn = $('createGroup');
+    const createGroupBtn = $('#createGroup');
 
     createGroupBtn.on('click', (e) => {
         e.preventDefault();
