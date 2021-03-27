@@ -9,11 +9,5 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: true
         },
     });
-    Group.associate = (models) => {
-        Group.belongsToMany = (models.User, {
-            through: models.User_group
-        });
-
-    };
     return Group;
 };

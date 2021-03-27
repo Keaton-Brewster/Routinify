@@ -1,7 +1,7 @@
 {{!-- From discussion, this will be where a user goes after selecting which group they're working in --}}
 <nav class="navbar navbar-expand-lg navbar-light bg-info">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Group Page: {{group.name}}</a>
+    <a class="navbar-brand" href="#">Group Page: <span id="group" data-id="{{group.id}}">{{group.name}}</span></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -15,7 +15,7 @@
           <a class="nav-link" href="/users/home/groups">Your Groups</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Your Routines and Tasks</a>
+          <a class="nav-link" href="/users/home/groups/{{group.id}}/tasks">{{group.name}} Tasks</a>
         </li>
         <li class="nav-item">
           <a href="/logout" class="text-danger">LOGOUT</a>

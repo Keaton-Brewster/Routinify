@@ -23,17 +23,6 @@ module.exports = (sequelize, DataTypes) => {
         },
     });
 
-    User.associate = (models) => {
-        User.hasMany(models.Task, {
-            sourceKey: 'id',
-            foreignKey: 'username'
-        });
-
-        User.belongsToMany(models.Group, {
-            through: models.User_group
-        });
-    };
-
     User.prototype.validPassword = function (password) {
         return bcrypt.compareSync(password, this.password);
     };
@@ -41,7 +30,5 @@ module.exports = (sequelize, DataTypes) => {
     User.addHook('beforeCreate', (user) => {
         user.password = bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null);
     });
-
-
     return User;
 };

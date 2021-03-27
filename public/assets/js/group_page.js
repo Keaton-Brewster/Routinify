@@ -24,15 +24,14 @@ $(document).ready(() => {
     addTaskForm.on('submit', (e) => {
         e.preventDefault();
         e.stopPropagation();
-        const newTaskName = $('input#taskName').val().trim();
-        const newTaskNotes = $('textarea').val().trim();
-        const newTaskOwner = $('option:selected').attr('value');
+
         const newTaskObj = {
-            name: newTaskName,
-            notes: newTaskNotes,
+            name: $('input#taskName').val().trim(),
+            notes: $('textarea').val().trim(),
+            groupId: $('span#group').attr('data-id')
         };
 
-        $.post(`/api/tasks/${newTaskOwner}`, newTaskObj)
+        $.post(`/api/tasks/add_task`, newTaskObj)
             .then(() => {
                 console.log('Added task');
             })
