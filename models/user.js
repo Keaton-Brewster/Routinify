@@ -20,7 +20,12 @@ module.exports = (sequelize, DataTypes) => {
         groupsIds: {
             type: DataTypes.TEXT,
             defaultValue: '0'
-        }
+        },
+        // tasksIds: {
+        //     type: DataTypes.TEXT,
+        //     allowNull: true
+        // }
+
     });
 
     User.prototype.validPassword = function (password) {
