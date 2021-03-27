@@ -1,6 +1,6 @@
   
   #  Project Title
-     Free Bird
+     Routinify
     
   ##  Description
     We help you make a list and keep track with your friends and famly.
@@ -10,15 +10,15 @@
   * [License](#license)
   * [Contribution](#contribution)
   * [Facesoftheteam](#Facesoftheteam)
-  * [Usage](#usage)
+  * [Dependencies](#Dependencies)
   * [License](#License)
   * [Images](#Images)
   * [Questions](#questions)
   ## Installation
   To install dependencies, run the below command :
     N/A
-  ## Usage
-     N/A
+  ## Dependencies
+     babel, ansi-styles,  
   ## License
     This repository is covered under the license '[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)' 
     Refer [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) for more detailed info 
