@@ -14,11 +14,13 @@
   * [License](#License)
   * [Images](#Images)
   * [Questions](#questions)
+  * [Links](#Links)
   ## Installation
-  To install dependencies, run the below command :
-    N/A
+  To install dependencies, run the below command : npm install, install mysql2, bcryptjs, express, express-handlebars,
+  express-session, nodemon, passport, passport-local, sequelize.
+    
   ## Dependencies
-     babel, ansi-styles,  
+       bcryptsjs, express, express-handlebars, express-session, mysql2, nodemon, passport, passport-local, sequelize.
   ## License
     This repository is covered under the license '[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)' 
     Refer [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) for more detailed info 
@@ -42,3 +44,5 @@
    If you have any questions reach us at
    Github : [Keaton-Brewster](https://github.com/Keaton-Brewster/project-2)[Ian E Von Fange](https://github.com/eliaswolfgang)[Justin Yates](https://github.com/justinyates887)[Maggie May Wilder](https://github.com/maggiemaywilder)[Michael Swigart](https://github.com/Michaelswigart)
   
+  ## Links
+     
