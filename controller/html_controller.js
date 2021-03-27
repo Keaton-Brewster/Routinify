@@ -3,16 +3,13 @@ const db = require('../models');
 const {
     Op
 } = require('sequelize');
-// const db = require('../models');
+
 
 module.exports = (app) => {
-    // load home screen
-
     app.get('/sign_up', (req, res) => {
         res.render('signup', {});
     });
 
-    // login (need middleware before (req, res))
     app.get('/', (req, res) => {
         if (req.user) {
             res.redirect('/users/home');
@@ -28,7 +25,6 @@ module.exports = (app) => {
             },
             attributes: ['groupsIds']
         });
-        // userGroups = JSON.parse(userGroups.dataValues.groupsIds);
         userGroups = userGroups.dataValues.groupsIds;
 
 
@@ -52,7 +48,7 @@ module.exports = (app) => {
         } else {
             groups = 'no groups found';
         }
-        // console.log(groups);
+
         res.render('justHome', {
             user: req.user,
             groups: groups
@@ -67,13 +63,6 @@ module.exports = (app) => {
             attributes: ['groupsIds']
         });
         userGroups = userGroups.groupsIds;
-
-        // let userGroupsIds;
-        // if (userGroups === 0) {
-        //     userGroupsIds = '0';
-        // } else {
-        //     userGroupsIds = userGroups.map(ele => ele);
-        // }
 
         const groupData = await db.Group.findAll({
             where: {
@@ -108,7 +97,6 @@ module.exports = (app) => {
         const thisGroupId = parseInt(req.params.id);
 
         allUsers.forEach((user) => {
-            // console.log(user.groupsIds);
             const userGroups = user.groupsIds;
 
             if (userGroups.includes(thisGroupId)) {

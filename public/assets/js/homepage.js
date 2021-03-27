@@ -1,7 +1,7 @@
     $(document).ready(() => {
         //todo Need to get this to do the initial loading of all db data, with a specific fetch. 
         //todo Then the controller will handle the rendering of the db data thru hbs
-
+        
         const createGroupForm = $('#createGroupForm');
         const userForm = $('#userForm');
         const finishedDiv = $('#finished');
