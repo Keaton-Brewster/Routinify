@@ -1,7 +1,30 @@
-here will be your group tasks!
+{{> group_nav_bar}}
 
 <ul>
     {{#each tasks}}
-    <li>{{name}}</li>
+    <li>{{name}}
+        <p>{{notes}}</p>
+    </li>
     {{/each}}
 </ul>
+
+<div class="container">
+    <div class="row">
+        <div class="col-8">
+            <h2>Add a New Task for {{group.name}}</h2>
+            <form id="createTask">
+                <div class="mb-3">
+                    <label for="taskName" class="form-label">Task Name</label>
+                    <input type="text" class="form-control" id="taskName" placeholder="Take out the trash.">
+                </div>
+                <div class="mb-3">
+                    <label for="taskNotes" class="form-label">Add notes for this Task</label>
+                    <textarea class="form-control" id="taskNotes" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-info" id="submitTask">Create Task</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="/assets/js/group_page.js"></script>

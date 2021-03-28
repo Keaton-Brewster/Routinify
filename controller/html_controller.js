@@ -90,10 +90,17 @@ module.exports = (app) => {
                 belongsTo: req.params.groupId
             }
         });
-
         groupTasks = groupTasks.map(ele => ele.dataValues);
 
+        let group = await db.Group.findOne({
+            where: {
+                id: req.params.groupId
+            }
+        });
+        group = group.dataValues;
+
         res.render('group_tasks', {
+            group: group,
             tasks: groupTasks
         });
     });
