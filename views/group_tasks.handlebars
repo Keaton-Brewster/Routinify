@@ -7,11 +7,10 @@
             <ul>
                 {{#each tasks}}
                 {{#if isCompleted}}
-                <div class="card" style="width: 18rem;">
+                <div class="card" data-id="{{id}}" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title">{{name}}</h5>
                         <p class="card-text">{{notes}}</p>
-                        <p class="card-text">Completed at {{updatedAt}}</p>
                     </div>
                 </div>
                 {{/if}}
@@ -27,7 +26,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{name}}</h5>
                         <p class="card-text">{{notes}}</p>
-                        <button type="button" data-id="{{id}}" class="btn btn-success">Completed</button>
+                        <button type="button" data-id="{{id}}" id="completeTask" class="btn btn-success">Completed</button>
                     </div>
                 </div>
                 {{/unless}}
