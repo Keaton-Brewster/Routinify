@@ -8,12 +8,8 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             foreignKey: true
         },
+    }, {
+        onDelete: 'cascade'
     });
-    Group.associate = (models) => {
-        Group.belongsToMany = (models.User, {
-            through: models.User_group
-        });
-
-    };
     return Group;
 };
