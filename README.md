@@ -20,12 +20,18 @@
   express-session, nodemon, passport, passport-local, sequelize.
     
   ## Dependencies
-       bcryptsjs, express, express-handlebars, express-session, mysql2, nodemon, passport, passport-local, sequelize.
+    bcryptsjs   
+    express 
+    express-handlebars  
+    express-session 
+    mysql2  
+    nodemon 
+    passport    
+    passport-local  
+    sequelize.
   ## License
-    This repository is covered under the license '[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)' 
-    Refer [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) for more detailed info 
-    [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-    
+ [![MIT Licence](https://badges.frapsoft.com/os/mit/mit.png?v=103)](https://opensource.org/licenses/mit-license.php)
+
   ## Images
   ![image1](./demo/signup.PNG)
   ![image2](./demo/login.PNG)
@@ -46,9 +52,11 @@
      
   ## Questions
    If you have any questions reach us at
-   Github : [Keaton-Brewster](https://github.com/Keaton-Brewster/project-2)[Ian E Von Fange](https://github.com/eliaswolfgang)[Justin Yates](https://github.com/justinyates887)[Maggie May Wilder](https://github.com/maggiemaywilder)[Michael Swigart](https://github.com/Michaelswigart)
+   Github :     
+   [Keaton-Brewster](https://github.com/Keaton-Brewster/project-2)  
+   [Ian E Von Fange](https://github.com/eliaswolfgang)  
+   [Justin Yates](https://github.com/justinyates887)    
+   [Maggie May Wilder](https://github.com/maggiemaywilder)  
+   [Michael Swigart](https://github.com/Michaelswigart) 
   
   ## Links
-     https://github.com/Keaton-Brewster/project-2
-
-     Place holder for heroku.
