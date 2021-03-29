@@ -11,6 +11,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{name}}</h5>
                         <p class="card-text">{{notes}}</p>
+                        <button type="button" data-id="{{id}}" class="btn btn-danger deleteTask">Delete</button>
                     </div>
                 </div>
                 {{/if}}
@@ -26,7 +27,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{name}}</h5>
                         <p class="card-text">{{notes}}</p>
-                        <button type="button" data-id="{{id}}" id="completeTask" class="btn btn-success">Completed</button>
+                        <button type="button" data-id="{{id}}" class="btn btn-success completeTask">Completed</button>
                     </div>
                 </div>
                 {{/unless}}
