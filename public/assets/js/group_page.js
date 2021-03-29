@@ -31,9 +31,10 @@ $(document).ready(() => {
             groupId: $('span#group').attr('data-id')
         };
 
-        $.post(`/api/tasks/add_task`, newTaskObj)
+        $.post('/api/tasks/add_task', newTaskObj)
             .then(() => {
                 console.log('Added task');
+                location.reload();
             })
             .catch(error => {
                 console.log(error);

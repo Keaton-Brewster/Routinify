@@ -1,12 +1,41 @@
 {{> group_nav_bar}}
 
-<ul>
-    {{#each tasks}}
-    <li>{{name}}
-        <p>{{notes}}</p>
-    </li>
-    {{/each}}
-</ul>
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <h2>Already completed:</h2>
+            <ul>
+                {{#each tasks}}
+                {{#if isCompleted}}
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{name}}</h5>
+                        <p class="card-text">{{notes}}</p>
+                        <p class="card-text">Completed at {{updatedAt}}</p>
+                    </div>
+                </div>
+                {{/if}}
+                {{/each}}
+            </ul>
+        </div>
+        <div class="col-6">
+            <h2>Tasks to be completed:</h2>
+            <ul>
+                {{#each tasks}}
+                {{#unless isCompleted}}
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{name}}</h5>
+                        <p class="card-text">{{notes}}</p>
+                        <button type="button" data-id="{{id}}" class="btn btn-success">Completed</button>
+                    </div>
+                </div>
+                {{/unless}}
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+</div>
 
 <div class="container">
     <div class="row">

@@ -19,8 +19,6 @@ module.exports = (app) => {
     });
 
     app.get('/users/home', isAuthenticated, async (req, res) => {
-
-
         res.render('justHome', {
             user: req.user,
         });
