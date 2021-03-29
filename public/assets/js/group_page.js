@@ -1,7 +1,7 @@
 $(document).ready(() => {
     const addUserForm = $('#addUserForm');
     const addTaskForm = $('#createTask');
-    const removeUserBtns = $('button#removeUser');
+    const removeUserBtns = document.querySelectorAll('.removeUser');
 
     addUserForm.on('submit', (e) => {
         e.preventDefault();
@@ -62,24 +62,26 @@ $(document).ready(() => {
 
     });
 
-    removeUserBtns.on('click', (e) => {
-        e.stopPropagation();
-        const userId = e.target.getAttribute('data-id');
-        const groupId = e.target.getAttribute('data-group');
+    removeUserBtns.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const userId = e.target.getAttribute('data-id');
+            const groupId = e.target.getAttribute('data-group');
+            const userName = e.target.getAttribute('data-name');
 
-        console.log(groupId);
+            console.log(groupId);
 
-        const confirmRemove = confirm('Are you sure you want to remove this user?');
-        if (confirmRemove) {
-            $.ajax({
-                    type: 'PUT',
-                    url: `/api/groups/remove-user/?userId=${userId}&groupId=${groupId}`
-                })
-                .then(() => {
-                    location.reload();
-                })
-                .catch(error => console.error(error));
-        }
-
+            const confirmRemove = confirm(`Are you sure you want to remove "${userName}" from this group?`);
+            if (confirmRemove) {
+                $.ajax({
+                        type: 'PUT',
+                        url: `/api/groups/remove-user/?userId=${userId}&groupId=${groupId}`
+                    })
+                    .then(() => {
+                        location.reload();
+                    })
+                    .catch(error => console.error(error));
+            }
+        });
     });
 });

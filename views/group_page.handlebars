@@ -12,7 +12,7 @@
                 {{#each usersInGroup}}
                 <li class="list-group-item">{{dataValues.username}}
                     {{#if canBeDeleted}}
-                    <button id="removeUser" class="btn btn-danger float-right" data-id="{{dataValues.id}}"
+                    <button class="btn btn-danger float-right removeUser" data-id="{{dataValues.id}}"
                         data-group="{{../group.id}}" data-name="{{dataValues.username}}">remove user</button>
                     {{/if}}
                 </li>
