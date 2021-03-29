@@ -3,22 +3,6 @@
 <div class="container">
     <div class="row">
         <div class="col-6">
-            <h2>Already completed:</h2>
-            <ul>
-                {{#each tasks}}
-                {{#if isCompleted}}
-                <div class="card" data-id="{{id}}" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">{{name}}</h5>
-                        <p class="card-text">{{notes}}</p>
-                        <button type="button" data-id="{{id}}" class="btn btn-danger deleteTask">Delete</button>
-                    </div>
-                </div>
-                {{/if}}
-                {{/each}}
-            </ul>
-        </div>
-        <div class="col-6">
             <h2>Tasks to be completed:</h2>
             <ul>
                 {{#each tasks}}
@@ -31,6 +15,22 @@
                     </div>
                 </div>
                 {{/unless}}
+                {{/each}}
+            </ul>
+        </div>
+        <div class="col-6">
+            <h2>Already completed:</h2>
+            <ul>
+                {{#each tasks}}
+                {{#if isCompleted}}
+                <div class="card" data-id="{{id}}" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{name}}</h5>
+                        <p class="card-text">{{notes}}</p>
+                        <button type="button" data-id="{{id}}" class="btn btn-danger deleteTask">Delete</button>
+                    </div>
+                </div>
+                {{/if}}
                 {{/each}}
             </ul>
         </div>
@@ -50,7 +50,9 @@
                     <label for="taskNotes" class="form-label">Add notes for this Task</label>
                     <textarea class="form-control" id="taskNotes" rows="3"></textarea>
                 </div>
-                <button type="submit" class="btn btn-info" id="submitTask">Create Task</button>
+                <div class="mx-auto">
+                    <button type="submit" class="btn btn-info btn-lg" id="submitTask">Create Task</button>
+                </div>
             </form>
         </div>
     </div>

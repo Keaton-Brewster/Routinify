@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const signUpForm = document.getElementById('sign-up-form');
+    const backToSignIn = document.getElementById('back2signIn');
 
     const insertNewUserData = (newUserData = {
         username: 'string',
@@ -37,7 +38,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         console.log(newUser);
         insertNewUserData(newUser);
-
-
     });
+
+    // backToSignIn.addEventListener('click', () => {
+    //     $.get('/')
+    // })
 });
