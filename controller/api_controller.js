@@ -157,34 +157,6 @@ module.exports = (app) => {
         res.end();
     });
 
-
-    // // get tasks assigned to user
-    // app.get('/api/users/:id', async (req, res) => {
-    //     const dbUser = await db.User.findAll({
-    //         where: {
-    //             // user id
-    //             id: req.params.id
-    //         },
-    //     });
-
-    //     console.log(dbUser);
-
-    //     res.end();
-    // });
-
-    // get messages (requests) logged in user = receiver id (OR response message where user = sender id)
-    app.get('/api/users/messages/', (req, res) => {
-        db.Messages.findAll({
-            include: 'messages',
-            // don't know the right syntax for including the or, so commenting the roughed out version, or maybe variable that includes both and then assign where that =req?
-            // where: {
-            //     'senderId': req.params.id || 'receiverId': req.params.id
-            // }
-        }).then((dbMessages) => console.log(dbMessages));
-
-        res.end();
-    });
-
     // update task
     app.put('/api/tasks/:id', (req, res) => {
         // from req.body -> get table, column, value for query
@@ -206,35 +178,15 @@ module.exports = (app) => {
         res.end();
     });
 
-    // delete user
-    app.delete('/api/user/:id', (req, res) => {
-        db.User.destroy({
-            where: {
-                // user id
-                id: req.params.id,
-            },
-            // }).then(res) {
-            //     console.log(res);   
-            // };
-        });
-
-        res.end();
-    });
-
     // delete tasks
     app.delete('/api/tasks/:id', (req, res) => {
         db.Task.destroy({
             where: {
-                // task id
                 id: req.params.id,
             },
-            // }).then(res) {
-            //     console.log(res);   
-            // };
         });
 
         res.end();
     });
-    // I remember something about needing to return something, but I'm not sure how to apply that until we have a better idea of what's going where. Does that need to happen in each or all of it at the end?
-
+    
 };
