@@ -5,14 +5,6 @@ const addUserToGroup = async (groupId = 'number', userId = 'number') => {
     // just making sure that we are getting integers in here
     groupId = parseInt(groupId);
     userId = parseInt(userId);
-
-    // const n = await db.User_groups.create({
-    //     userId: userId,
-    //     groupId: groupId
-    // });
-
-    // console.log(n);
-
     let userGroups = await db.User.findOne({
         where: {
             id: userId
@@ -64,28 +56,6 @@ module.exports = (app) => {
 
     app.post('/api/groups/add_group', async (req, res) => {
         try {
-            // console.log(req.body);
-            // const user = await db.User.findOne({
-            //     where: {
-            //         id: req.user.id
-            //     }
-            // });
-
-
-            // const newGroup = await db.Group.create({
-            //         name: req.body.name,
-            //         ownerId: req.user.id,
-            //         users: [{
-            //             id: req.user.id,
-            //             User_group: {
-            //                 name: req.body.name
-            //             }
-            //         }]
-            //     }, {
-            //         include: db.User
-            //     })
-            //     .catch(error => console.log(error));
-
             const newGroup = await db.Group.create({
                 name: req.body.name,
                 ownerId: req.user.id
@@ -99,6 +69,22 @@ module.exports = (app) => {
             (error) => console.error(error);
             res.sendStatus(500);
         }
+    });
+
+    app.delete('/api/groups/:groupId/delete', async (req, res) => {
+        try {
+            await db.Group.destroy({
+                    where: {
+                        id: req.params.groupId
+                    }
+                })
+                .then(() => {
+                    res.sendStatus(202);
+                });
+        } catch {
+            error => console.error(error);
+        }
+
     });
 
     app.post('/api/groups/add_user_by_username', async (req, res) => {
@@ -115,61 +101,38 @@ module.exports = (app) => {
 
             addUserToGroup(req.query.group, userId);
             res.sendStatus(201);
-            // res.redirect(`/api/users/add_user_to_group/?group=${req.query.group}&user=${userId}`);
         } catch {
             error => console.log(error);
         }
     });
 
-    //* Was using this route for adding users to the db. 
-    //* Realized that was stupid and just put the add user to group into a function
-    // app.get('/api/users/add_user_to_group/', async (req, res) => {
-    //     try {
-    //         const groupIdFromQuery = parseInt(decodeURIComponent(req.query.group));
-    //         const userIdFromQuery = decodeURIComponent(req.query.user);
+    app.put('/api/groups/remove-user/', async (req, res) => {
+        try {
+            const userId = req.query.userId;
+            const groupId = parseInt(req.query.groupId);
 
-    //         let userGroups = await db.User.findOne({
-    //             where: {
-    //                 id: userIdFromQuery
-    //             },
-    //             attributes: ['groupsIds']
-    //         });
-    //         userGroups = JSON.parse(userGroups.dataValues.groupsIds);
+            let userGroups = await db.User.findOne({
+                where: {
+                    id: userId
+                }
+            });
+            userGroups = userGroups.dataValues.groupsIds;
 
-    //         // let userGroupsIds = [];
+            userGroups = userGroups.filter(id => id !== groupId);
 
-    //         let userGroupsIds;
+            await db.User.update({
+                groupsIds: userGroups
+            }, {
+                where: {
+                    id: userId
+                }
+            });
+            res.sendStatus(200);
+        } catch {
+            () => res.sendStatus(500);
+        }
 
-
-    //         if (userGroups === 0) {
-    //             userGroupsIds = [0, groupIdFromQuery];
-    //         } else {
-    //             userGroupsIds = userGroups.map(el => el);
-    //             userGroupsIds.push(groupIdFromQuery);
-    //         }
-
-    //         userGroupsIds = [...new Set(userGroupsIds)];
-    //         userGroupsIds = [...userGroupsIds];
-
-    //         const updatedGroups = JSON.stringify(userGroupsIds);
-
-    //         await db.User.update({
-    //                 groupsIds: updatedGroups
-    //             }, {
-    //                 where: {
-    //                     id: userIdFromQuery
-    //                 }
-    //             })
-    //             .catch(error => console.error(error));
-    //         res.sendStatus(200);
-
-    //     } catch {
-    //         error => {
-    //             console.error(error);
-    //             res.sendStatus(500);
-    //         };
-    //     }
-    // });
+    });
 
     app.get('/api/groups', async (req, res) => {
         try {
@@ -184,54 +147,30 @@ module.exports = (app) => {
         }
     });
 
-    // To add an existing user to a group
-    //todo MAKE THIS WORK
-    app.put('/api/group/add_user', (req, res) => {
-        res.end();
-    });
-
-
-    // these are the user routes for when logged in
-
-    // I'm literally making up the structure, so we'll need to revisit that when it's set
-    // any authorization stuff will have to be added around/in  
-
-    app.post('/api/tasks/:username', async (req, res) => {
+    app.post('/api/tasks/add_task', async (req, res) => {
         const newTask = await db.Task.create({
-                name: req.body.name,
-                notes: req.body.notes
-            }, //{
-            //     include: [{
-            //         association: db.User
-            //     }]
-            // }
-        );
+            name: req.body.name,
+            notes: req.body.notes,
+            belongsTo: req.body.groupId
+        }, );
         console.log(newTask);
         res.end();
     });
-    // get tasks assigned to user
-    app.get('/api/users/:id', async (req, res) => {
-        const dbUser = await db.User.findAll({
-            where: {
-                // user id
-                id: req.params.id
-            },
-        });
 
-        console.log(dbUser);
 
-        res.end();
-    });
+    // // get tasks assigned to user
+    // app.get('/api/users/:id', async (req, res) => {
+    //     const dbUser = await db.User.findAll({
+    //         where: {
+    //             // user id
+    //             id: req.params.id
+    //         },
+    //     });
 
-    // get unassigned tasks (admin only?)
-    app.get('/api/tasks', (req, res) => {
-        db.Tasks.findAll({
-            include: ['tasks', 'routines'],
-            where: 'no user id assigned',
-        }).then((dbTasks) => console.log(dbTasks));
+    //     console.log(dbUser);
 
-        res.end();
-    });
+    //     res.end();
+    // });
 
     // get messages (requests) logged in user = receiver id (OR response message where user = sender id)
     app.get('/api/users/messages/', (req, res) => {
@@ -247,12 +186,12 @@ module.exports = (app) => {
     });
 
     // update task
-    app.post('/api/tasks/:id', (req, res) => {
+    app.put('/api/tasks/:id', (req, res) => {
         // from req.body -> get table, column, value for query
-        db.Tasks.updateOne(req.body, {
+        db.Task.update(req.body, {
                 where: {
                     // task id
-                    id: req.body.id,
+                    id: req.params.id,
                 },
             }).then((dbTask) => console.log(dbTask))
             .catch((err) => console.error(err));
@@ -260,55 +199,9 @@ module.exports = (app) => {
         res.end();
     });
 
-    // update request (accept)(deny)
-    app.post('/api/messages/:id', (req, res) => {
-        // from req.body -> get table, column, value for query
-        db.Messages.updateOne(req.body, {
-            where: {
-                // message id
-                id: req.body.id,
-            },
-        }).then((dbMessage) => console.log(dbMessage));
-
-        res.end();
-    });
-
-    // create routine
-    app.post('/api/routines', (req, res) => {
-        db.Routine.create(req.body).then((res) => console.log(res));
-
-        res.end();
-    });
-
     // create task
     app.post('/api/tasks', (req, res) => {
         db.Tasks.create(req.body).then((res) => console.log(res));
-
-        res.end();
-    });
-
-    // create request (for asking someone else to do a task)
-    app.post('/api/messages', (req, res) => {
-        db.Message.create(req.body).then((res) => console.log(res));
-
-        res.end();
-    });
-
-    // delete routine
-    app.delete('/api/routines/:id', (req, res) => {
-        db.Routine.destroy({
-            where: {
-                // routine id
-                id: req.params.id,
-            },
-            // (result) => {
-            //     if (result.changedRows === 0) {
-            //         return res.status(404).end();
-            //     } else {
-            //         res.status(200).end();
-            //     };
-            // }
-        });
 
         res.end();
     });

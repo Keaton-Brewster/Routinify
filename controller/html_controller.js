@@ -3,16 +3,13 @@ const db = require('../models');
 const {
     Op
 } = require('sequelize');
-// const db = require('../models');
+
 
 module.exports = (app) => {
-    // load home screen
-
     app.get('/sign_up', (req, res) => {
         res.render('signup', {});
     });
 
-    // login (need middleware before (req, res))
     app.get('/', (req, res) => {
         if (req.user) {
             res.redirect('/users/home');
@@ -21,45 +18,13 @@ module.exports = (app) => {
         }
     });
 
+    // app.get('/users/home', isAuthenticated, async (req, res) => {
+    //     res.render('justHome', {
+    //         user: req.user,
+    //     });
+    // });
+
     app.get('/users/home', isAuthenticated, async (req, res) => {
-        let userGroups = await db.User.findOne({
-            where: {
-                id: req.user.id
-            },
-            attributes: ['groupsIds']
-        });
-        // userGroups = JSON.parse(userGroups.dataValues.groupsIds);
-        userGroups = userGroups.dataValues.groupsIds;
-
-
-        let userGroupsIds;
-        Array.isArray(userGroups) ?
-            userGroupsIds = userGroups.map(ele => ele) :
-            userGroupsIds = '0';
-
-        const groupData = await db.Group.findAll({
-            where: {
-                [Op.and]: {
-                    id: userGroupsIds
-                }
-            }
-        });
-        let groups = [];
-        if (groupData.length > 0) {
-            for (let i = 0; i < groupData.length; i++) {
-                groups.push(groupData[i].dataValues);
-            }
-        } else {
-            groups = 'no groups found';
-        }
-        // console.log(groups);
-        res.render('justHome', {
-            user: req.user,
-            groups: groups
-        });
-    });
-
-    app.get('/users/home/groups', isAuthenticated, async (req, res) => {
         let userGroups = await db.User.findOne({
             where: {
                 id: req.user.id
@@ -68,50 +33,52 @@ module.exports = (app) => {
         });
         userGroups = userGroups.groupsIds;
 
-        // let userGroupsIds;
-        // if (userGroups === 0) {
-        //     userGroupsIds = '0';
-        // } else {
-        //     userGroupsIds = userGroups.map(ele => ele);
-        // }
-
-        const groupData = await db.Group.findAll({
+        let groups = await db.Group.findAll({
             where: {
                 [Op.and]: {
                     id: userGroups
                 }
             }
         });
-        let groups = [];
-        if (groupData.length > 0) {
-            for (let i = 0; i < groupData.length; i++) {
-                groups.push(groupData[i].dataValues);
+        groups = groups.map(group => group.dataValues);
+        groups.forEach(group => {
+            if (group.ownerId === req.user.id) {
+                group.ownerLoggedIn = true;
             }
-        } else {
-            groups = 'no groups found';
-        }
+        });
+
         res.render('yourGroups', {
             user: req.user,
-            groups: groups
+            groups: groups,
         });
     });
 
-    app.get('/users/home/groups/:id', async (req, res) => {
+    app.get('/users/home/groups/:id', isAuthenticated, async (req, res) => {
         const usersInGroup = [];
         const usersNOTInGroup = [];
         const allUsers = await db.User.findAll({});
-        const group = await db.Group.findOne({
+        let group = await db.Group.findOne({
             where: {
                 id: req.params.id
             }
         });
+        group = group.dataValues;
         const thisGroupId = parseInt(req.params.id);
+        let owner = await db.User.findOne({
+            where: {
+                id: group.ownerId
+            }
+        });
+        owner = owner.dataValues;
+
 
         allUsers.forEach((user) => {
-            // console.log(user.groupsIds);
             const userGroups = user.groupsIds;
 
             if (userGroups.includes(thisGroupId)) {
+                if (req.user.id === owner.id && req.user.id !== user.dataValues.id) {
+                    user.canBeDeleted = true;
+                }
                 usersInGroup.push(user);
             } else {
                 usersNOTInGroup.push(user);
@@ -119,9 +86,32 @@ module.exports = (app) => {
         });
 
         res.render('group_page', {
-            group: group.dataValues,
+            owner: owner,
+            group: group,
             usersNOTInGroup: usersNOTInGroup,
-            usersInGroup: usersInGroup
+            usersInGroup: usersInGroup,
+
+        });
+    });
+
+    app.get('/users/home/groups/:groupId/tasks', isAuthenticated, async (req, res) => {
+        let groupTasks = await db.Task.findAll({
+            where: {
+                belongsTo: req.params.groupId
+            }
+        });
+        groupTasks = groupTasks.map(ele => ele.dataValues);
+
+        let group = await db.Group.findOne({
+            where: {
+                id: req.params.groupId
+            }
+        });
+        group = group.dataValues;
+
+        res.render('group_tasks', {
+            group: group,
+            tasks: groupTasks
         });
     });
 };

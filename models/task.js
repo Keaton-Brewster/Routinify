@@ -8,19 +8,16 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TEXT,
             length: 'tiny',
             allowNull: true
+        },
+        belongsTo: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        isCompleted: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+            defaultValue: false
         }
     });
-    Task.associate = (models) => {
-        Task.belongsToMany(models.User, {
-            through: 'UserTasks',
-            onDelete: 'cascade'
-        });
-
-        Task.belongsToMany(models.Routine, {
-            through: 'TaskRoutines',
-            onDelete: 'cascade'
-        });
-    };
-    
     return Task;
 };

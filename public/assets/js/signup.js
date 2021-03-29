@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
         username: 'string',
         email: 'email',
         password: 'password',
-        isAdmin: false
     }) => {
         $.post('/api/sign_up', newUserData)
             .then(() => {
@@ -24,7 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
             username: $('#signupUsername').val(),
             email: $('#signupEmail').val(),
             password: $('#password').val(),
-            isAdmin: false
         };
 
         if (!confirmUsername || newUser.username !== confirmUsername) {
@@ -37,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Passwords do not match');
             return;
         }
+        console.log(newUser);
         insertNewUserData(newUser);
 
 
