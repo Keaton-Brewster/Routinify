@@ -58,12 +58,25 @@ module.exports = (app) => {
         const usersInGroup = [];
         const usersNOTInGroup = [];
         const allUsers = await db.User.findAll({});
-        const group = await db.Group.findOne({
+        let group = await db.Group.findOne({
             where: {
                 id: req.params.id
             }
         });
+        group = group.dataValues;
         const thisGroupId = parseInt(req.params.id);
+        let owner = await db.User.findOne({
+            where: {
+                id: group.ownerId
+            }
+        });
+        owner = owner.dataValues;
+
+        let ownerLoggedIn;
+        req.user.id === owner.id ?
+            ownerLoggedIn = true :
+            ownerLoggedIn = false;
+
 
         allUsers.forEach((user) => {
             const userGroups = user.groupsIds;
@@ -76,9 +89,11 @@ module.exports = (app) => {
         });
 
         res.render('group_page', {
-            group: group.dataValues,
+            owner: owner,
+            group: group,
             usersNOTInGroup: usersNOTInGroup,
-            usersInGroup: usersInGroup
+            usersInGroup: usersInGroup,
+            ownerLoggedIn: ownerLoggedIn,
         });
     });
 

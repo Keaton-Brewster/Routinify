@@ -3,6 +3,10 @@
 <div class="container m-5">
     <div class="row">
         <div class="col-4">
+            <h2>Owner</h2>
+            <ul class="list-group">
+                <li class="list-group-item">{{owner.username}}</li>
+            </ul>
             <h2>Users</h2>
             <ul class="list-group">
                 {{#each usersInGroup}}
@@ -25,6 +29,16 @@
                 <button type="submit" id="addUserButton" data-id="{{group.id}}" class="btn btn-primary">ADD</button>
             </form>
         </div>
+        {{#if ownerLoggedIn}}
+        <div class="my-5">
+            <form id="addUserForm" data-id="{{group.id}}">
+                <h2>Delete Group: {{group.name}}</h2>
+                <div class="mb-3">
+                    <button class="btn btn-danger">DELETE</button>
+                </div>
+            </form>
+        </div>
+        {{/if}}
     </div>
     <div class="row"></div>
 </div>
