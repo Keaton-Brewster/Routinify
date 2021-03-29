@@ -18,7 +18,6 @@ $(document).ready(() => {
     });
 
     deleteGroupBtn.on('click', (e) => {
-        e.preventDefault();
         e.stopPropagation();
         const groupName = deleteGroupBtn.attr('data-name');
         const groupId = deleteGroupBtn.attr('data-id');
@@ -27,6 +26,9 @@ $(document).ready(() => {
             $.ajax({
                     url: `/api/groups/${groupId}/delete`,
                     type: 'DELETE'
+                })
+                .then(() => {
+                    location.reload();
                 })
                 .catch(error => console.error(error));
 

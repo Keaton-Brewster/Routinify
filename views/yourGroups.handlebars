@@ -14,7 +14,7 @@
             <li class="list-group-item text-center">
                 <a class="btn btn-info select-group" href="/users/home/groups/{{id}}" data-id="{{id}}">{{name}}</a>
                 {{#if ownerLoggedIn}}
-                <a class="btn btn-danger" data-id="{{id}}" data-name="{{name}}">DELETE</a>
+                <a class="btn btn-danger" id="deleteGroup" data-id="{{id}}" data-name="{{name}}">DELETE</a>
                 {{/if}}
             </li>
             {{/each}}

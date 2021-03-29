@@ -121,10 +121,7 @@ module.exports = (app) => {
                     }
                 })
                 .then(() => {
-                    // res.sendStatus(202);
-
-                    req.method = 'GET';
-                    res.redirect('/users/home');
+                    res.sendStatus(202);
                 });
         } catch {
             error => console.error(error);
