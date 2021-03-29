@@ -18,12 +18,6 @@ module.exports = (app) => {
         }
     });
 
-    // app.get('/users/home', isAuthenticated, async (req, res) => {
-    //     res.render('justHome', {
-    //         user: req.user,
-    //     });
-    // });
-
     app.get('/users/home', isAuthenticated, async (req, res) => {
         let userGroups = await db.User.findOne({
             where: {
@@ -71,10 +65,14 @@ module.exports = (app) => {
         });
         owner = owner.dataValues;
 
+
         allUsers.forEach((user) => {
             const userGroups = user.groupsIds;
 
             if (userGroups.includes(thisGroupId)) {
+                if (req.user.id === owner.id && req.user.id !== user.dataValues.id) {
+                    user.canBeDeleted = true;
+                }
                 usersInGroup.push(user);
             } else {
                 usersNOTInGroup.push(user);
@@ -86,6 +84,7 @@ module.exports = (app) => {
             group: group,
             usersNOTInGroup: usersNOTInGroup,
             usersInGroup: usersInGroup,
+
         });
     });
 
