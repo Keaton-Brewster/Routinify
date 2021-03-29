@@ -50,7 +50,7 @@ $(document).ready(() => {
         $.ajax({
             url: `/api/tasks/${taskId}`,
             type: 'PUT',
-            data: { isCompleted: true}
+            data: { isCompleted: true }
         })
             .done(() => {
                 alert('Task complete!');
