@@ -8,6 +8,8 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             foreignKey: true
         },
+    }, {
+        onDelete: 'cascade'
     });
     return Group;
 };

@@ -21,6 +21,8 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.JSON,
             defaultValue: []
         },
+    }, {
+        onDelete: 'cascade'
     });
 
     User.prototype.validPassword = function (password) {
