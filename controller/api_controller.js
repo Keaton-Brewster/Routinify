@@ -71,6 +71,22 @@ module.exports = (app) => {
         }
     });
 
+    app.delete('/api/groups/:groupId/delete', async (req, res) => {
+        try {
+            await db.Group.destroy({
+                    where: {
+                        id: req.params.groupId
+                    }
+                })
+                .then(() => {
+                    res.sendStatus(202);
+                });
+        } catch {
+            error => console.error(error);
+        }
+
+    });
+
     app.post('/api/groups/add_user_by_username', async (req, res) => {
         try {
             const username = decodeURIComponent(req.query.user);
@@ -112,23 +128,6 @@ module.exports = (app) => {
         console.log(newTask);
         res.end();
     });
-
-    app.delete('/api/groups/:groupId/delete', async (req, res) => {
-        try {
-            await db.Group.destroy({
-                    where: {
-                        id: req.params.groupId
-                    }
-                })
-                .then(() => {
-                    res.sendStatus(202);
-                });
-        } catch {
-            error => console.error(error);
-        }
-
-    });
-
 
 
     // // get tasks assigned to user
