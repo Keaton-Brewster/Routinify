@@ -41,4 +41,21 @@ $(document).ready(() => {
             });
 
     });
+
+    $('#completeTask').on('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const taskId = $('#completeTask').attr('data-id');
+
+        $.ajax({
+            url: `/api/tasks/${taskId}`,
+            type: 'PUT',
+            data: { isCompleted: true}
+        })
+            .done(() => {
+                alert('Task complete!');
+                location.reload();
+            });
+
+    });
 });

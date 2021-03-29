@@ -115,29 +115,19 @@ module.exports = (app) => {
     });
 
 
-    // get tasks assigned to user
-    app.get('/api/users/:id', async (req, res) => {
-        const dbUser = await db.User.findAll({
-            where: {
-                // user id
-                id: req.params.id
-            },
-        });
+    // // get tasks assigned to user
+    // app.get('/api/users/:id', async (req, res) => {
+    //     const dbUser = await db.User.findAll({
+    //         where: {
+    //             // user id
+    //             id: req.params.id
+    //         },
+    //     });
 
-        console.log(dbUser);
+    //     console.log(dbUser);
 
-        res.end();
-    });
-
-    // get unassigned tasks (admin only?)
-    app.get('/api/tasks', (req, res) => {
-        db.Tasks.findAll({
-            include: ['tasks', 'routines'],
-            where: 'no user id assigned',
-        }).then((dbTasks) => console.log(dbTasks));
-
-        res.end();
-    });
+    //     res.end();
+    // });
 
     // get messages (requests) logged in user = receiver id (OR response message where user = sender id)
     app.get('/api/users/messages/', (req, res) => {
@@ -153,12 +143,12 @@ module.exports = (app) => {
     });
 
     // update task
-    app.post('/api/tasks/:id', (req, res) => {
+    app.put('/api/tasks/:id', (req, res) => {
         // from req.body -> get table, column, value for query
-        db.Tasks.updateOne(req.body, {
+        db.Task.update(req.body, {
                 where: {
                     // task id
-                    id: req.body.id,
+                    id: req.params.id,
                 },
             }).then((dbTask) => console.log(dbTask))
             .catch((err) => console.error(err));
@@ -166,55 +156,9 @@ module.exports = (app) => {
         res.end();
     });
 
-    // update request (accept)(deny)
-    app.post('/api/messages/:id', (req, res) => {
-        // from req.body -> get table, column, value for query
-        db.Messages.updateOne(req.body, {
-            where: {
-                // message id
-                id: req.body.id,
-            },
-        }).then((dbMessage) => console.log(dbMessage));
-
-        res.end();
-    });
-
-    // create routine
-    app.post('/api/routines', (req, res) => {
-        db.Routine.create(req.body).then((res) => console.log(res));
-
-        res.end();
-    });
-
     // create task
     app.post('/api/tasks', (req, res) => {
         db.Tasks.create(req.body).then((res) => console.log(res));
-
-        res.end();
-    });
-
-    // create request (for asking someone else to do a task)
-    app.post('/api/messages', (req, res) => {
-        db.Message.create(req.body).then((res) => console.log(res));
-
-        res.end();
-    });
-
-    // delete routine
-    app.delete('/api/routines/:id', (req, res) => {
-        db.Routine.destroy({
-            where: {
-                // routine id
-                id: req.params.id,
-            },
-            // (result) => {
-            //     if (result.changedRows === 0) {
-            //         return res.status(404).end();
-            //     } else {
-            //         res.status(200).end();
-            //     };
-            // }
-        });
 
         res.end();
     });
