@@ -1,5 +1,6 @@
 $(document).ready(() => {
     const createGroupBtn = $('#createGroup');
+    const deleteGroupBtn = $('#deleteGroup');
 
     createGroupBtn.on('click', () => {
 
@@ -16,4 +17,20 @@ $(document).ready(() => {
 
     });
 
+    deleteGroupBtn.on('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const groupName = deleteGroupBtn.attr('data-name');
+        const groupId = deleteGroupBtn.attr('data-id');
+        const confirmDelete = confirm(`Are you sure you want to delete: "${groupName}"`);
+        if (confirmDelete) {
+            $.ajax({
+                    url: `/api/groups/${groupId}/delete`,
+                    type: 'DELETE'
+                })
+                .catch(error => console.error(error));
+
+        }
+        return;
+    });
 });

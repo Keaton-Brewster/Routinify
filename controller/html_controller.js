@@ -33,24 +33,23 @@ module.exports = (app) => {
         });
         userGroups = userGroups.groupsIds;
 
-        const groupData = await db.Group.findAll({
+        let groups = await db.Group.findAll({
             where: {
                 [Op.and]: {
                     id: userGroups
                 }
             }
         });
-        let groups = [];
-        if (groupData.length > 0) {
-            for (let i = 0; i < groupData.length; i++) {
-                groups.push(groupData[i].dataValues);
+        groups = groups.map(group => group.dataValues);
+        groups.forEach(group => {
+            if (group.ownerId === req.user.id) {
+                group.ownerLoggedIn = true;
             }
-        } else {
-            groups = 'no groups found';
-        }
+        });
+
         res.render('yourGroups', {
             user: req.user,
-            groups: groups
+            groups: groups,
         });
     });
 
@@ -72,12 +71,6 @@ module.exports = (app) => {
         });
         owner = owner.dataValues;
 
-        let ownerLoggedIn;
-        req.user.id === owner.id ?
-            ownerLoggedIn = true :
-            ownerLoggedIn = false;
-
-
         allUsers.forEach((user) => {
             const userGroups = user.groupsIds;
 
@@ -93,7 +86,6 @@ module.exports = (app) => {
             group: group,
             usersNOTInGroup: usersNOTInGroup,
             usersInGroup: usersInGroup,
-            ownerLoggedIn: ownerLoggedIn,
         });
     });
 

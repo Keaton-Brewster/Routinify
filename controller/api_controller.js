@@ -39,7 +39,7 @@ module.exports = (app) => {
         db.User.create(req.body)
             .then(() => {
                 res.sendStatus(207);
-            })    
+            })
             .catch(error => {
                 res.status(401).json(error);
             });
@@ -105,14 +105,33 @@ module.exports = (app) => {
 
     app.post('/api/tasks/add_task', async (req, res) => {
         const newTask = await db.Task.create({
-                name: req.body.name,
-                notes: req.body.notes,
-                belongsTo: req.body.groupId
-            },
-        );
+            name: req.body.name,
+            notes: req.body.notes,
+            belongsTo: req.body.groupId
+        }, );
         console.log(newTask);
         res.end();
     });
+
+    app.delete('/api/groups/:groupId/delete', async (req, res) => {
+        try {
+            await db.Group.destroy({
+                    where: {
+                        id: req.params.groupId
+                    }
+                })
+                .then(() => {
+                    // res.sendStatus(202);
+
+                    req.method = 'GET';
+                    res.redirect('/users/home');
+                });
+        } catch {
+            error => console.error(error);
+        }
+
+    });
+
 
 
     // get tasks assigned to user
