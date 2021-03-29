@@ -106,6 +106,34 @@ module.exports = (app) => {
         }
     });
 
+    app.put('/api/groups/remove-user/', async (req, res) => {
+        try {
+            const userId = req.query.userId;
+            const groupId = parseInt(req.query.groupId);
+
+            let userGroups = await db.User.findOne({
+                where: {
+                    id: userId
+                }
+            });
+            userGroups = userGroups.dataValues.groupsIds;
+
+            userGroups = userGroups.filter(id => id !== groupId);
+
+            await db.User.update({
+                groupsIds: userGroups
+            }, {
+                where: {
+                    id: userId
+                }
+            });
+            res.sendStatus(200);
+        } catch {
+            () => res.sendStatus(500);
+        }
+
+    });
+
     app.get('/api/groups', async (req, res) => {
         try {
             const groups = await db.Group.findAll({});
