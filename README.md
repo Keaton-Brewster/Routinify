@@ -27,11 +27,11 @@
     [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
     
   ## Images
-      ![image1](./demo/signup.PNG)
-      ![image2](./demo/login.PNG)
-      ![image3](./demo/dashboard.PNG)
-      ![image4](./demo/user.PNG)
-      ![image5](./demo/task.PNG)
+      ![image1]('./demo/signup.PNG')
+      ![image2]('./demo/login.PNG')
+      ![image3]('./demo/dashboard.PNG')
+      ![image4]('./demo/user.PNG')
+      ![image5]('./demo/task.PNG')
      
   ## Contribution
      Keaton-Brewster, Eliaswolfgang, Justin Yates, Maggiemaywilder, Michael.
