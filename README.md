@@ -27,21 +27,21 @@
     [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
     
   ## Images
-      ![image1](./demo/signup.PNG)
-      ![image2](./demo/login.PNG)
-      ![image3](./demo/dashboard.PNG)
-      ![image4](./demo/user.PNG)
-      ![image5](./demo/task.PNG)
+  ![image1](./demo/signup.PNG)
+  ![image2](./demo/login.PNG)
+  ![image3](./demo/dashboard.PNG)
+  ![image4](./demo/user.PNG)
+  ![image5](./demo/task.PNG)
      
   ## Contribution
      Keaton-Brewster, Eliaswolfgang, Justin Yates, Maggiemaywilder, Michael.
      
   ## Faces of the team
-      ![image](https://user-images.githubusercontent.com/73671076/112399291-fc12a300-8cd3-11eb-8c81-02c3014a9bdd.png)
-      ![image](https://user-images.githubusercontent.com/73671076/112399401-22384300-8cd4-11eb-90de-69b20d485dd3.png)
-      ![image](https://user-images.githubusercontent.com/73671076/112399455-3c722100-8cd4-11eb-8afb-06c5282fa472.png)
-      ![image](https://user-images.githubusercontent.com/73671076/112399519-5ca1e000-8cd4-11eb-9f30-1da60a2c4bd1.png)
-      ![michaelaswigartat27 2](https://user-images.githubusercontent.com/73671076/112399660-a1c61200-8cd4-11eb-8f8d-d6f0e339fe84.png)
+  ![image](https://user-images.githubusercontent.com/73671076/112399291-fc12a300-8cd3-11eb-8c81-02c3014a9bdd.png)
+  ![image](https://user-images.githubusercontent.com/73671076/112399401-22384300-8cd4-11eb-90de-69b20d485dd3.png)
+  ![image](https://user-images.githubusercontent.com/73671076/112399455-3c722100-8cd4-11eb-8afb-06c5282fa472.png)
+  ![image](https://user-images.githubusercontent.com/73671076/112399519-5ca1e000-8cd4-11eb-9f30-1da60a2c4bd1.png)
+  ![michaelaswigartat27 2](https://user-images.githubusercontent.com/73671076/112399660-a1c61200-8cd4-11eb-8f8d-d6f0e339fe84.png)
 
      
   ## Questions
