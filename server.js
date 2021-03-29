@@ -6,6 +6,14 @@ const passport = require('./config/passport.js');
 const PORT = process.env.PORT || 8080;
 const db = require('./models');
 
+let seq;
+if (process.env.JAWSDB_URL) {
+  seq = new db.Sequelize(process.env.JAWSDB_URL);
+}
+else {
+  seq = require('./models');
+}
+
 const app = express();
 app.use(express.urlencoded({
   extended: true
@@ -32,7 +40,7 @@ app.set('view engine', 'handlebars');
 require('./controller/api_controller')(app);
 require('./controller/html_controller')(app);
 
-db.sequelize.sync({force: true}).then(() => {
+seq.sequelize.sync({force: true}).then(() => {
   try {
     app.listen(PORT, () => {
       console.log(`Listening on port ${PORT}.`);
