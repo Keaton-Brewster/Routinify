@@ -1,6 +1,8 @@
 $(document).ready(() => {
     const addUserForm = $('#addUserForm');
     const addTaskForm = $('#createTask');
+    const completeTaskBtns = document.querySelectorAll('.completeTask');
+    const deleteTaskBtns = document.querySelectorAll('.deleteTask');
     const removeUserBtns = document.querySelectorAll('.removeUser');
 
     addUserForm.on('submit', (e) => {
@@ -43,23 +45,43 @@ $(document).ready(() => {
 
     });
 
-    $('#completeTask').on('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const taskId = $('#completeTask').attr('data-id');
+    completeTaskBtns.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const taskId = e.target.getAttribute('data-id');
 
-        $.ajax({
+            $.ajax({
                 url: `/api/tasks/${taskId}`,
                 type: 'PUT',
                 data: {
                     isCompleted: true
                 }
             })
-            .done(() => {
-                alert('Task complete!');
-                location.reload();
-            });
+                .done(() => {
+                    alert('Task complete!');
+                    location.reload();
+                });
 
+        });
+    });
+
+    deleteTaskBtns.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const taskId = e.target.getAttribute('data-id');
+
+            $.ajax({
+                url: `/api/tasks/${taskId}`,
+                type: 'DELETE',
+            })
+                .done(() => {
+                    alert('Task deleted!');
+                    location.reload();
+                });
+
+        });
     });
 
     removeUserBtns.forEach(button => {
@@ -74,9 +96,9 @@ $(document).ready(() => {
             const confirmRemove = confirm(`Are you sure you want to remove "${userName}" from this group?`);
             if (confirmRemove) {
                 $.ajax({
-                        type: 'PUT',
-                        url: `/api/groups/remove-user/?userId=${userId}&groupId=${groupId}`
-                    })
+                    type: 'PUT',
+                    url: `/api/groups/remove-user/?userId=${userId}&groupId=${groupId}`
+                })
                     .then(() => {
                         location.reload();
                     })
