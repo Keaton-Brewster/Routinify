@@ -42,6 +42,7 @@ $(document).ready(() => {
 
     });
 
+<<<<<<< HEAD
     const deleteGroupBtn = $('#deleteGroup');
 
 
@@ -60,5 +61,22 @@ $(document).ready(() => {
 
         }
         return;
+=======
+    $('#completeTask').on('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const taskId = $('#completeTask').attr('data-id');
+
+        $.ajax({
+            url: `/api/tasks/${taskId}`,
+            type: 'PUT',
+            data: { isCompleted: true }
+        })
+            .done(() => {
+                alert('Task complete!');
+                location.reload();
+            });
+
+>>>>>>> 739e4be051e2597a6cfdb96d687bbb7def8c04cf
     });
 });
