@@ -58,4 +58,20 @@ $(document).ready(() => {
             });
 
     });
+
+    $('#deleteTask').on('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const taskId = $('#deleteTask').attr('data-id');
+
+        $.ajax({
+            url: `/api/tasks/${taskId}`,
+            type: 'DELETE',
+        })
+            .done(() => {
+                alert('Task deleted!');
+                location.reload();
+            });
+
+    });
 });
