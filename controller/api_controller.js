@@ -39,7 +39,7 @@ module.exports = (app) => {
         db.User.create(req.body)
             .then(() => {
                 res.sendStatus(207);
-            })
+            })    
             .catch(error => {
                 res.status(401).json(error);
             });
@@ -103,21 +103,12 @@ module.exports = (app) => {
         }
     });
 
-    // these are the user routes for when logged in
-
-    // I'm literally making up the structure, so we'll need to revisit that when it's set
-    // any authorization stuff will have to be added around/in  
-
     app.post('/api/tasks/add_task', async (req, res) => {
         const newTask = await db.Task.create({
                 name: req.body.name,
                 notes: req.body.notes,
                 belongsTo: req.body.groupId
-            }, //{
-            //     include: [{
-            //         association: db.User
-            //     }]
-            // }
+            },
         );
         console.log(newTask);
         res.end();

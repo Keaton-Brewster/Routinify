@@ -19,8 +19,6 @@ module.exports = (app) => {
     });
 
     app.get('/users/home', isAuthenticated, async (req, res) => {
-
-
         res.render('justHome', {
             user: req.user,
         });
@@ -42,13 +40,11 @@ module.exports = (app) => {
                 }
             }
         });
-        console.log('!!!groupData!!!', groupData, '---------------------------');
         let groups = [];
         if (groupData.length > 0) {
             for (let i = 0; i < groupData.length; i++) {
                 groups.push(groupData[i].dataValues);
             }
-            console.log(groups);
         } else {
             groups = 'no groups found';
         }
