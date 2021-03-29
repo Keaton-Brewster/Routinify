@@ -11,10 +11,10 @@
     <div>
         <ul class="list-group list-group-flush">
             {{#each groups}}
-            <li class="list-group-item text-center">
-                <a class="btn btn-info select-group" href="/users/home/groups/{{id}}" data-id="{{id}}">{{name}}</a>
+            <li class="list-group-item text-center mb-2">
+                <a class="btn btn-info btn-lg select-group" href="/users/home/groups/{{id}}" data-id="{{id}}">{{name}}</a>
                 {{#if ownerLoggedIn}}
-                <a class="btn btn-danger deleteGroup" data-id="{{id}}" data-name="{{name}}">DELETE</a>
+                <a class="btn btn-outline-danger deleteGroup" data-id="{{id}}" data-name="{{name}}">DELETE</a>
                 {{/if}}
             </li>
             {{/each}}
@@ -30,7 +30,9 @@
     <form class="form-group">
         <label for="groupName" class="form-label">Name your group</label>
         <input type="text" class="form-control col" id="groupName">
-        <button class="btn" id="createGroup">Create</button>
+        <div class="text-center mt-2">
+            <button class="btn btn-success" id="createGroup">Create</button>
+        </div>
     </form>
     {{!-- <br><br>
     <div class="p-3 m-2">
