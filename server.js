@@ -6,15 +6,6 @@ const passport = require('./config/passport.js');
 const PORT = process.env.PORT || 8080;
 const db = require('./models');
 
-// temporary attempt to fix JawsDB
-// let seq;
-// if (process.env.JAWSDB_URL) {
-//   seq = new db.Sequelize(process.env.JAWSDB_URL);
-// }
-// else {
-//   seq = require('./models');
-// }
-
 const app = express();
 app.use(express.urlencoded({
   extended: true
