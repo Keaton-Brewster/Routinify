@@ -32,7 +32,7 @@ app.set('view engine', 'handlebars');
 require('./controller/api_controller')(app);
 require('./controller/html_controller')(app);
 
-db.sequelize.sync().then(() => {
+db.sequelize.sync(force: true).then(() => {
   try {
     app.listen(PORT, () => {
       console.log(`Listening on port ${PORT}.`);

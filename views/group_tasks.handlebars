@@ -10,8 +10,12 @@
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
                         <h5 class="card-title">{{name}}</h5>
+                        {{#if UserId}}
+                        <p class="card-text text-muted assigned" data-id="{{UserId}}"></p>
+                        {{/if}}
                         <p class="card-text">{{notes}}</p>
                         <button type="button" data-id="{{id}}" class="btn btn-success completeTask">Completed</button>
+                        <button type="button" data-id="{{id}}" class="btn btn-info updateTask">Update</button>
                     </div>
                 </div>
                 {{/unless}}
@@ -49,6 +53,15 @@
                 <div class="mb-3">
                     <label for="taskNotes" class="form-label">Add notes for this Task</label>
                     <textarea class="form-control" id="taskNotes" rows="3"></textarea>
+                </div>
+                <div class="mb-3">
+                    <h4>Assign this task</h4>
+                    <label for="usersInGroup">Select a user to assign this task to</label>
+                    <select class="form-control" id="usersInGroup">
+                        {{#each groupUsers}}
+                        <option id="{{dataValues.id}}">{{dataValues.username}}</option>
+                        {{/each}}
+                    </select>
                 </div>
                 <div class="mx-auto">
                     <button type="submit" class="btn btn-info btn-lg" id="submitTask">Create Task</button>
