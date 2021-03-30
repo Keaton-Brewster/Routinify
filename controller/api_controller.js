@@ -151,8 +151,9 @@ module.exports = (app) => {
         const newTask = await db.Task.create({
             name: req.body.name,
             notes: req.body.notes,
-            belongsTo: req.body.groupId
-        }, );
+            belongsTo: req.body.groupId,
+            UserId: req.body.assignedTo
+        });
         console.log(newTask);
         res.end();
     });

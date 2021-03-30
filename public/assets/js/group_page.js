@@ -27,11 +27,13 @@ $(document).ready(() => {
     addTaskForm.on('submit', (e) => {
         e.preventDefault();
         e.stopPropagation();
-
+        const sel = $('#usersInGroup');
+        const assignedId = parseInt(sel.find('option:selected').attr('id'));
         const newTaskObj = {
             name: $('input#taskName').val().trim(),
             notes: $('textarea').val().trim(),
-            groupId: $('span#group').attr('data-id')
+            groupId: $('span#group').attr('data-id'),
+            assignedTo: assignedId
         };
 
         $.post('/api/tasks/add_task', newTaskObj)

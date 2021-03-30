@@ -89,11 +89,16 @@ module.exports = (app) => {
     });
 
     app.get('/users/home/groups/:groupId/tasks', isAuthenticated, async (req, res) => {
+        const usersInGroup = [];
+        const allUsers = await db.User.findAll({});
+        const thisGroupId = parseInt(req.params.groupId);
+
         let groupTasks = await db.Task.findAll({
             where: {
                 belongsTo: req.params.groupId
             }
         });
+
         groupTasks = groupTasks.map(ele => ele.dataValues);
 
         let group = await db.Group.findOne({
@@ -101,11 +106,22 @@ module.exports = (app) => {
                 id: req.params.groupId
             }
         });
+
+        allUsers.forEach((user) => {
+            const userGroups = user.groupsIds;
+            if (userGroups.includes(thisGroupId)) {
+                usersInGroup.push(user);  
+            } else {
+                console.log(`${user.username} is not in ${group.name}`);
+            }
+        });
+        
         group = group.dataValues;
 
         res.render('group_tasks', {
             group: group,
-            tasks: groupTasks
+            tasks: groupTasks,
+            groupUsers: usersInGroup
         });
     });
 };
