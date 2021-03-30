@@ -147,6 +147,36 @@ module.exports = (app) => {
         }
     });
 
+    app.get('/api/tasks', async (req, res) => {
+       try {
+        const tasks = await db.Task.findAll({});
+        if (tasks) {
+            res.json(tasks);
+        } else {
+            res.sendStatus(404);
+        }
+       } catch {
+         res.sendStatus(500);
+       } 
+    });
+
+    app.get('/api/users/:id', async (req, res) => {
+        try {
+            const user = await db.User.findOne({
+                where: {
+                    id: req.params.id
+                }
+            });
+            if (user) {
+                res.send(user);
+            } else {
+                res.sendStatus(404);
+            }
+        } catch {
+            res.sendStatus(500);
+        }
+    });
+
     app.post('/api/tasks/add_task', async (req, res) => {
         const newTask = await db.Task.create({
             name: req.body.name,

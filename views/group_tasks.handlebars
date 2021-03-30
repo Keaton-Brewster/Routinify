@@ -11,10 +11,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{name}}</h5>
                         {{#if UserId}}
-                        <p class="card-text text-muted">Assigned to User {{UserId}}</span></p>
-                        {{#else}}
-                        <p class="card-text text-muted">Click Update to assign this task</p>
-                        {{/else}}
+                        <p class="card-text text-muted assigned" data-id="{{UserId}}"></p>
                         {{/if}}
                         <p class="card-text">{{notes}}</p>
                         <button type="button" data-id="{{id}}" class="btn btn-success completeTask">Completed</button>
