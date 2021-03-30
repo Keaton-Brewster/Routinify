@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         belongsTo: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true
         },
         isCompleted: {
             type: DataTypes.BOOLEAN,
@@ -19,5 +19,9 @@ module.exports = (sequelize, DataTypes) => {
             defaultValue: false
         }
     });
+
+    Task.associate = (models) => {
+        Task.belongsTo(models.User);
+    };
     return Task;
 };

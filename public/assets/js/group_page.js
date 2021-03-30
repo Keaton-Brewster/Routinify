@@ -4,7 +4,22 @@ $(document).ready(() => {
     const completeTaskBtns = document.querySelectorAll('.completeTask');
     const deleteTaskBtns = document.querySelectorAll('.deleteTask');
     const removeUserBtns = document.querySelectorAll('.removeUser');
+    const assignedEls = $('.assigned');
 
+    async function getAssignments(elements) {
+        let result;
+        for (const p of elements) {
+            const uid = parseInt(p.getAttribute('data-id'));
+            result = await $.ajax({
+                url: `/api/users/${uid}`,
+                method: 'GET'
+            });
+           p.append(`Assigned to: ${result.username}`);
+        }
+    }
+
+    getAssignments(assignedEls);
+    
     addUserForm.on('submit', (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -27,11 +42,13 @@ $(document).ready(() => {
     addTaskForm.on('submit', (e) => {
         e.preventDefault();
         e.stopPropagation();
-
+        const sel = $('#usersInGroup');
+        const assignedId = parseInt(sel.find('option:selected').attr('id'));
         const newTaskObj = {
             name: $('input#taskName').val().trim(),
             notes: $('textarea').val().trim(),
-            groupId: $('span#group').attr('data-id')
+            groupId: $('span#group').attr('data-id'),
+            assignedTo: assignedId
         };
 
         $.post('/api/tasks/add_task', newTaskObj)
@@ -53,15 +70,14 @@ $(document).ready(() => {
 
             $.ajax({
                 url: `/api/tasks/${taskId}`,
-                type: 'PUT',
+                method: 'PUT',
                 data: {
                     isCompleted: true
                 }
-            })
-                .done(() => {
-                    alert('Task complete!');
-                    location.reload();
-                });
+            }).done(() => {
+                alert('Task complete!');
+                location.reload();
+            });
 
         });
     });
@@ -74,13 +90,11 @@ $(document).ready(() => {
 
             $.ajax({
                 url: `/api/tasks/${taskId}`,
-                type: 'DELETE',
-            })
-                .done(() => {
-                    alert('Task deleted!');
-                    location.reload();
-                });
-
+                method: 'DELETE',
+            }).done(() => {
+                alert('Task deleted!');
+                location.reload();
+            });
         });
     });
 
@@ -96,7 +110,7 @@ $(document).ready(() => {
             const confirmRemove = confirm(`Are you sure you want to remove "${userName}" from this group?`);
             if (confirmRemove) {
                 $.ajax({
-                    type: 'PUT',
+                    method: 'PUT',
                     url: `/api/groups/remove-user/?userId=${userId}&groupId=${groupId}`
                 })
                     .then(() => {

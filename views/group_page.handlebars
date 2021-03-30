@@ -27,8 +27,8 @@
                         placeholder="Search by Username">
                     <datalist id="allUsers">
                         {{#each usersNOTInGroup}}
-                        <option value={{dataValues.username}}>
-                            {{/each}}
+                        <option value="{{dataValues.username}}">
+                        {{/each}}
                     </datalist>
                 </div>
                 <button type="submit" id="addUserButton" data-id="{{group.id}}" class="btn btn-primary">ADD</button>
