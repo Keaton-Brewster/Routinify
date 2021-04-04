@@ -1,6 +1,6 @@
 {{> group_nav_bar}}
 
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-6">
             <h2>Tasks to be completed:</h2>
@@ -15,7 +15,8 @@
                         {{/if}}
                         <p class="card-text">{{notes}}</p>
                         <button type="button" data-id="{{id}}" class="btn btn-success completeTask">Completed</button>
-                        <button type="button" data-id="{{id}}" class="btn btn-info updateTask">Update</button>
+                        <button type="button" data-id="{{id}}" class="btn btn-info editTask" data-bs-toggle="modal"
+                            data-bs-target="#editModal">Edit</button>
                     </div>
                 </div>
                 {{/unless}}
@@ -41,7 +42,7 @@
     </div>
 </div>
 
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-8">
             <h2>Add a New Task for {{group.name}}</h2>
@@ -67,6 +68,42 @@
                     <button type="submit" class="btn btn-info btn-lg" id="submitTask">Create Task</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel"></h5>
+                <p id="updateTaskId" style="display:none"></p>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="newTaskName" class="col-form-label">Name:</label>
+                        <input type="text" class="form-control" id="newTaskName">
+                    </div>
+                    <div class="mb-3">
+                        <label for="newTaskNotes" class="col-form-label">Notes:</label>
+                        <textarea class="form-control" id="newTaskNotes"></textarea>
+                    </div>
+                </form>
+                <div class="mb-3">
+                    <label for="reassignTask">Reassign to:</label>
+                    <select class="form-control" id="reassignTask">
+                        {{#each groupUsers}}
+                        <option id="{{dataValues.id}}">{{dataValues.username}}</option>
+                        {{/each}}
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" id="updateTask" class="btn btn-primary">Update</button>
+            </div>
         </div>
     </div>
 </div>
