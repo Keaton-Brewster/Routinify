@@ -160,6 +160,23 @@ module.exports = (app) => {
        } 
     });
 
+    app.get('/api/tasks/:id', async (req, res) => {
+        try {
+         const task = await db.Task.findOne({
+             where: {
+                 id: req.params.id
+             }
+         });
+         if (task) {
+             res.send(task);
+         } else {
+             res.sendStatus(404);
+         }
+        } catch {
+          res.sendStatus(500);
+        } 
+     });
+
     app.get('/api/users/:id', async (req, res) => {
         try {
             const user = await db.User.findOne({

@@ -4,7 +4,10 @@ $(document).ready(() => {
     const completeTaskBtns = document.querySelectorAll('.completeTask');
     const deleteTaskBtns = document.querySelectorAll('.deleteTask');
     const removeUserBtns = document.querySelectorAll('.removeUser');
+    const updateTaskBtn = $('#updateTask');
     const assignedEls = $('.assigned');
+    const editModal = $('#editModal');
+    let updateTaskId;
 
     async function getAssignments(elements) {
         let result;
@@ -20,6 +23,18 @@ $(document).ready(() => {
 
     getAssignments(assignedEls);
     
+    editModal.on('show.bs.modal', async (e) => {
+        const taskId = parseInt(e.relatedTarget.getAttribute('data-id'));
+        const updateLabel = $('#editModalLabel');
+        updateTaskId = $('#updateTaskId');
+        const task = await $.ajax({
+            url: `/api/tasks/${taskId}`,
+            method: 'GET'
+        });
+        updateLabel.text(`Update ${task.name}`);
+        updateTaskId.text(`${task.id}`);
+    });
+
     addUserForm.on('submit', (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -46,7 +61,7 @@ $(document).ready(() => {
         const assignedId = parseInt(sel.find('option:selected').attr('id'));
         const newTaskObj = {
             name: $('input#taskName').val().trim(),
-            notes: $('textarea').val().trim(),
+            notes: $('textarea#taskNotes').val().trim(),
             groupId: $('span#group').attr('data-id'),
             assignedTo: assignedId
         };
@@ -60,6 +75,27 @@ $(document).ready(() => {
                 console.log(error);
             });
 
+    });
+
+    updateTaskBtn.on('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const tid = parseInt($('#updateTaskId').text());
+        const sel = $('select#reassignTask');
+        const reassignedId = parseInt(sel.find('option:selected').attr('id'));
+        
+        $.ajax({
+            url: `/api/tasks/${tid}`,
+            method: 'PUT',
+            data: {
+                name: $('input#newTaskName').val().trim(),
+                notes: $('textarea#newTaskNotes').val().trim(),
+                UserId: reassignedId
+            }
+        }).done(() => {
+            editModal.hide();
+            location.reload();
+        });
     });
 
     completeTaskBtns.forEach(button => {
