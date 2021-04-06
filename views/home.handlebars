@@ -1,0 +1,31 @@
+{{> nav_bar}}
+
+<div class="mb-3 text-center">
+  <p class="bg-dark display-4">Quick look</p>
+</div>
+
+<div class="container-fluid">
+  <div class="p-5-lg row justify-content-center">
+    <div class="col-lg-6">
+      <h2 class="text-center">Your tasks</h2>
+      <ul>
+        {{#each tasks}}
+        {{#unless isCompleted}}
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">{{name}}</h5>
+            {{#if UserId}}
+            <p class="card-text text-muted assigned" data-id="{{UserId}}"></p>
+            {{/if}}
+            <p class="float-right text-muted groupids" data-id="{{belongsTo}}">Group: </p>
+            <p class="card-text">{{notes}}</p>
+          </div>
+        </div>
+        {{/unless}}
+        {{/each}}
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script src="/assets/js/home_page.js"></script>

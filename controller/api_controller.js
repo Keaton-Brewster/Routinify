@@ -147,35 +147,52 @@ module.exports = (app) => {
         }
     });
 
-    app.get('/api/tasks', async (req, res) => {
-       try {
-        const tasks = await db.Task.findAll({});
-        if (tasks) {
-            res.json(tasks);
-        } else {
-            res.sendStatus(404);
+    app.get('/api/groups/get_group_name/:id', async (request, response) => {
+        try {
+            const group = await db.Group.findOne({
+                where: {
+                    id: request.params.id
+                }
+            });
+            if (group) {
+                response.send(group);
+            } else {
+                response.sendStatus(404);
+            }
+        } catch {
+            error => console.error(error);
         }
-       } catch {
-         res.sendStatus(500);
-       } 
+    });
+
+    app.get('/api/tasks', async (req, res) => {
+        try {
+            const tasks = await db.Task.findAll({});
+            if (tasks) {
+                res.json(tasks);
+            } else {
+                res.sendStatus(404);
+            }
+        } catch {
+            res.sendStatus(500);
+        }
     });
 
     app.get('/api/tasks/:id', async (req, res) => {
         try {
-         const task = await db.Task.findOne({
-             where: {
-                 id: req.params.id
-             }
-         });
-         if (task) {
-             res.send(task);
-         } else {
-             res.sendStatus(404);
-         }
+            const task = await db.Task.findOne({
+                where: {
+                    id: req.params.id
+                }
+            });
+            if (task) {
+                res.send(task);
+            } else {
+                res.sendStatus(404);
+            }
         } catch {
-          res.sendStatus(500);
-        } 
-     });
+            res.sendStatus(500);
+        }
+    });
 
     app.get('/api/users/:id', async (req, res) => {
         try {
@@ -236,5 +253,5 @@ module.exports = (app) => {
 
         res.end();
     });
-    
+
 };

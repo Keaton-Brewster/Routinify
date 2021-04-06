@@ -18,7 +18,9 @@ module.exports = (app) => {
         }
     });
 
-    app.get('/users/home', isAuthenticated, async (req, res) => {
+
+    //! OLD ROUTE FOR USER HOME. I AM ADDING A NEW ONE BELOW THIS ONE TO TRY TO REWORK THE HOME PAGE FOR BETTER UI/UX
+    app.get('/users/home/groups', isAuthenticated, async (req, res) => {
         let userGroups = await db.User.findOne({
             where: {
                 id: req.user.id
@@ -44,6 +46,49 @@ module.exports = (app) => {
         res.render('yourGroups', {
             user: req.user,
             groups: groups,
+        });
+    });
+
+    app.get('/users/home', isAuthenticated, async (req, res) => {
+        let userGroups = await db.User.findOne({
+            where: {
+                id: req.user.id
+            },
+            attributes: ['groupsIds']
+        });
+        let thisUsersTasks = await db.Task.findAll({
+            where: {
+                UserId: req.user.id
+            }
+        });
+        let groups = await db.Group.findAll({
+            where: {
+                [Op.and]: {
+                    id: userGroups
+                }
+            }
+        });
+
+        userGroups = userGroups.groupsIds;
+        thisUsersTasks = thisUsersTasks.map(thisTask => thisTask.dataValues);
+        console.log(thisUsersTasks);
+
+        //? CAN PROBABLY MAP THE ARRAY AGAIN, AND MODIFY EACH belongsTo VALUE TO BE THE NAME OF THAT GROUP
+        //? THIS WOULD JUST BE A UI/UX THING
+        thisUsersTasks = thisUsersTasks.map(taskValues => taskValues);
+
+        groups = groups.map(group => group.dataValues);
+
+        groups.forEach(group => {
+            if (group.ownerId === req.user.id) {
+                group.ownerLoggedIn = true;
+            }
+        });
+
+        res.render('home', {
+            user: req.user,
+            groups: groups,
+            tasks: thisUsersTasks
         });
     });
 
@@ -95,7 +140,7 @@ module.exports = (app) => {
 
         let groupTasks = await db.Task.findAll({
             where: {
-                belongsTo: req.params.groupId
+                belongsTo: thisGroupId
             }
         });
 
@@ -110,12 +155,12 @@ module.exports = (app) => {
         allUsers.forEach((user) => {
             const userGroups = user.groupsIds;
             if (userGroups.includes(thisGroupId)) {
-                usersInGroup.push(user);  
+                usersInGroup.push(user);
             } else {
                 console.log(`${user.username} is not in ${group.name}`);
             }
         });
-        
+
         group = group.dataValues;
 
         res.render('group_tasks', {
