@@ -1,11 +1,23 @@
 $(document).ready(() => {
     const createGroupBtn = $('#createGroup');
     const deleteGroupBtn = document.querySelectorAll('.deleteGroup');
+    const groupModal = $('#groupModal');
+    const createGroupToast = document.getElementById('createGroupToast');
 
-    createGroupBtn.on('click', () => {
+    function toast() {
+        createGroupToast.className = 'show';
+        setTimeout(() => {
+            createGroupToast.className = createGroupToast.className.replace('show', '');
+        }, 3000);
+    }
 
-        $.post('/api/groups/add_group', {
-                name: $('#groupName').val().trim()
+    createGroupBtn.on('click', async () => {
+        groupModal.hide();
+        //! toast() is not working!
+        toast();
+        
+        await $.post('/api/groups/add_group', {
+                name: $('#newGroupName').val().trim()
             })
             .then((res) => {
                 console.log(res);
@@ -15,6 +27,7 @@ $(document).ready(() => {
                 console.error(`Error: ${error}`);
             });
 
+        location.reload();
     });
 
     deleteGroupBtn.forEach(button => {
@@ -36,5 +49,9 @@ $(document).ready(() => {
             }
             return;
         });
+    });
+
+    groupModal.on('show.bs.modal', async (e) => {
+
     });
 });

@@ -3,46 +3,65 @@
 <div style="display:none">
     <span id="userId">{{user.id}}</span>
 </div>
-<div class="col-8 mx-auto my-5">
-    <div class="bg-light p-3 m-2">
-        <h1 class="text-dark text-center">Your groups</h1>
-    </div><br>
+<div id="createGroupToast">Group Created!</div>
 
-    <div>
-        <ul class="list-group list-group-flush">
-            {{#each groups}}
-            <li class="list-group-item text-center mb-2">
-                <a class="btn btn-info btn-lg select-group" href="/users/home/groups/{{id}}" data-id="{{id}}">{{name}}</a>
-                {{#if ownerLoggedIn}}
-                <a class="btn btn-outline-danger deleteGroup" data-id="{{id}}" data-name="{{name}}">DELETE</a>
-                {{/if}}
-            </li>
-            {{/each}}
-        </ul>
+<div class="row-sm d-xs-flex m-5">
+    <div class="col-6-lg col-md-8 col-sm-12 mx-auto my-auto">
+
+        <div class="card">
+            <div class="card-header">
+                <h1 class="text-center">Your groups</h1>
+            </div>
+
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    {{#each groups}}
+                    <li class="list-group-item text-center mb-2">
+                        <a class="float-left btn btn-info select-group" href="/users/home/groups/{{id}}"
+                            data-id="{{id}}">{{name}}</a>
+                        {{#if ownerLoggedIn}}
+                        <a class="float-right btn btn-outline-danger deleteGroup" data-id="{{id}}"
+                            data-name="{{name}}">DELETE</a>
+                        {{/if}}
+                    </li>
+                    {{/each}}
+                </ul>
+            </div>
+
+            <div class="card-footer">
+                <button type="button" class="btn btn-block btn-success editTask" data-bs-toggle="modal"
+                    data-bs-target="#groupModal">Create a new group</button>
+            </div>
+        </div>
+
+
+    </div>
+
+
+
+    <div class="modal fade" id="groupModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true" style="top: 15rem;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                {{!-- <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel"></h5>
+                    <p id="updateTaskId" style="display:none"></p>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div> --}}
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="newGroupName" class="col-form-label">Name your new group:</label>
+                            <input type="text" class="form-control" id="newGroupName">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" id="createGroup" class="btn btn-primary">Create</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-
-<form class="col-8 mx-auto">
-    <div class="bg-light p-3 m-2">
-        <h1 class="text-dark text-center">Create a new group</h1>
-    </div><br>
-
-    <form class="form-group">
-        <label for="groupName" class="form-label">Name your group</label>
-        <input type="text" class="form-control col" id="groupName">
-        <div class="text-center mt-2">
-            <button class="btn btn-success" id="createGroup">Create</button>
-        </div>
-    </form>
-    {{!-- <br><br>
-    <div class="p-3 m-2">
-        <h1 class="text-white text-center">Would you like to add other users?</h1>
-    </div><br>
-
-    <div class="btn-group" role="group">
-        <button type="submit" class="btn btn-success btn-lg btn-success">yes</button>
-        <button type="submit" class="btn btn-success btn-lg btn-danger">no</button>
-    </div> --}}
-</form>
 
 <script type="text/javascript" src="/assets/js/yourGroups.js"></script>
