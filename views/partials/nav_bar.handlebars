@@ -1,4 +1,3 @@
-{{!-- From discussion, this will be where a user goes after selecting which group they're working in --}}
 <nav class="navbar navbar-expand-lg navbar-light bg-info">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Welcome, {{user.username}}</a>
@@ -8,18 +7,16 @@
     </button>
     <div class="collapse navbar-collapse " id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        {{!-- commenting routines and tasks because redundant in first stage development --}}
         <li class="nav-item">
-          <a class="nav-link" href="/users/home">Home</a>
+          <a class="nav-link" aria-current="page" href="/users/home">Home <span class="ml-3">/</span></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/users/home/groups">Groups</a>
         </li>
         <li class="nav-item">
-          <a href="/logout" class="nav-link float-right text-danger" role="button">Log out</a>
+          <a id="logoutButton" href="/logout" class="nav-link float-right text-danger" role="button">Log out</a>
         </li>
       </ul>
-
     </div>
   </div>
 </nav>
