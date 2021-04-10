@@ -73,8 +73,6 @@ module.exports = (app) => {
         thisUsersTasks = thisUsersTasks.map(thisTask => thisTask.dataValues);
         console.log(thisUsersTasks);
 
-        //? CAN PROBABLY MAP THE ARRAY AGAIN, AND MODIFY EACH belongsTo VALUE TO BE THE NAME OF THAT GROUP
-        //? THIS WOULD JUST BE A UI/UX THING
         thisUsersTasks = thisUsersTasks.map(taskValues => taskValues);
 
         groups = groups.map(group => group.dataValues);
@@ -92,7 +90,7 @@ module.exports = (app) => {
         });
     });
 
-    app.get('/users/home/groups/:id', isAuthenticated, async (req, res) => {
+    app.get('/users/home/groups/:id/users', isAuthenticated, async (req, res) => {
         const usersInGroup = [];
         const usersNOTInGroup = [];
         const allUsers = await db.User.findAll({});
@@ -133,7 +131,7 @@ module.exports = (app) => {
         });
     });
 
-    app.get('/users/home/groups/:groupId/tasks', isAuthenticated, async (req, res) => {
+    app.get('/users/home/groups/:groupId', isAuthenticated, async (req, res) => {
         const usersInGroup = [];
         const allUsers = await db.User.findAll({});
         const thisGroupId = parseInt(req.params.groupId);
