@@ -36,11 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Passwords do not match');
             return;
         }
-        console.log(newUser);
         insertNewUserData(newUser);
     });
-
-    // backToSignIn.addEventListener('click', () => {
-    //     $.get('/')
-    // })
 });

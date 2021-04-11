@@ -62,7 +62,6 @@ module.exports = (app) => {
             });
 
             addUserToGroup(newGroup.id, req.user.id);
-            console.log(newGroup);
 
             res.sendStatus(200);
         } catch {
@@ -102,7 +101,7 @@ module.exports = (app) => {
             addUserToGroup(req.query.group, userId);
             res.sendStatus(201);
         } catch {
-            error => console.log(error);
+            error => console.error(error);
         }
     });
 
@@ -218,7 +217,6 @@ module.exports = (app) => {
             belongsTo: req.body.groupId,
             UserId: req.body.assignedTo
         });
-        console.log(newTask);
         res.end();
     });
 
@@ -230,7 +228,7 @@ module.exports = (app) => {
                     // task id
                     id: req.params.id,
                 },
-            }).then((dbTask) => console.log(dbTask))
+            })
             .catch((err) => console.error(err));
 
         res.end();
@@ -238,8 +236,7 @@ module.exports = (app) => {
 
     // create task
     app.post('/api/tasks', (req, res) => {
-        db.Tasks.create(req.body).then((res) => console.log(res));
-
+        db.Tasks.create(req.body);
         res.end();
     });
 

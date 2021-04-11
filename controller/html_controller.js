@@ -71,7 +71,6 @@ module.exports = (app) => {
 
         userGroups = userGroups.groupsIds;
         thisUsersTasks = thisUsersTasks.map(thisTask => thisTask.dataValues);
-        console.log(thisUsersTasks);
 
         thisUsersTasks = thisUsersTasks.map(taskValues => taskValues);
 
@@ -155,7 +154,7 @@ module.exports = (app) => {
             if (userGroups.includes(thisGroupId)) {
                 usersInGroup.push(user);
             } else {
-                console.log(`${user.username} is not in ${group.name}`);
+                console.error(`${user.username} is not in ${group.name}`);
             }
         });
 

@@ -15,12 +15,11 @@ $(document).ready(() => {
         groupModal.hide();
         //! toast() is not working!
         toast();
-        
+
         await $.post('/api/groups/add_group', {
                 name: $('#newGroupName').val().trim()
             })
-            .then((res) => {
-                console.log(res);
+            .then(() => {
                 location.reload();
             })
             .catch((error) => {
@@ -31,6 +30,7 @@ $(document).ready(() => {
     });
 
     deleteGroupBtn.forEach(button => {
+        ƒ
         button.addEventListener('click', (e) => {
             e.stopPropagation();
             const groupName = e.target.getAttribute('data-name');

@@ -17,12 +17,12 @@ $(document).ready(() => {
                 url: `/api/users/${uid}`,
                 method: 'GET'
             });
-           p.append(`Assigned to: ${result.username}`);
+            p.append(`Assigned to: ${result.username}`);
         }
     }
 
     getAssignments(assignedEls);
-    
+
     editModal.on('show.bs.modal', async (e) => {
         const taskId = parseInt(e.relatedTarget.getAttribute('data-id'));
         const updateLabel = $('#editModalLabel');
@@ -50,7 +50,7 @@ $(document).ready(() => {
                 location.reload();
             })
             .catch(error => {
-                console.log(error);
+                console.error(error);
             });
     });
 
@@ -68,11 +68,10 @@ $(document).ready(() => {
 
         $.post('/api/tasks/add_task', newTaskObj)
             .then(() => {
-                console.log('Added task');
                 location.reload();
             })
             .catch(error => {
-                console.log(error);
+                console.error(error);
             });
 
     });
@@ -83,7 +82,7 @@ $(document).ready(() => {
         const tid = parseInt($('#updateTaskId').text());
         const sel = $('select#reassignTask');
         const reassignedId = parseInt(sel.find('option:selected').attr('id'));
-        
+
         $.ajax({
             url: `/api/tasks/${tid}`,
             method: 'PUT',
@@ -141,14 +140,12 @@ $(document).ready(() => {
             const groupId = e.target.getAttribute('data-group');
             const userName = e.target.getAttribute('data-name');
 
-            console.log(groupId);
-
             const confirmRemove = confirm(`Are you sure you want to remove "${userName}" from this group?`);
             if (confirmRemove) {
                 $.ajax({
-                    method: 'PUT',
-                    url: `/api/groups/remove-user/?userId=${userId}&groupId=${groupId}`
-                })
+                        method: 'PUT',
+                        url: `/api/groups/remove-user/?userId=${userId}&groupId=${groupId}`
+                    })
                     .then(() => {
                         location.reload();
                     })
