@@ -30,7 +30,6 @@ $(document).ready(() => {
     });
 
     deleteGroupBtn.forEach(button => {
-        ƒ
         button.addEventListener('click', (e) => {
             e.stopPropagation();
             const groupName = e.target.getAttribute('data-name');
