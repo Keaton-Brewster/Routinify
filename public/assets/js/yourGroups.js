@@ -49,8 +49,4 @@ $(document).ready(() => {
             return;
         });
     });
-
-    groupModal.on('show.bs.modal', async (e) => {
-
-    });
 });

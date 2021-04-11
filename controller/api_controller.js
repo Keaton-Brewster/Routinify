@@ -211,7 +211,7 @@ module.exports = (app) => {
     });
 
     app.post('/api/tasks/add_task', async (req, res) => {
-        const newTask = await db.Task.create({
+        await db.Task.create({
             name: req.body.name,
             notes: req.body.notes,
             belongsTo: req.body.groupId,
