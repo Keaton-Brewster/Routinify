@@ -5,19 +5,43 @@
     <div class="row">
         <div class="col">
             <h2>{{user.username}}'s Routines</h2>
-            <button type="button" class="btn btn-success" id="createNewRoutine">NEW</button>
         </div>
     </div>
+    <div class="row"></div>
 
-    <div class="row" id="newRoutineDiv">
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <h3>Create a New Routine</h3>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-12 col-md-6">
             <form id="newRoutineForm">
-                <div class="form-floating">
-                    <input type="text" class="form-control" id="newRoutineName" placeholder="Morning Routine">
-                    <label for="newRoutineName">Routine name</label>
+                <div class="row mb-2">
+                    <label for="newRoutineName">Routine Name</label>
+                    <input type="text" class="form-control" id="newRoutineName">
                 </div>
+                <div class="row mb-2">
+                    <h4>Add Tasks</h4>
+                </div>
+                <div class="row mb-2">
+                    {{#each tasks}}
+                    <div class="card" data-id="{{dataValues.id}}" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">{{dataValues.name}}</h5>
+                            <p class="card-text">{{dataValues.notes}}</p>
+                            <button type="button" data-id="{{id}}" class="btn btn-danger addTask">Add</button>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+                <button type="button" class="btn btn-success" id="createNewRoutine">Create New</button>
             </form>
         </div>
     </div>
+
+
+
+
 
 </div>
