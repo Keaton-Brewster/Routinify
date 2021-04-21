@@ -1,8 +1,21 @@
 {{> nav_bar}}
 
 <div class="container-fluid">
-    
+
     <div class="row">
-        <h2>Routines for {{user.username}} will go here</h2>
+        <h2>{{user.username}}'s Routines</h2>
+        <button type="button" class="btn btn-success" id="createNewRoutine">NEW</button>
     </div>
+
+    <div class="row" id="newRoutineDiv">
+        <div class="col-12 col-md-6">
+            <form id="newRoutineForm">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="newRoutineName" placeholder="Morning Routine">
+                    <label for="newRoutineName">Routine name</label>
+                </div>
+            </form>
+        </div>
+    </div>
+
 </div>
