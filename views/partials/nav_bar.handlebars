@@ -8,9 +8,11 @@
     </button>
     <div class="collapse navbar-collapse " id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        {{!-- commenting routines and tasks because redundant in first stage development --}}
         <li class="nav-item">
           <a class="nav-link" href="/users/home">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/users/${{user.id}}/routines">My Routines</a>
         </li>
       </ul>
       <a href="/logout" class="float-end btn btn-outline-danger" role="button">Log out</a>

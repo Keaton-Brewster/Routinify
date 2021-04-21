@@ -47,6 +47,25 @@ module.exports = (app) => {
         });
     });
 
+    app.get('/users/:id/routines', isAuthenticated, async (req, res) => {
+        const userRoutines = await db.Routine.findAll({
+            where: {
+                UserId: req.params.id
+            }
+        });
+        const userTasks = await db.Task.findAll({
+            where: {
+                UserId: req.params.id
+            }
+        });
+
+        res.render('my_routines', {
+            user: req.user,
+            routines: userRoutines,
+            userTasks: userTasks
+        });
+    });
+
     app.get('/users/home/groups/:id', isAuthenticated, async (req, res) => {
         const usersInGroup = [];
         const usersNOTInGroup = [];
