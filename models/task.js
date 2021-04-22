@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
 
     Task.associate = (models) => {
         Task.belongsTo(models.User);
+        Task.belongsTo(models.Routine);
     };
     return Task;
 };

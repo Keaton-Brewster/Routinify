@@ -1,0 +1,53 @@
+{{> nav_bar}}
+
+<div class="container">
+
+    <div class="row">
+        <div class="col">
+            <h2>{{user.username}}'s Routines | User ID: <span id="userId">{{user.id}}</span></h2>
+        </div>
+    </div>
+    <div class="row">
+        <ul>
+            {{#each routines}}
+            <li>{{dataValues.name}}</li>
+            {{/each}}
+        </ul>
+    </div>
+
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <h3>Create a New Routine</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-4">
+            <div class="row mb-2">
+                <label for="newRoutineName">Routine Name</label>
+                <input type="text" class="form-control" id="newRoutineName">
+            </div>
+            <div class="row mb-2">
+                <h4>Add Tasks</h4>
+            </div>
+            <div class="row mb-2">
+                {{#each tasks}}
+                {{#unless dataValues.RoutineId}}
+                <div class="card bg-light mb-3" style="max-width: 20rem;">
+                    <div class="card-header">{{dataValues.name}}</div>
+                    <div class="card-body">
+                        <p class="card-text">{{dataValues.notes}}</p>
+                        <button type="button" id="{{dataValues.id}}" class="btn btn-primary">Add task</button>
+                    </div>
+                </div>
+                {{/unless}}
+                {{/each}}
+            </div>
+            <div class="row">
+                <button type="button" class="btn btn-success" id="createNewRoutine">Create New</button>
+            </div>  
+        </div>
+    </div>
+
+</div>
+
+<script src="/assets/js/my_routines.js"></script>

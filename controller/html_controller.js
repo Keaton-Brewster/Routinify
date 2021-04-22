@@ -47,6 +47,30 @@ module.exports = (app) => {
         });
     });
 
+    app.get('/users/routines/:id', isAuthenticated, async (req, res) => {
+        try {
+            const userRoutines = await db.Routine.findAll({
+                where: {
+                    UserId: req.params.id
+                }
+            });
+
+            const userTasks = await db.Task.findAll({
+                where: {
+                    belongsTo: req.params.id
+                }
+            });
+
+            res.render('my_routines', {
+                user: req.user,
+                routines: userRoutines,
+                tasks: userTasks
+            });
+        } catch (err) {
+            console.error(err);
+        }
+    });
+
     app.get('/users/home/groups/:id', isAuthenticated, async (req, res) => {
         const usersInGroup = [];
         const usersNOTInGroup = [];
@@ -110,12 +134,12 @@ module.exports = (app) => {
         allUsers.forEach((user) => {
             const userGroups = user.groupsIds;
             if (userGroups.includes(thisGroupId)) {
-                usersInGroup.push(user);  
+                usersInGroup.push(user);
             } else {
                 console.log(`${user.username} is not in ${group.name}`);
             }
         });
-        
+
         group = group.dataValues;
 
         res.render('group_tasks', {

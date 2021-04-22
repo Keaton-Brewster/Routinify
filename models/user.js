@@ -29,6 +29,9 @@ module.exports = (sequelize, DataTypes) => {
         User.hasMany(models.Task, {
             foreignKey: 'UserId'
         });
+        User.hasMany(models.Routine, {
+            foreignKey: 'UserId'
+        });
     };
 
     User.prototype.validPassword = function (password) {
