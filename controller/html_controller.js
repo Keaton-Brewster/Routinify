@@ -49,15 +49,11 @@ module.exports = (app) => {
 
     app.get('/users/routines/:id', isAuthenticated, async (req, res) => {
         try {
-            // const userRoutines = await db.Task.findAll({
-            //     include: { 
-            //         model: db.Routine, 
-            //         required: true 
-            //     },
-            //         where: {
-            //             UserId: req.params.id
-            //         } 
-            // });
+            const userRoutines = await db.Routine.findAll({
+                where: {
+                    UserId: req.params.id
+                }
+            });
 
             const userTasks = await db.Task.findAll({
                 where: {
@@ -67,8 +63,8 @@ module.exports = (app) => {
 
             res.render('my_routines', {
                 user: req.user,
-                // routines: userRoutines,
-                tasks: userTasks.dataValues
+                routines: userRoutines,
+                tasks: userTasks
             });
         } catch (err) {
             console.error(err);

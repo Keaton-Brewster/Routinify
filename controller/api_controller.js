@@ -1,5 +1,6 @@
 const db = require('../models');
 const passport = require('../config/passport');
+const { Op } = require('sequelize');
 
 const addUserToGroup = async (groupId = 'number', userId = 'number') => {
     // just making sure that we are getting integers in here
@@ -74,10 +75,10 @@ module.exports = (app) => {
     app.delete('/api/groups/:groupId/delete', async (req, res) => {
         try {
             await db.Group.destroy({
-                    where: {
-                        id: req.params.groupId
-                    }
-                })
+                where: {
+                    id: req.params.groupId
+                }
+            })
                 .then(() => {
                     res.sendStatus(202);
                 });
@@ -148,34 +149,34 @@ module.exports = (app) => {
     });
 
     app.get('/api/tasks', async (req, res) => {
-       try {
-        const tasks = await db.Task.findAll({});
-        if (tasks) {
-            res.json(tasks);
-        } else {
-            res.sendStatus(404);
+        try {
+            const tasks = await db.Task.findAll({});
+            if (tasks) {
+                res.json(tasks);
+            } else {
+                res.sendStatus(404);
+            }
+        } catch {
+            res.sendStatus(500);
         }
-       } catch {
-         res.sendStatus(500);
-       } 
     });
 
     app.get('/api/tasks/:id', async (req, res) => {
         try {
-         const task = await db.Task.findOne({
-             where: {
-                 id: req.params.id
-             }
-         });
-         if (task) {
-             res.send(task);
-         } else {
-             res.sendStatus(404);
-         }
+            const task = await db.Task.findOne({
+                where: {
+                    id: req.params.id
+                }
+            });
+            if (task) {
+                res.send(task);
+            } else {
+                res.sendStatus(404);
+            }
         } catch {
-          res.sendStatus(500);
-        } 
-     });
+            res.sendStatus(500);
+        }
+    });
 
     app.get('/api/users/:id', async (req, res) => {
         try {
@@ -209,11 +210,11 @@ module.exports = (app) => {
     app.put('/api/tasks/:id', (req, res) => {
         // from req.body -> get table, column, value for query
         db.Task.update(req.body, {
-                where: {
-                    // task id
-                    id: req.params.id,
-                },
-            }).then((dbTask) => console.log(dbTask))
+            where: {
+                // task id
+                id: req.params.id,
+            },
+        }).then((dbTask) => console.log(dbTask))
             .catch((err) => console.error(err));
 
         res.end();
@@ -236,5 +237,31 @@ module.exports = (app) => {
 
         res.end();
     });
-    
+
+    // Add new routine
+
+    app.post('/api/routines/new', async (req, res) => {
+        try {
+           const newRoutine = await db.Routine.create({
+                name: req.body.name,
+                UserId: req.body.ownerId
+            });
+            console.log(newRoutine);
+            const tasksToUpdate = req.body.tasks;
+            
+            tasksToUpdate.forEach((task) => {
+                db.Task.findOne({
+                    where: {
+                        id: parseInt(task)
+                    },
+                });
+                db.Task.update({ RoutineId: newRoutine.id }, { where: { id: parseInt(task) } });
+            });
+
+            res.end();
+        } catch (err) {
+            console.error(err);
+        }
+
+    });
 };
